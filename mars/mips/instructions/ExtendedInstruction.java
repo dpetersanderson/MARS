@@ -201,7 +201,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        * <LI>BROFFnm means substitute n if delayed branching is NOT enabled otherwise substitute m.  n and m are single digit numbers indicating constant branch offset (in words).  Added in 3.4.1 release.
    	 * </UL>
    	 * @param template a String containing template for basic statement.
-   	 * @param tokenList a TokenList containing tokens from extended instruction.
+   	 * @param theTokenList a TokenList containing tokens from extended instruction.
    	 * @return String representing basic assembler statement.
    	 */
    

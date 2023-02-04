@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * recognizing each MIPS language element.  The types of language elements are known as "tokens".
  * MIPS tokens are defined in the TokenTypes class.<br><br>
  * Example: <br>
- * The MIPS statement  <tt>here:  lw  $t3, 8($t4)   #load third member of array</tt><br>
+ * The MIPS statement  <code>here:  lw  $t3, 8($t4)   #load third member of array</code><br>
  * generates the following token list<br>
  * IDENTIFIER, COLON, OPERATOR, REGISTER_NAME, COMMA, INTEGER_5, LEFT_PAREN, 
  * REGISTER_NAME, RIGHT_PAREN, COMMENT<br>
@@ -251,7 +251,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param lineNum  line number from source code (used in error message)
     * @param theLine String containing source code
     * @param callerErrorList errors will go into this list instead of tokenizer's list.
-    * @param doEqvSubstitutse boolean param set true to perform .eqv substitutions, else false
+    * @param doEqvSubstitutes boolean param set true to perform .eqv substitutions, else false
     * @return the generated token list for that line
     * 
     **/		

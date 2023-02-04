@@ -51,7 +51,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * <p> 
  * The code of this tools is initially based on the Instruction counter tool by Felipe Lassa.  
  * 
- * @author Ingo Kofler <ingo.kofler@itec.uni-klu.ac.at>
+ * @author Ingo Kofler {@literal <ingo.kofler@itec.uni-klu.ac.at>}
  *
  */
    // @SuppressWarnings("serial")
