@@ -573,12 +573,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  a string represents a hex number if the string is in the forms:
     *      Signopt 0x HexDigits
     *      Signopt 0X HexDigits
-    *      Signopt # HexDigits   <---- Disallow this form since # is MIPS comment
+    *      Signopt # HexDigits   &gt;---- Disallow this form since # is MIPS comment
     *
     *
     * @param v String containing numeric digits (could be decimal, octal, or hex)
     *
-    * @return Returns <tt>true</tt> if string represents a hex number, else returns <tt>false</tt>.
+    * @return Returns <code>true</code> if string represents a hex number, else returns <code>false</code>.
     **/
        public static boolean isHex(String v)
       {
@@ -627,7 +627,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *
     * @param v String containing numeric digits (could be decimal, octal, or hex)
     *
-    * @return Returns <tt>true</tt> if string represents an octal number, else returns <tt>false</tt>.
+    * @return Returns <code>true</code> if string represents an octal number, else returns <code>false</code>.
     **/
        public static boolean isOctal(String v)
       {

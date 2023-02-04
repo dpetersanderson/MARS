@@ -76,7 +76,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      *  Constructor that gets list from section of String array, one
      *  argument per element.
      *
-     *  @param args  Array of String, each element containing one argument
+     *  @param list  Array of String, each element containing one argument
      *  @param startPosition Index of array element containing the first argument; all remaining
      *   elements are assumed to contain an argument.
      */	 
@@ -100,7 +100,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      *  Constructor that gets list from section of String ArrayList, one
      *  argument per element.
      *
-     *  @param args  ArrayList of String, each element containing one argument
+     *  @param list  ArrayList of String, each element containing one argument
      *  @param startPosition Index of array element containing the first argument; all remaining
      *   elements are assumed to contain an argument.
      */	 

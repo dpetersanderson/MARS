@@ -133,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	/**
    	 *  Change the register's reset value; the value to which it will be
-   	 *  set when <tt>resetValue()</tt> is called.
+   	 *  set when <code>resetValue()</code> is called.
    	 */
    	 
        public synchronized void changeResetValue(int reset) {

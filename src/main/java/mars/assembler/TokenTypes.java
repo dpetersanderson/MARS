@@ -95,7 +95,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param value String containing candidate language element, extracted from MIPS program.
     * 
     * @return Returns the corresponding TokenTypes object if the parameter matches a
-    * defined MIPS token type, else returns <tt>null</tt>.
+    * defined MIPS token type, else returns <code>null</code>.
     **/
     
        public static TokenTypes matchTokenType(String value)

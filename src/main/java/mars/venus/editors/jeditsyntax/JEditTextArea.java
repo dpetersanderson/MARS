@@ -77,14 +77,12 @@ public class JEditTextArea extends JComponent
       this(TextAreaDefaults.getDefaults(), lineNumbers);
    }
 
+   private JScrollBar lineNumbersVertical;//************************************
 /**
  * Creates a new JEditTextArea with the specified settings.
  * @param defaults The default settings
+ * @param lineNumbers
  */
- 
-   private JScrollBar lineNumbersVertical;//************************************
-
-
    public JEditTextArea(TextAreaDefaults defaults, JComponent lineNumbers)
    {
    // Enable the necessary events
@@ -1458,7 +1456,7 @@ public class JEditTextArea extends JComponent
 
 /**
  * Sets if the selection should be rectangular.
- * @param overwrite True if the selection should be rectangular,
+ * @param rectSelect True if the selection should be rectangular,
  * false otherwise.
  */
    public final void setSelectionRectangular(boolean rectSelect)
