@@ -394,7 +394,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * {@link MIPSprogram} to it
     * 
     * @return instatiated MacroPool
-    * @author M.H.Sekhavat <sekhavat17@gmail.com>
+    * @author M.H.Sekhavat {@literal <sekhavat17@gmail.com>}
     */
        public MacroPool createMacroPool() {
          macroPool = new MacroPool(this);
@@ -404,7 +404,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Gets local macro pool {@link MacroPool} for this program
     * @return MacroPool
-    * @author M.H.Sekhavat <sekhavat17@gmail.com>
+    * @author M.H.Sekhavat {@literal <sekhavat17@gmail.com>}
     */	
        public MacroPool getLocalMacroPool() {
          return macroPool;
@@ -413,7 +413,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Sets local macro pool {@link MacroPool} for this program
     * @param macroPool reference to MacroPool
-    * @author M.H.Sekhavat <sekhavat17@gmail.com>
+    * @author M.H.Sekhavat {@literal <sekhavat17@gmail.com>}
     */   
        public void setLocalMacroPool(MacroPool macroPool) {
          this.macroPool = macroPool;

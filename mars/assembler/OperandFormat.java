@@ -52,8 +52,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param spec The (resumably best matched) MIPS instruction.
     * @param errors ErrorList into which any error messages generated here will be added.
     * 
-    * @return Returns <tt>true</tt> if the programmer's statement matches the MIPS 
-    * specification, else returns <tt>false</tt>.
+    * @return Returns <code>true</code> if the programmer's statement matches the MIPS
+    * specification, else returns <code>false</code>.
     */
    
        static boolean tokenOperandMatch(TokenList candidateList, Instruction inst, ErrorList errors) {
