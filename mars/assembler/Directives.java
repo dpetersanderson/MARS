@@ -88,7 +88,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * Find Directive object, if any, which matches the given String.
     * 
     * @param str A String containing candidate directive name (e.g. ".ascii")
-    * @return If match is found, returns matching Directives object, else returns <tt>null</tt>.
+    * @return If match is found, returns matching Directives object, else returns <code>null</code>.
     **/
     
        public static Directives matchDirective(String str) {
@@ -108,7 +108,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * ".a" will match ".ascii", ".asciiz" and ".align"
     * 
     * @param str A String 
-    * @return If match is found, returns ArrayList of matching Directives objects, else returns <tt>null</tt>.
+    * @return If match is found, returns ArrayList of matching Directives objects, else returns <code>null</code>.
     **/
     
        public static ArrayList prefixMatchDirectives(String str) {

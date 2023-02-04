@@ -61,17 +61,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            db  -- MIPS delayed branching is enabled.<br>
           dec  -- display memory or register contents in decimal.<br>
          dump  -- dump memory contents to file.  Option has 3 arguments, e.g. <br>
-                  <tt>dump &lt;segment&gt; &lt;format&gt; &lt;file&gt;</tt>.  Also supports<br>
+                  <code>dump &lt;segment&gt; &lt;format&gt; &lt;file&gt;</code>.  Also supports<br>
                   an address range (see <i>m-n</i> below).  Current supported <br>
-                  segments are <tt>.text</tt> and <tt>.data</tt>.  Current supported dump formats <br>
-                  are <tt>Binary</tt>, <tt>HexText</tt>, <tt>BinaryText</tt>.<br>
+                  segments are <code>.text</code> and <code>.data</code>.  Current supported dump formats <br>
+                  are <code>Binary</code>, <code>HexText</code>, <code>BinaryText</code>.<br>
             h  -- display help.  Use by itself and with no filename</br>
           hex  -- display memory or register contents in hexadecimal (default)<br>
            ic  -- display count of MIPS basic instructions 'executed'");
            mc  -- set memory configuration.  Option has 1 argument, e.g.<br>
-                  <tt>mc &lt;config$gt;</tt>, where &lt;config$gt; is <tt>Default</tt><br>
-                  for the MARS default 32-bit address space, <tt>CompactDataAtZero</tt> for<br>
-                  a 32KB address space with data segment at address 0, or <tt>CompactTextAtZero</tt><br>
+                  <code>mc &lt;config$gt;</code>, where &lt;config$gt; is <code>Default</code><br>
+                  for the MARS default 32-bit address space, <code>CompactDataAtZero</code> for<br>
+                  a 32KB address space with data segment at address 0, or <code>CompactTextAtZero</code><br>
                   for a 32KB address space with text segment at address 0.<br>
            me  -- display MARS messages to standard err instead of standard out. Can separate via redirection.</br>
            nc  -- do not display copyright notice (for cleaner redirected/piped output).</br>

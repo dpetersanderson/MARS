@@ -100,8 +100,8 @@ public final class DataTypes {
     * Determines whether given integer value falls within value range for given directive.
     * @param direct Directive that controls storage allocation for value.
     * @param value The value to be stored.
-    * @return Returns <tt>true</tt> if value can be stored in the number of bytes allowed
-    * by the given directive (.word, .half, .byte), <tt>false</tt> otherwise.
+    * @return Returns <code>true</code> if value can be stored in the number of bytes allowed
+    * by the given directive (.word, .half, .byte), <code>false</code> otherwise.
     **/   
    public static boolean outOfRange(Directives direct, int value) {
        if (direct == Directives.HALF && (value < MIN_HALF_VALUE || value > MAX_HALF_VALUE))
@@ -119,8 +119,8 @@ public final class DataTypes {
 	 * stored in a float because the exponent 500 is too large (float allows 8 bits for exponent).
     * @param direct Directive that controls storage allocation for value.
     * @param value The value to be stored.
-    * @return Returns <tt>true</tt> if value is within range of
-    * the given directive (.float, .double), <tt>false</tt> otherwise.
+    * @return Returns <code>true</code> if value is within range of
+    * the given directive (.float, .double), <code>false</code> otherwise.
     **/   
    public static boolean outOfRange(Directives direct, double value) {
        if (direct == Directives.FLOAT && (value < LOW_FLOAT_VALUE || value > MAX_FLOAT_VALUE))

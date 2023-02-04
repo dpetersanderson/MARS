@@ -115,7 +115,7 @@ public class TokenList implements Cloneable {
 	 * Removes Token object at specified list position. Uses ArrayList remove method.
 	 * 
 	 * @param  pos   Position in token list.  Subsequent Tokens are shifted one position left.
-	 * @throws IndexOutOfBoundsException if <tt>pos</tt> is < 0 or >= <tt>size()</tt>
+	 * @throws IndexOutOfBoundsException if <code>pos</code> is &lt; 0 or &gt;= <code>size()</code>
 	 */    
     public void remove(int pos) {
         tokenList.remove(pos);
@@ -124,7 +124,7 @@ public class TokenList implements Cloneable {
 	/**
 	 * Returns empty/non-empty status of list.
 	 * 
-	 * @return     <tt>true</tt> if list has no tokens, else <tt>false</tt>. 
+	 * @return     <code>true</code> if list has no tokens, else <code>false</code>. 
 	 */    
     public boolean isEmpty() {
         return tokenList.isEmpty();

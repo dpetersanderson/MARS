@@ -558,7 +558,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * Produces operand value from given array position (first operand is position 0).
      * 
      * @param i Operand position in array (first operand is position 0).
-     * @return Operand value at given operand array position.  If < 0 or >= numOperands, it returns -1.
+     * @return Operand value at given operand array position.  If &lt; 0 or &gt;= <code>numOperands</code>, it returns -1.
      **/   
        public int getOperand(int i) {
          if (i >= 0 && i < this.numOperands) {

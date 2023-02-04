@@ -16,18 +16,17 @@
    import java.util.*;
 
 /**
- * An input handler converts the user's key strokes into concrete actions.
+ * An input handler converts the user's keystrokes into concrete actions.
  * It also takes care of macro recording and action repetition.<p>
  *
  * This class provides all the necessary support code for an input
  * handler, but doesn't actually do any key binding logic. It is up
  * to the implementations of this class to do so.
- * 
+ *
+ * 08/12/2002	Clipboard actions	(Oliver Henning)
  * @author Slava Pestov
  * @version $Id: InputHandler.java,v 1.14 1999/12/13 03:40:30 sp Exp $
- * @see org.syntax.jedit.DefaultInputHandler
- * 
- * 08/12/2002	Clipboard actions	(Oliver Henning)
+ * @see "org.syntax.jedit.DefaultInputHandler"
  */
     public abstract class InputHandler extends KeyAdapter
    {
@@ -191,7 +190,7 @@
    /**
     * Grabs the next key typed event and invokes the specified
     * action with the key as a the action command.
-    * @param action The action
+    * @param listener The action
     */
        public void grabNextKeyStroke(ActionListener listener)
       {

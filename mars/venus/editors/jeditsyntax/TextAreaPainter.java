@@ -102,7 +102,7 @@
    /**
     * Returns the syntax styles used to paint colorized text. Entry <i>n</i>
     * will be used to paint tokens with id = <i>n</i>.
-    * @see org.syntax.jedit.Token
+    * @see "org.syntax.jedit.Token"
     */
        public final SyntaxStyle[] getStyles()
       {
@@ -113,7 +113,7 @@
     * Sets the syntax styles used to paint colorized text. Entry <i>n</i>
     * will be used to paint tokens with id = <i>n</i>.
     * @param styles The syntax styles
-    * @see org.syntax.jedit.Token
+    * @see "org.syntax.jedit.Token"
     */
        public final void setStyles(SyntaxStyle[] styles)
       {

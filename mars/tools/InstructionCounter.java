@@ -52,7 +52,7 @@ import mars.mips.instructions.BasicInstructionFormat;
  * 
  * Code slightly based on MemoryReferenceVisualization.
  * 
- * @author Felipe Lessa <felipe.lessa@gmail.com>
+ * @author Felipe Lessa {@literal <felipe.lessa@gmail.com>}
  *
  */
 //@SuppressWarnings("serial")

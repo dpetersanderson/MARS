@@ -1050,7 +1050,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * Set number of letters to be matched by editor's instruction guide before popup generated (if popup enabled).
    	 * Should be 1 or 2.  If 1, the popup will be generated after first letter typed, based on all matches; if 2, 
    	 * the popup will be generated after second letter typed.
-   	 * @param number of letters (should be 1 or 2).
+   	 * @param length number of letters (should be 1 or 2).
    	 */		
        public void setEditorPopupPrefixLength(int length) {
          setStringSetting(EDITOR_POPUP_PREFIX_LENGTH, ""+length);
@@ -1069,7 +1069,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	/**
    	 *  Store a Font setting
    	 *  @param fontSettingPosition Constant that identifies the item the font goes with
-   	 *  @font The font to set that item to
+   	 *  @param font The font to set that item to
    	 */
        public void setFontByPosition(int fontSettingPosition, Font font) {
          if (fontSettingPosition >=0 && fontSettingPosition < fontFamilySettingsValues.length) {
