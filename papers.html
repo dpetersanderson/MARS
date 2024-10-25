@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0060)https://courses.missouristate.edu/KenVollmar/mars/papers.htm -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="./papers_files/global.css" type="text/css" media="all">
+<link rel="stylesheet" href="./papers_files/sgf.css" type="text/css" media="all">
+<title>MARS MIPS simulator</title>
+<script language="JavaScript">
+<!--
+function FP_swapImg() {//v1.0
+ var doc=document,args=arguments,elm,n; doc.$imgSwaps=new Array(); for(n=2; n<args.length;
+ n+=2) { elm=FP_getObjectByID(args[n]); if(elm) { doc.$imgSwaps[doc.$imgSwaps.length]=elm;
+ elm.$src=elm.src; elm.src=args[n+1]; } }
+}
+
+function FP_preloadImgs() {//v1.0
+ var d=document,a=arguments; if(!d.FP_imgs) d.FP_imgs=new Array();
+ for(var i=0; i<a.length; i++) { d.FP_imgs[i]=new Image; d.FP_imgs[i].src=a[i]; }
+}
+
+function FP_getObjectByID(id,o) {//v1.0
+ var c,el,els,f,m,n; if(!o)o=document; if(o.getElementById) el=o.getElementById(id);
+ else if(o.layers) c=o.layers; else if(o.all) el=o.all[id]; if(el) return el;
+ if(o.id==id || o.name==id) return o; if(o.childNodes) c=o.childNodes; if(c)
+ for(n=0; n<c.length; n++) { el=FP_getObjectByID(id,c[n]); if(el) return el; }
+ f=o.forms; if(f) for(n=0; n<f.length; n++) { els=f[n].elements;
+ for(m=0; m<els.length; m++){ el=FP_getObjectByID(id,els[n]); if(el) return el; } }
+ return null;
+}
+// -->
+</script>
+</head>
+
+
+
+<body onload="FP_preloadImgs(/*url*/&#39;button36.jpg&#39;,/*url*/&#39;button35.jpg&#39;,/*url*/&#39;button2D.jpg&#39;,/*url*/&#39;button2C.jpg&#39;,/*url*/&#39;button30.jpg&#39;,/*url*/&#39;button2F.jpg&#39;,/*url*/&#39;button33.jpg&#39;,/*url*/&#39;button32.jpg&#39;,/*url*/&#39;button39.jpg&#39;,/*url*/&#39;button38.jpg&#39;,/*url*/&#39;button3C.jpg&#39;,/*url*/&#39;button3B.jpg&#39;,/*url*/&#39;button3.jpg&#39;,/*url*/&#39;button4.jpg&#39;)" style="background-color: #96A978">
+<div id="PageWrapper">
+	<div id="MastheadWrapper" class="CenterWrapper">
+		<div id="Masthead">
+			<a href="https://courses.missouristate.edu/KenVollmar/mars/index.htm#EndSearch"><img src="./index_files/spacer.gif" alt="Skip search and site index" height="1" width="1"></a>
+
+		</div>
+	</div>
+	<div class="CenterWrapper">
+		<div id="OuterColumnContainer">
+			<div id="InnerColumnContainer" style="width: 561px; height: 750px">
+				<div id="LeftColumn" style="width: 145px; height: 700px">
+					<div id="NavPhoto">
+						<img border="0" src="./index_files/Mars 140.jpg" alt="The planet Mars, NASA photo" width="140" height="140">
+						<p>&nbsp;</p></div>
+					<div id="LocalNav" class="NavLinks FSmall" style="width: 135px; height: 300px">
+	<p style="margin-top: 2px; margin-bottom: 0" align="right"><a href="index.html">
+	<img border="0" id="img10" src="./papers_files/button34.jpg" height="24" width="100" alt="Home" onmouseover="FP_swapImg(1,0,/*id*/&#39;img10&#39;,/*url*/&#39;button35.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img10&#39;,/*url*/&#39;button34.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img10&#39;,/*url*/&#39;button36.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img10&#39;,/*url*/&#39;button35.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0; fp-orig: 0" fp-title="Home"></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right">
+	<a href="features.html">
+	<img border="0" id="img7" src="./papers_files/button2B.jpg" height="24" width="100" alt="Features" onmouseover="FP_swapImg(1,0,/*id*/&#39;img7&#39;,/*url*/&#39;button2C.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img7&#39;,/*url*/&#39;button2B.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img7&#39;,/*url*/&#39;button2D.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img7&#39;,/*url*/&#39;button2C.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0; fp-orig: 0" fp-title="Features"></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right">
+	<a href="download.html">
+	<img border="0" id="img8" src="./papers_files/button2E.jpg" height="24" width="100" alt="Download" onmouseover="FP_swapImg(1,0,/*id*/&#39;img8&#39;,/*url*/&#39;button2F.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img8&#39;,/*url*/&#39;button2E.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img8&#39;,/*url*/&#39;button30.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img8&#39;,/*url*/&#39;button2F.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0; fp-orig: 0" fp-title="Download"></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right">
+	<a href="license.html">
+	<img border="0" id="img13" src="./papers_files/button2.jpg" height="20" width="100" alt="License" onmouseover="FP_swapImg(1,0,/*id*/&#39;img13&#39;,/*url*/&#39;button3.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img13&#39;,/*url*/&#39;button2.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img13&#39;,/*url*/&#39;button4.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img13&#39;,/*url*/&#39;button3.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12" fp-title="License"></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right"><a href="license.html">
+	</a><a href="papers.html">
+	<img border="0" id="img9" src="./papers_files/button31.jpg" height="24" width="100" alt="Papers" onmouseover="FP_swapImg(1,0,/*id*/&#39;img9&#39;,/*url*/&#39;button32.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img9&#39;,/*url*/&#39;button31.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img9&#39;,/*url*/&#39;button33.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img9&#39;,/*url*/&#39;button32.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0; fp-orig: 0" fp-title="Papers"></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right">
+	<a href="Help/MarsHelpIntro.html">
+	<img border="0" id="img11" src="./papers_files/button37.jpg" height="24" width="100" alt="Help &amp; Info" onmouseover="FP_swapImg(1,0,/*id*/&#39;img11&#39;,/*url*/&#39;button38.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img11&#39;,/*url*/&#39;button37.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img11&#39;,/*url*/&#39;button39.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img11&#39;,/*url*/&#39;button38.jpg&#39;)"><!-- MSComment="ibutton" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0" fp-title="Help & Info" --></a></p><p style="margin-top: 2px; margin-bottom: 0" align="right">
+<!--
+	<a href="contact.html">
+	<img border="0" id="img12" src="./papers_files/button3A.jpg" height="24" width="100" alt="Contact Us" onmouseover="FP_swapImg(1,0,/*id*/&#39;img12&#39;,/*url*/&#39;button3B.jpg&#39;)" onmouseout="FP_swapImg(0,0,/*id*/&#39;img12&#39;,/*url*/&#39;button3A.jpg&#39;)" onmousedown="FP_swapImg(1,0,/*id*/&#39;img12&#39;,/*url*/&#39;button3C.jpg&#39;)" onmouseup="FP_swapImg(0,0,/*id*/&#39;img12&#39;,/*url*/&#39;button3B.jpg&#39;)" fp-style="fp-btn: Border Bottom 3; fp-font-size: 12; fp-proportional: 0; fp-orig: 0" fp-title="Contact Us"></a>  -->
+
+					</p></div>
+				</div>
+				<div id="ContentColumn">
+					<div class="ColumnTrpl">
+						<h2><i><font face="Arial">MARS 
+	<font size="4">(MIPS Assembler and Runtime Simulator) </font> </font></i></h2>
+						<p style="margin-top: 0; margin-bottom: 0">
+						<font face="Arial" size="4"><i>An 
+	IDE for MIPS Assembly Language Programming </i></font>					
+					</p></div>
+					<div class="ColumnTrpl" style="width: 500px; height: 272px">
+
+						<p> <em>MARS has been jointly developed by 
+						<a href="http://faculty.otterbein.edu/PSanderson/"> 
+						Pete Sanderson </a> 
+						(programming) and 
+						 
+						Ken Vollmar (details and paperwork).
+						</em></p>
+
+
+						<p>CCSC-MW paper, <em>"A MIPS Assembly 
+						Language Simulator Designed for Education."</em> 
+						Ken Vollmar and Pete Sanderson. Journal of Computing Sciences 
+						in Colleges, 21:1, October 2005. Pages: 95 - 101.
+						</p>
+						
+						<p>SIGCSE 2006 paper, <a href="fp288-vollmar.pdf">
+						<em>"MARS: An Education-Oriented MIPS Assembly Language Simulator,"</em> 
+						</a> Kenneth Vollmar and Pete Sanderson.  ACM SIGCSE Bulletin, 38:1 (March 
+						2006), 239-243.
+						</p>
+						
+						<p>MARS presentations by Pete Sanderson at Bowling Green 
+						State Univ. (2006) and University of Pittsburgh (2007).
+						</p>
+						
+                    	<p>
+                    	Tutorial on MARS at CCSC-CP,
+                    	Drury University, Apr. 
+						13-14, 2007, by Pete Sanderson and Ken Vollmar.</p>
+						</div>
+						
+				</div>				
+				<div class="Clear MozClear"></div>
+			</div>
+		</div>
+	</div>
+	<div id="Footer" class="CenterWrapper">
+
+
+
+		<div class="Clear MozClear"></div>
+
+	</div>
+
+</div>
+</body></html>
