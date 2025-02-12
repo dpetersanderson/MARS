@@ -68,8 +68,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Directory from which MARS was launched. Guaranteed to have a value.
          defaultOpenDirectory = System.getProperty("user.dir");
          defaultSaveDirectory = System.getProperty("user.dir");
-         currentOpenDirectory = defaultOpenDirectory;
-         currentSaveDirectory = defaultSaveDirectory;
+        // Last saved values from settings.
+         currentOpenDirectory = Globals.getSettings().getLastOpenDirectory();
+         currentSaveDirectory = Globals.getSettings().getLastSaveDirectory();
       }
    	
     /**
