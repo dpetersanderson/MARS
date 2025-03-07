@@ -460,6 +460,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   retValue = -1;
                }
          }
+
+         if (retValue >= 0)
+         {
+            // Must be OK -- put filename in table
+            FileIOData.putFilenameInTable(filename, flags, retValue);
+         }
+         
          return retValue; // return the "file descriptor"
       
       }
@@ -656,12 +663,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                return -1;
             }    
          
-            // Must be OK -- put filename in table
-            fileNames[i] = new String(filename); // our table has its own copy of filename
-            fileFlags[i] = flag;
-            fileErrorString = new String("File operation OK");
             return i;
          
+         }
+
+         private static void putFilenameInTable(String filename, int flag, int fd)
+         {
+            fileNames[fd] = new String(filename); // our table has its own copy of filename
+            fileFlags[fd] = flag;
+            fileErrorString = new String("File operation OK");
          }
       
       } // end private class FileIOData
