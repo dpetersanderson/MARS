@@ -2,11 +2,13 @@
    import mars.*;
    import mars.util.*;
    import mars.venus.editors.jeditsyntax.*;
+
    import java.io.*;
    import java.util.*;
    import java.util.prefs.*;
    import java.awt.Color;
    import java.awt.Font;
+   import java.util.logging.*;
 
 /*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
@@ -286,6 +288,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// This determines where the values are actually stored.  Actual implementation
       	// is platform-dependent.  For Windows, they are stored in Registry.  To see,
       	// run regedit and browse to: HKEY_CURRENT_USER\Software\JavaSoft\Prefs\mars
+         Logger prefsLogger = Logger.getLogger("java.util.prefs");
+         prefsLogger.setLevel(Level.OFF);
          preferences = Preferences.userNodeForPackage(this.getClass());
       	// The gui parameter, formerly passed to initialize(), is no longer needed
       	// because I removed (1/21/09) the call to generate the Font object for the text editor.
