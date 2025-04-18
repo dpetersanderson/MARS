@@ -8,7 +8,6 @@
    import java.util.*;
    import java.awt.*;
    import javax.swing.*;
-   import javax.swing.JOptionPane;   // KENV 9/8/2004
 
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -275,7 +274,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// generated during option parsing).
          processDisplayMessagesToErrSwitch(args, displayMessagesToErrSwitch);
          displayCopyright(args, noCopyrightSwitch);  // ..or not..
-         if (args.length == 1 && args[0].equals("h")) {
+         java.util.List helpArgs = Arrays.asList("h", "-h", "--help", "-help", "help", "/?");
+         
+         if (args.length == 1 && helpArgs.contains(args[0])) {
             displayHelp();
             return false;					
          } 
@@ -458,6 +459,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                	   // Do nothing.  next statement will handle it
                }
             out.println("Invalid Command Argument: "+args[i]);
+            out.println("Run `Mars.jar h` for a help message.");
             argsOK = false;
          }
          return argsOK;
@@ -840,6 +842,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          out.println("            option must be placed AFTER ALL FILE NAMES, because everything");
          out.println("            that follows it is interpreted as a program argument to be");
          out.println("            made available to the MIPS program at runtime.");
+         out.println("     sb  -- If this option is present, syscalls that have isRestricted() == true");
+         out.println("            will throw an error if there is an attempt to execute them. These");
+         out.println("            syscalls are either potentially harmful (e.g. filesystem related)");
+         out.println("            or incompatible with an environment that doesn't have a window manager,");
+         out.println("            such as input and message dialogs.");
          out.println("If more than one filename is listed, the first is assumed to be the main");
          out.println("unless the global statement label 'main' is defined in one of the files.");
          out.println("Exception handler not automatically assembled.  Add it to the file list.");
