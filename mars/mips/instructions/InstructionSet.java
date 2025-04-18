@@ -3237,18 +3237,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private void findAndSimulateSyscall(int number, ProgramStatement statement) 
                                                         throws ProcessingException {
          Syscall service = syscallLoader.findSyscall(number);
+         if (service == null) {
+            throw new ProcessingException(statement,
+              "invalid or unimplemented syscall service: " +
+              number + " ", Exceptions.SYSCALL_EXCEPTION);
+         }
          if (Globals.sandboxed && service.isRestricted()) {
             throw new ProcessingException(statement,
               "syscall blocked by sandbox: " +
               number + " ", Exceptions.SYSCALL_EXCEPTION);
          }
-         if (service != null) {
-            service.simulate(statement);
-            return;
-         }
-         throw new ProcessingException(statement,
-              "invalid or unimplemented syscall service: " +
-              number + " ", Exceptions.SYSCALL_EXCEPTION);
+         service.simulate(statement);
+         return;
       }
    	
    	/*
