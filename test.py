@@ -1,12 +1,16 @@
 import subprocess as sp
 from pathlib import Path
 
-base_command = ["java", "-jar", "Mars.jar", "nc", "sb", "me", "ae2", "se1", "sm"]
+base_command = ["java", "-jar", "Mars.jar", "nc", "me", "ae2", "se1", "sm"]
 
 if __name__ == '__main__':
     fails, oks = 0, 0
     for test in Path('integration').iterdir():
-        command = base_command + [str(test / 'test.asm')]
+        sbfile = test / 'no_sandbox'
+        if sbfile.is_file():
+            command = base_command + [str(test / 'test.asm')]
+        else:
+            command = base_command + ['sb'] + [str(test / 'test.asm')]
         i = 0
         while (test / f'input-{i}.bin').is_file() and (test / f'output-{i}.bin').is_file():
             with (test / f'input-{i}.bin').open('rb') as infile:
