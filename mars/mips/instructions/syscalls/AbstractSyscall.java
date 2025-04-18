@@ -91,4 +91,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public abstract void simulate(ProgramStatement statement)
 		    throws ProcessingException;
+
+   /**
+   * Checks if this syscall should be restricted in sandboxed environments.
+   * The default implementation always returns false.
+	* @return true if restricted, false otherwise
+   */
+      public boolean isRestricted() {
+         return false;
+      }
    }

@@ -95,6 +95,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public static int exitCode = 0;
    	
       public static boolean runSpeedPanelExists = false;
+
+      /** Flag that indicates whether to restrict syscalls that have isRestricted() == true */
+      public static boolean sandboxed = false;
    	
        private static String getCopyrightYears() {
          return "2003-2014";

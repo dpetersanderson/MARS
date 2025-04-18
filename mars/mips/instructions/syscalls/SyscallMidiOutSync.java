@@ -90,6 +90,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (volume < rangeLowEnd || volume > rangeHighEnd) volume = ToneGenerator.DEFAULT_VOLUME;
          new ToneGenerator().generateToneSynchronously( (byte) pitch, duration, (byte) instrument, (byte) volume);
       }
+
+   /**
+   * Checks if this syscall should be restricted in sandboxed environments.
+   * This syscall is restricted, so return true.
+	* @return true if restricted, false otherwise
+   */
+      public boolean isRestricted() {
+         return true;
+      }
    
    }
 	

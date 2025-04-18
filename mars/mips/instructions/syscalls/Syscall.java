@@ -73,4 +73,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public abstract void simulate(ProgramStatement statement)
 		    throws ProcessingException;
+   
+   /**
+   * Performs syscall function.  It will be invoked when the service is invoked
+   * at simulation time.  Service is identified by value stored in $v0.
+   * @param statement ProgramStatement for this syscall statement.
+   */
+       public abstract boolean isRestricted();
    }

@@ -94,6 +94,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   option must be placed AFTER ALL FILE NAMES, because everything<br>
                   that follows it is interpreted as a program argument to be<br>
                   made available to the MIPS program at runtime.<br>
+           sb  -- If this option is present, syscalls that have isRestricted() == true
+                  will throw an error if there is an attempt to execute them. These
+                  syscalls are either potentially harmful (e.g. filesystem related)
+                  or incompatible with an environment that doesn't have a window manager,
+                  such as input and message dialogs.
     **/
     
    
@@ -404,6 +409,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                continue;
             }
          
+            if (args[i].toLowerCase().equals("sb")) {
+               Globals.sandboxed = true;
+               continue;
+            }
          
             if (args[i].indexOf("$") == 0) {
                if (RegisterFile.getUserRegister(args[i])==null &&
