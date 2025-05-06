@@ -1,7 +1,8 @@
 import subprocess as sp
 from pathlib import Path
+import shlex
 
-base_command = ["java", "-jar", "Mars.jar", "nc", "me", "ae2", "se1", "sm"]
+base_command = ["java", "-Xmx128M", "-jar", "Mars.jar", "nc", "me", "ae2", "se1", "sm"]
 base_command_assemble = base_command + ["a"]
 
 if __name__ == '__main__':
@@ -14,18 +15,18 @@ if __name__ == '__main__':
         mars_asm = sp.Popen(asm_command, stdin=sp.DEVNULL, stdout=sp.PIPE, stderr=sp.PIPE)
         asm_code = mars_asm.wait()
         if bool(asm_code) != fafile.is_file():
-            print(f'{test.name}-{i}: FAIL: ', end='')
+            print(f'{test.name}: FAIL: ', end='')
             print('error in compilation' if asm_code else 'successful compilation')
-            print(f'{test.name}-{i}: stdout: {mars_asm.stdout.read()}', end='')
-            print(f'{test.name}-{i}: stderr: {mars_asm.stderr.read()}', end='')
+            print(f'{test.name}: stdout: {mars_asm.stdout.read()}', end='')
+            print(f'{test.name}: stderr: {mars_asm.stderr.read()}', end='')
         if sbfile.is_file():
-            command = base_command + [str(test / 'test.asm')]
+            command = shlex.join(base_command + [str(test / 'test.asm')])
         else:
-            command = base_command + ['sb'] + [str(test / 'test.asm')]
+            command = shlex.join(base_command + ['sb'] + [str(test / 'test.asm')])
         i = 0
         while (test / f'input-{i}.bin').is_file() and (test / f'output-{i}.bin').is_file():
             with (test / f'input-{i}.bin').open('rb') as infile:
-                mars = sp.Popen(command, stdin=infile, stdout=sp.PIPE, stderr=sp.PIPE)
+                mars = sp.Popen(command, stdin=infile, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
                 errors = mars.stderr.read().strip()
                 if mars.wait() != 0 or errors:
                     for error in errors.decode('utf-8').splitlines():
