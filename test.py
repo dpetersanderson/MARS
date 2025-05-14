@@ -2,13 +2,15 @@ import subprocess as sp
 from pathlib import Path
 import shlex
 
+base_path = Path(__file__).parent
+
 base_command = ["java", "-Xmx128M", "-jar", "Mars.jar", "nc", "me", "ae2", "se1", "sm"]
 base_command_assemble = base_command + ["a"]
 
 if __name__ == '__main__':
     Path('thisfiledoesnotexist.txt').unlink(missing_ok=True)
     fails, oks = 0, 0
-    for test in Path('integration').iterdir():
+    for test in (base_path / 'integration').iterdir():
         sbfile = test / 'no_sandbox'
         fafile = test / 'fails_assembly'
         asm_command = base_command_assemble + [str(test / 'test.asm')]
