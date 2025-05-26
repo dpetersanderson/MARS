@@ -235,20 +235,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public static final int REGISTER_HIGHLIGHT_BACKGROUND = 10;
    	/** RGB color for register highlighted foreground */
       public static final int REGISTER_HIGHLIGHT_FOREGROUND = 11;
+
+      /** RGB color for register source code usage highlighted background */
+      public static final int REGISTER_SRC_USAGE_HIGHLIGHT_BACKGROUND = 12;
+   	/** RGB color for register source code usage highlighted foreground */
+      public static final int REGISTER_SRC_USAGE_HIGHLIGHT_FOREGROUND = 13;
    	// Match the above by position.
       private static final String[] colorSettingsKeys = { 
          												"EvenRowBackground","EvenRowForeground", "OddRowBackground", "OddRowForeground",
          												"TextSegmentHighlightBackground", "TextSegmentHighlightForeground",
          												"TextSegmentDelaySlotHighlightBackground","TextSegmentDelaySlotHighlightForeground",
          												"DataSegmentHighlightBackground", "DataSegmentHighlightForeground",
-         												"RegisterHighlightBackground", "RegisterHighlightForeground"   };
+         												"RegisterHighlightBackground", "RegisterHighlightForeground", "RegisterSrcUsageHighlightBackground", "RegisterSrcUsageHighlightForeground"   };
       /** Last resort default values for color settings; 
    	 *  will use only if neither the Preferences nor the properties file work.
    	 *  If you wish to change, do so before instantiating the Settings object.
    	 *  Must match key by list position.
    	 */
       private static String[] defaultColorSettingsValues = { 
-                 "0x00e0e0e0", "0", "0x00ffffff", "0", "0x00ffff99", "0", "0x0033ff00", "0", "0x0099ccff", "0", "0x0099cc55","0" };
+                 "0x00e0e0e0", "0", "0x00ffffff", "0", "0x00ffff99", "0", "0x0033ff00", "0", "0x0099ccff", "0", "0x0099cc55","0", "0x00af56cd","0" };
       
    
       

@@ -64,7 +64,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (this.getUI() instanceof BasicTabbedPaneUI) {
             BasicTabbedPaneUI ui = (BasicTabbedPaneUI) this.getUI();
          }
-         editTabbedPane = new EditTabbedPane(appFrame, editor, this);
+         RegisterSourceUsageHighlight[] highlights = new RegisterSourceUsageHighlight[]{regs, cop1Regs, cop0Regs};
+         SelectionListener etpSelectionListener = new EditorSelectionRegisterHighlightListener(highlights);
+         editTabbedPane = new EditTabbedPane(appFrame, editor, this, etpSelectionListener);
          executeTab = new ExecutePane(appFrame, regs, cop1Regs, cop0Regs);
          String editTabTitle = "Edit"; //"<html><center>&nbsp;<br>E<br>d<br>i<br>t<br>&nbsp;</center></html>";
          String executeTabTitle = "Execute"; //"<html><center>&nbsp;<br>E<br>x<br>e<br>c<br>u<br>t<br>e<br>&nbsp;</center></html>";

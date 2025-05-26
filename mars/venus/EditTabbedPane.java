@@ -53,15 +53,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private VenusUI mainUI;
       private Editor editor;
       private FileOpener fileOpener;
+      private SelectionListener globalSelectionListener;
    
     /**
       *  Constructor for the EditTabbedPane class. 
    	**/
    	
-       public EditTabbedPane(VenusUI appFrame, Editor editor, MainPane mainPane){
+       public EditTabbedPane(VenusUI appFrame, Editor editor, MainPane mainPane, SelectionListener selectionListener){
          super();
          this.mainUI = appFrame;
          this.editor = editor;
+         this.globalSelectionListener = selectionListener;
          this.fileOpener = new FileOpener(editor);
          this.mainPane = mainPane;
          this.editor.setEditTabbedPane(this);
@@ -79,7 +81,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            EditTabbedPane.this.updateTitlesAndMenuState(editPane); 
                            EditTabbedPane.this.mainPane.getExecutePane().clearPane();
                         }
+                        Component[] comp = getComponents();
+                        for (int i = 0; i < comp.length; i++) {
+                           if (comp[i] instanceof EditPane) {
+                              EditPane p = (EditPane) comp[i];
+                              p.removeSelectionListener(globalSelectionListener);
+                           }
+                        }
                         editPane.tellEditingComponentToRequestFocusInWindow();
+                        editPane.dispatchSelectionEvent(globalSelectionListener);
+                        editPane.addSelectionListener(globalSelectionListener);
                      }
                   }
                });	

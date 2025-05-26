@@ -3,7 +3,9 @@
    import mars.venus.editors.MARSTextEditingArea;
    import mars.venus.editors.generic.GenericTextArea;
    import mars.venus.editors.jeditsyntax.JEditBasedTextArea;
-   import javax.swing.*;
+import mars.venus.editors.jeditsyntax.JEditTextArea;
+
+import javax.swing.*;
    import javax.swing.event.*;
    import java.awt.*;
    import java.awt.event.*;
@@ -182,6 +184,30 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          this.add(editInfo,BorderLayout.SOUTH);
       }
    	
+      public void dispatchSelectionEvent(SelectionListener listener) {
+         if (!(sourceCode instanceof JEditTextArea)) {
+            return;
+         }
+         JEditTextArea textArea = (JEditTextArea) sourceCode;
+         SelectionEvent evt = new SelectionEvent(textArea.getSelectionStart(), textArea.getSelectionEnd(), textArea);
+         listener.selectionChanged(evt);
+      }
+
+      public void addSelectionListener(SelectionListener listener) {
+         if (!(sourceCode instanceof JEditTextArea)) {
+            return;
+         }
+         JEditTextArea textArea = (JEditTextArea) sourceCode;
+         textArea.addSelectionListener(listener);
+      }
+
+      public void removeSelectionListener(SelectionListener listener) {
+         if (!(sourceCode instanceof JEditTextArea)) {
+            return;
+         }
+         JEditTextArea textArea = (JEditTextArea) sourceCode;
+         textArea.removeSelectionListener(listener);
+      }
       
     	 /**
    	  *  For initalizing the source code when opening an ASM file

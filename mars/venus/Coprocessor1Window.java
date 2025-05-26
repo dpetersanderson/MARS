@@ -43,12 +43,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 *   @author Pete Sanderson 2005
 	 **/
     
-    public class Coprocessor1Window extends JPanel implements ActionListener, Observer { 
+    public class Coprocessor1Window extends JPanel implements ActionListener, Observer, RegisterSourceUsageHighlight { 
       private static JTable table;
       private static Register [] registers;
       private Object[][] tableData;
       private boolean highlighting;
       private int highlightRow;
+      private StatefulUsageHighlight usageHighlight;
       private ExecutePane executePane;
       private JCheckBox[] conditionFlagCheckBox;
       private static final int NAME_COLUMN = 0;
@@ -101,6 +102,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	//UIManager.put("CheckBox.interiorBackground", saveBG);	
          flagsPane.add(checksPane,BorderLayout.CENTER);
          this.add(flagsPane, BorderLayout.SOUTH);
+         this.usageHighlight = new StatefulUsageHighlight(registers, new StatefulUsageHighlight.Redrawer() {
+            @Override
+            public void redraw() {
+               refresh();
+            }
+         });
       }
     
        /** Called when user clicks on a condition flag checkbox.
@@ -319,11 +326,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     isSelected, hasFocus, row, column);
             cell.setFont(font);
             cell.setHorizontalAlignment(alignment);
-            if (settings.getRegistersHighlighting() && highlighting && row==highlightRow) {
+            if (settings.getRegistersHighlighting() && highlighting && row==highlightRow && column == 2) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_FOREGROUND) );
 					cell.setFont( settings.getFontByPosition(Settings.REGISTER_HIGHLIGHT_FONT) );
-            } 
+            }
+            else if (settings.getRegistersHighlighting() && usageHighlight.isRowHighlighted(row) && column == 0) {
+               cell.setBackground( settings.getColorSettingByPosition(Settings.REGISTER_SRC_USAGE_HIGHLIGHT_BACKGROUND) );
+               cell.setForeground( settings.getColorSettingByPosition(Settings.REGISTER_SRC_USAGE_HIGHLIGHT_FOREGROUND) );
+					cell.setFont( settings.getFontByPosition(Settings.REGISTER_HIGHLIGHT_FONT) );
+            }
             else if (row%2==0) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
@@ -583,5 +595,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                };
          }
       }
+
+       @Override
+       public void setUsedRegisterNames(String[] names) {
+         this.usageHighlight.setUsedRegisterNames(names);
+       }
    
    }

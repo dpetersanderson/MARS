@@ -11,6 +11,8 @@ package mars.venus.editors.jeditsyntax;
 
 import mars.Globals;
 import mars.Settings;
+import mars.venus.SelectionEvent;
+import mars.venus.SelectionListener;
 import mars.venus.editors.jeditsyntax.tokenmarker.*; 
 import javax.swing.event.*;
 import javax.swing.text.*;
@@ -83,7 +85,6 @@ public class JEditTextArea extends JComponent
  */
  
    private JScrollBar lineNumbersVertical;//************************************
-
 
    public JEditTextArea(TextAreaDefaults defaults, JComponent lineNumbers)
    {
@@ -1167,6 +1168,7 @@ public class JEditTextArea extends JComponent
    // Clear the `magic' caret position used by up/down
       magicCaret = -1;      
       scrollToCaret();
+      fireSelectionEvent();
    }
 
 /**
@@ -1503,6 +1505,24 @@ public class JEditTextArea extends JComponent
       listenerList.remove(CaretListener.class,listener);
    }
 
+   /**
+ * Adds a selection change listener to this text area.
+ * @param listener The listener
+ */
+   public final void addSelectionListener(SelectionListener listener)
+   {
+      listenerList.add(SelectionListener.class,listener);
+   }
+
+/**
+ * Removes a selection change listener from this text area.
+ * @param listener The listener
+ */
+   public final void removeSelectionListener(SelectionListener listener)
+   {
+      listenerList.remove(SelectionListener.class,listener);
+   }
+
 /**
  * Deletes the selected text from the text area and places it
  * into the clipboard.
@@ -1669,6 +1689,19 @@ public class JEditTextArea extends JComponent
          if(listeners[i] == CaretListener.class)
          {
             ((CaretListener)listeners[i+1]).caretUpdate(caretEvent);
+         }
+      }
+   }
+
+   protected void fireSelectionEvent()
+   {
+      Object[] listeners = listenerList.getListenerList();
+      SelectionEvent evt = new SelectionEvent(selectionStart, selectionEnd, this);
+      for(int i = listeners.length - 2; i >= 0; i--)
+      {
+         if(listeners[i] == SelectionListener.class)
+         {
+            ((SelectionListener)listeners[i+1]).selectionChanged(evt);
          }
       }
    }
