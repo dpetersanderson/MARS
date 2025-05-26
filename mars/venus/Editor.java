@@ -147,11 +147,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       /**
    	 * Generates a default file name
    	 *
-   	 * @return returns string mipsN.asm, where N is 1,2,3,...
+   	 * @return returns string mipsN.mar, where N is 1,2,3,...
    	 */
        public String getNextDefaultFilename() {
          newUsageCount++;
-         return "mips"+newUsageCount+".asm";
+         return "mips"+newUsageCount+".mar";
       }
     
    
