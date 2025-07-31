@@ -51,8 +51,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
          // Note: Higher numbered reg contains high order word so concat 13-12.
-         SystemIO.printString(new Double(Double.longBitsToDouble(
+         SystemIO.printString(Double.toString(Double.longBitsToDouble(
              Binary.twoIntsToLong(Coprocessor1.getValue(13),Coprocessor1.getValue(12))
-             )).toString());
+             )));
       }
    }
