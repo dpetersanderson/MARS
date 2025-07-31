@@ -769,7 +769,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          else if (inTextSegment(address) || inKernelTextSegment(address)) {
             try { 
-               value = (getStatementNoNotify(address) == null) ? null : new Integer(getStatementNoNotify(address).getBinaryStatement());
+               value = (getStatementNoNotify(address) == null) ? null : getStatementNoNotify(address).getBinaryStatement();
             } 
                 catch (AddressErrorException aee) { 
                   value = null;               }
@@ -1382,7 +1382,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          else {
             value = blockTable[block][offset];
          }
-         return new Integer(value);
+         return value;
       }
    	   
    ////////////////////////////////////////////////////////////////////////////////////

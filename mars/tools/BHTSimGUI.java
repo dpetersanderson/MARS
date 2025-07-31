@@ -217,13 +217,13 @@ public class BHTSimGUI extends JPanel {
 		JPanel panel = new JPanel();
 		
 		Vector sizes = new Vector();
-		sizes.add(new Integer(8));
-		sizes.add(new Integer(16));
-		sizes.add(new Integer(32));
+		sizes.add(8);
+		sizes.add(16);
+		sizes.add(32);
 		
 		Vector bits = new Vector();
-		bits.add(new Integer(1));
-		bits.add(new Integer(2));
+		bits.add(1);
+		bits.add(2);
 		
 		Vector initVals = new Vector();		
 		initVals.add(BHTSimGUI.BHT_DO_NOT_TAKE_BRANCH);

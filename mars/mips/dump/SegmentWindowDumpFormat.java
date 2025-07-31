@@ -133,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                try {
                   ProgramStatement ps = Globals.memory.getStatement(address);
                   string += (ps.getPrintableBasicAssemblyStatement()+"                      ").substring(0,22);
-                  string += (((ps.getSource()=="") ? "" : new Integer(ps.getSourceLine()).toString())+"     ").substring(0,5);
+                  string += (((ps.getSource()=="") ? "" : ps.getSourceLine())+"     ").substring(0,5);
                   string += ps.getSource();
                } 
                    catch (AddressErrorException aee) {

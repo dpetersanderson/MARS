@@ -186,8 +186,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                try {
                   String[] memoryRange = checkMemoryAddressRange(triple[0]);
                   segInfo = new Integer[2];
-                  segInfo[0] = new Integer(Binary.stringToInt(memoryRange[0])); // low end of range
-                  segInfo[1] = new Integer(Binary.stringToInt(memoryRange[1])); // high end of range
+                  segInfo[0] = Binary.stringToInt(memoryRange[0]); // low end of range
+                  segInfo[1] = Binary.stringToInt(memoryRange[1]); // high end of range
                }    
                   catch (NumberFormatException nfe) {
                      segInfo = null;

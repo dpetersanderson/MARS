@@ -89,7 +89,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          for(int i=0; i< registers.length; i++){
             rowGivenRegNumber[registers[i].getNumber()] = i;
             tableData[i][0]= registers[i].getName();
-            tableData[i][1]= new Integer(registers[i].getNumber());
+            tableData[i][1]= registers[i].getNumber();
             tableData[i][2]= NumberDisplayBaseChooser.formatNumber(registers[i].getValue(), NumberDisplayBaseChooser.getBase(settings.getDisplayValuesInHex()));
          }
          return tableData;
