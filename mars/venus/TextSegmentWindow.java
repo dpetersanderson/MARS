@@ -129,7 +129,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          for (int i = 0; i < sourceStatementList.size(); i++) {
             ProgramStatement statement = (ProgramStatement) sourceStatementList.get(i);
             intAddresses[i] = statement.getAddress();
-            addressRows.put(new Integer(intAddresses[i]), new Integer(i));
+            addressRows.put(intAddresses[i], i);
             data[i][BREAK_COLUMN] = Boolean.FALSE;
             data[i][ADDRESS_COLUMN] = NumberDisplayBaseChooser.formatUnsignedInteger(statement.getAddress(), addressBase);
             data[i][CODE_COLUMN] = NumberDisplayBaseChooser.formatNumber(statement.getBinaryStatement(), 16);
@@ -668,7 +668,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private int findRowForAddress(int address) throws IllegalArgumentException {
          int addressRow = 0;
          try {
-            addressRow = ((Integer)addressRows.get(new Integer(address))).intValue();
+            addressRow = ((Integer)addressRows.get(address)).intValue();
          } 
              catch (NullPointerException e) {
                throw new IllegalArgumentException(); // address not found in map

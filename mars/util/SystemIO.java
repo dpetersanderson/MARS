@@ -99,7 +99,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       
         // Client is responsible for catching NumberFormatException
-         return new Integer(input.trim()).intValue();
+         return Integer.parseInt(input.trim());
       }
    	
    	
