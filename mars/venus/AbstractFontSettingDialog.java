@@ -112,7 +112,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontSizeSelector.addChangeListener(
                 new ChangeListener() {
                    public void stateChanged(ChangeEvent e) {
-                     Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                     Integer value = ((JSlider)e.getSource()).getValue();
                      fontSizeSpinSelector.setValue(value);
                      fontSample.setFont(getFont());
                   }
@@ -189,7 +189,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontFamilySelector.setSelectedItem(initialFontFamily);
          fontStyleSelector.setSelectedItem(initialFontStyle);
          fontSizeSelector.setValue(EditorFont.sizeStringToSizeInt(initialFontSize));
-         fontSizeSpinSelector.setValue(new Integer(EditorFont.sizeStringToSizeInt(initialFontSize)));
+         fontSizeSpinSelector.setValue(EditorFont.sizeStringToSizeInt(initialFontSize));
       }
    	 
    	/**

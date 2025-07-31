@@ -207,7 +207,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return Binary.intToHexString(value);
          } 
          else {
-            return new Integer(value).toString();
+            return Integer.toString(value);
          }
       }
    

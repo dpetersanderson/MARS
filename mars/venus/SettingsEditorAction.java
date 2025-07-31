@@ -262,10 +262,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Perform reset on miscellaneous editor settings
           private void resetOtherSettings() {
             tabSizeSelector.setValue(initialEditorTabSize);
-            tabSizeSpinSelector.setValue(new Integer(initialEditorTabSize));
+            tabSizeSpinSelector.setValue(initialEditorTabSize);
             lineHighlightCheck.setSelected(initialLineHighlighting);
 				autoIndentCheck.setSelected(initialAutoIndent); 
-            blinkRateSpinSelector.setValue(new Integer(initialCaretBlinkRate));
+            blinkRateSpinSelector.setValue(initialCaretBlinkRate);
             blinkCaret.setBlinkRate(initialCaretBlinkRate);
             popupGuidanceOptions[initialPopupGuidance].setSelected(true);				
          }
@@ -281,7 +281,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             tabSizeSelector.addChangeListener(
                    new ChangeListener() {
                       public void stateChanged(ChangeEvent e) {
-                        Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                        Integer value = ((JSlider)e.getSource()).getValue();
                         tabSizeSpinSelector.setValue(value);
                      }
                   });  

@@ -554,15 +554,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    
        private void  updateMemoryAccessCountDisplay() {
-         memoryAccessCountDisplay.setText(new Integer(memoryAccessCount).toString());
+         memoryAccessCountDisplay.setText(Integer.toString(memoryAccessCount));
       }
    	
        private void	updateCacheHitCountDisplay() {
-         cacheHitCountDisplay.setText(new Integer(cacheHitCount).toString());
+         cacheHitCountDisplay.setText(Integer.toString(cacheHitCount));
       }
    	
        private void	updateCacheMissCountDisplay() {
-         cacheMissCountDisplay.setText(new Integer(cacheMissCount).toString());
+         cacheMissCountDisplay.setText(Integer.toString(cacheMissCount));
       }
    	
        private void	updateCacheHitRateDisplay() {

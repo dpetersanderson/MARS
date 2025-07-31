@@ -86,19 +86,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          registers = RegisterFile.getRegisters();
          for(int i=0; i< registers.length; i++){
             tableData[i][0]= registers[i].getName();
-            tableData[i][1]= new Integer(registers[i].getNumber());
+            tableData[i][1]= registers[i].getNumber();
             tableData[i][2]= NumberDisplayBaseChooser.formatNumber(registers[i].getValue(),valueBase);
          }
          tableData[32][0]= "pc";
-         tableData[32][1]= "";//new Integer(32);
+         tableData[32][1]= "";//32;
          tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedInteger(RegisterFile.getProgramCounter(),valueBase);
          
          tableData[33][0]= "hi";
-         tableData[33][1]= "";//new Integer(33);
+         tableData[33][1]= "";//33;
          tableData[33][2]= NumberDisplayBaseChooser.formatNumber(RegisterFile.getValue(33),valueBase);
          
          tableData[34][0]= "lo";
-         tableData[34][1]= "";//new Integer(34);
+         tableData[34][1]= "";//34;
          tableData[34][2]= NumberDisplayBaseChooser.formatNumber(RegisterFile.getValue(34),valueBase);
          
          return tableData;
