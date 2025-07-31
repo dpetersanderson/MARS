@@ -354,12 +354,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                } 
                else {
                   File f = new File(editPane.getPathname());
-                  if (f != null) {
-                     saveDialog = new JFileChooser(f.getParent());
-                  } 
-                  else {
-                     saveDialog = new JFileChooser(editor.getCurrentSaveDirectory());
-                  }
+                  saveDialog = new JFileChooser(f.getParent());
                }
                String paneFile = editPane.getFilename();
                if (paneFile != null) saveDialog.setSelectedFile(new File(paneFile));
