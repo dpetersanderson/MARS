@@ -132,7 +132,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                input = Globals.getGui().getMessagesPane().getInputString(-1);
             }
          }
-         return new Float(input.trim()).floatValue();
+         return Float.parseFloat(input.trim());
       
       }
     
@@ -166,7 +166,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                input = Globals.getGui().getMessagesPane().getInputString(-1);
             }
          }
-         return new Double(input.trim()).doubleValue();
+         return Double.parseDouble(input.trim());
       
       }
     
