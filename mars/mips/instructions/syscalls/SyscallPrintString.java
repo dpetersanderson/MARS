@@ -57,7 +57,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               // won't stop until NULL byte reached!
             while (ch != 0)
             {
-               SystemIO.printString(new Character(ch).toString());
+               SystemIO.printString(Character.toString(ch));
                byteAddress++;
                ch = (char) Globals.memory.getByte(byteAddress);
             }
