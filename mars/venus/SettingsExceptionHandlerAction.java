@@ -158,7 +158,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Associated action class: selecting exception handler file.  Attached to handler selector.
        private class ExceptionHandlerSelectionAction implements ActionListener {
           public void actionPerformed(ActionEvent e) {
-            JFileChooser chooser = new JFileChooser();
+            FileChooser chooser = FileChooser.createForCurrentPlatform();
             String pathname = Globals.getSettings().getExceptionHandler();
             if (pathname != null) {
                File file = new File(pathname);

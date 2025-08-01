@@ -43,7 +43,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class FileOpenAction extends GuiAction {
     
       private File mostRecentlyOpenedFile;
-      private JFileChooser fileChooser;
+      private FileChooser fileChooser;
       private int fileFilterCount;
       private ArrayList fileFilterList;
       private PropertyChangeListener listenForUserAddedFileFilter;

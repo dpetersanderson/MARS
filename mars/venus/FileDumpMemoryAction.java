@@ -215,10 +215,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// segment (memory range) and format selections and save to the file.
        private boolean performDump(int firstAddress, int lastAddress, DumpFormat format) {	
          File theFile = null;
-         JFileChooser saveDialog = null;
+         FileChooser saveDialog = null;
          boolean operationOK = false;
       
-         saveDialog = new JFileChooser(mainUI.getEditor().getCurrentSaveDirectory());
+         saveDialog = FileChooser.createForCurrentPlatform(mainUI.getEditor().getCurrentSaveDirectory());
          saveDialog.setDialogTitle(title);
          while (!operationOK) {
             int decision = saveDialog.showSaveDialog(mainUI);

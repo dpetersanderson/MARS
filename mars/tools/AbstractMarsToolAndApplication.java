@@ -331,6 +331,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          openFileButton.addActionListener(
                 new ActionListener() {
                    public void actionPerformed(ActionEvent e) {
+                     // Use the swing implementation here instead of the FileChooser interface
+                     // because this code adds checkboxes and such
                      JFileChooser fileChooser = new JFileChooser();
                      JCheckBox multiFileAssembleChoose = new JCheckBox("Assemble all in selected file's directory",multiFileAssemble);
                      multiFileAssembleChoose.setToolTipText("If checked, selected file will be assembled first and all other assembly files in directory will be assembled also.");
