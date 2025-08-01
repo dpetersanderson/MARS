@@ -174,7 +174,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @return true if file was opened, false otherwise.
     */   	
        public boolean openFile() {
-         return fileOpener.openFile();
+         FileChooser fc = FileChooser.createForCurrentPlatform(editor.getCurrentOpenDirectory());
+         fc.setDialogTitle("Open file...");
+         if (fc.showOpenDialog(mainUI) == JFileChooser.APPROVE_OPTION) {
+            File theFile = fc.getSelectedFile();
+            editor.setCurrentOpenDirectory(theFile.getParent());
+            if (!openFile(theFile)) {
+               return false;
+            }
+         
+               // possibly send this file right through to the assembler by firing Run->Assemble's
+               // actionPerformed() method.
+            if (theFile.canRead() && Globals.getSettings().getAssembleOnOpenEnabled()) {
+               mainUI.getRunAssembleAction().actionPerformed(null);
+            }
+         }
+         return true;
       }
    
     /**
@@ -342,7 +357,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private File saveAsFile(EditPane editPane) {
          File theFile = null;
          if (editPane != null) {
-            JFileChooser saveDialog = null;
+            FileChooser saveDialog = null;
             boolean operationOK = false;
             while (!operationOK) {
                // Set Save As dialog directory in a logical way.  If file in
@@ -350,11 +365,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	// If a new file (mipsN.asm), default to current save directory.
             	// DPS 13-July-2011
                if (editPane.isNew()) {
-                  saveDialog = new JFileChooser(editor.getCurrentSaveDirectory());
+                  saveDialog = FileChooser.createForCurrentPlatform(editor.getCurrentSaveDirectory());
                } 
                else {
                   File f = new File(editPane.getPathname());
-                  saveDialog = new JFileChooser(f.getParent());
+                  saveDialog = FileChooser.createForCurrentPlatform(f.getParent());
                }
                String paneFile = editPane.getFilename();
                if (paneFile != null) saveDialog.setSelectedFile(new File(paneFile));
@@ -367,7 +382,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
                theFile = saveDialog.getSelectedFile();
                operationOK = true;
-               if (theFile.exists()) {
+               if (!saveDialog.automaticallyAsksOverwrite() && theFile.exists()) {
                   int overwrite = JOptionPane.showConfirmDialog(mainUI,
                      "File "+theFile.getName()+" already exists.  Do you wish to overwrite it?",
                      "Overwrite existing file?",
