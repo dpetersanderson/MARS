@@ -4,15 +4,20 @@ use std::{env, process};
 
 fn main() {
     let executable_path = env::current_exe().expect("Failed to get current executable path.");
+    let java_dl_url = "https://www.java.com/download/";
     let java_executable = if env::consts::OS.contains("win") {
         "javaw"
     } else {
         "java"
     };
-    let mut child = process::Command::new(java_executable)
+    let result = process::Command::new(java_executable)
         .arg("-jar")
         .arg(executable_path)
-        .spawn()
-        .expect("Failed to spawn JVM.");
-    child.wait().expect("Couldn't wait for child");
+        .spawn();
+
+    if let Ok(mut child) = result {
+        child.wait().expect("Couldn't wait for child");
+    } else {
+        open::that(java_dl_url).expect("Couldn't open browser");
+    }
 }
