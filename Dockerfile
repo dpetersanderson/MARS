@@ -25,4 +25,4 @@ RUN rustup target add x86_64-apple-darwin
 # Run the build script to package the project and test it
 COPY . /app
 WORKDIR /app
-CMD ["bash", "-c", "python3 build.py && cd /mnt && python3 /app/test.py && python3 /app/wrap.py"]
+CMD ["bash", "-c", "python3 build.py && python3 /app/wrap.py && cd /mnt && python3 /app/test.py"]
