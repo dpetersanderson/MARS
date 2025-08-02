@@ -13,6 +13,7 @@ fn main() {
     let result = process::Command::new(java_executable)
         .arg("-jar")
         .arg(executable_path)
+        .args(env::args_os().skip(1))
         .spawn();
 
     if let Ok(mut child) = result {
