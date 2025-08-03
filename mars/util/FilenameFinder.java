@@ -1,14 +1,15 @@
-   package mars.util;
-   import java.io.File;
-   import java.io.IOException;
-   import java.net.URI;
-   import java.net.URISyntaxException;
-   import java.net.URL;
-   import java.util.ArrayList;
-   import java.util.Enumeration;
-   import java.util.StringTokenizer;
-   import java.util.zip.ZipEntry;
-   import java.util.zip.ZipFile;
+package mars.util;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
    import javax.swing.filechooser.FileFilter;
 	
@@ -109,11 +110,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              
                File f = new File(uri.getPath());
                File[] files = f.listFiles();
-               if (files == null) {         
-                  if (f.toString().toLowerCase().indexOf(JAR_EXTENSION)>0) {
+               if (files == null) {
+                  String filesystemPath = extractJarFilename(f.getAbsolutePath());
+                  if (isZipFile(new File(filesystemPath))) {
                        // Must be running from a JAR file. Use ZipFile to find files and create list.
-							  // Modified 12/28/09 by DPS to add results to existing filenameList instead of overwriting it.         
-                     filenameList.addAll(getListFromJar(extractJarFilename(f.toString()), directoryPath, fileExtension));
+							  // Modified 12/28/09 by DPS to add results to existing filenameList instead of overwriting it.
+                     filenameList.addAll(getListFromJar(filesystemPath, directoryPath, fileExtension));
                   } 
                }
                else {  // have array of File objects; convert to names and add to list
@@ -423,12 +425,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 //                 work only if the JAR file was in the current working directory (as would
    	 //                 be the case if executed from a GUI by double-clicking the jar icon).
        private static String extractJarFilename(String path) {
-         StringTokenizer findTheJar = new StringTokenizer(path,"\\/");
-         if (path.toLowerCase().startsWith(FILE_URL)) {
-            path = path.substring(FILE_URL.length());
+         String filesystemPath = path;
+         if (filesystemPath.contains("!")) {
+            filesystemPath = filesystemPath.substring(0, filesystemPath.indexOf("!"));
          }
-         int jarPosition = path.toLowerCase().indexOf(JAR_EXTENSION);
-         return (jarPosition >= 0) ? path.substring(0,jarPosition+JAR_EXTENSION.length()) : path;
+         return filesystemPath;
+      }
+
+      private static boolean isZipFile(File f) {
+         try {
+            new ZipFile(f).close();
+            return true;
+         } catch (IOException e) {}
+         return false;
       }
    	
    	// make sure file extension, if it is real, does not start with '.' -- remove it.

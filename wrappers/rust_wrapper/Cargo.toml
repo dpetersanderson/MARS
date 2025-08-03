@@ -1,0 +1,10 @@
+[package]
+name = "rust_wrapper"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+open = "5.3.2"
+
+[build-dependencies]
+winresource = "0.1.23"
