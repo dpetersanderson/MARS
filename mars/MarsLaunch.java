@@ -247,6 +247,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   public void run() {
                      //Turn off metal's use of bold fonts
                      //UIManager.put("swing.boldMetal", Boolean.FALSE);
+                     try {
+                        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+                     } catch (ClassNotFoundException e) {
+                     } catch (InstantiationException e) {
+                     } catch (IllegalAccessException e) {
+                     } catch (UnsupportedLookAndFeelException e) {
+                     }
                      new VenusUI("MARS "+Globals.version);
                   }
                }); 
