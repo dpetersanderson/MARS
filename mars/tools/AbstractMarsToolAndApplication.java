@@ -645,18 +645,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	
           public void connect() {
             observing = true;
-            synchronized (Globals.memoryAndRegistersLock) {// DPS 23 July 2008
                addAsObserver();
-            }
-            setText(disconnectText);
          }
       	
           public void disconnect() {
-            synchronized (Globals.memoryAndRegistersLock) {// DPS 23 July 2008
                deleteAsObserver();
-            }
             observing = false;
-            setText(connectText);
          }
       	
           public boolean isConnected() {

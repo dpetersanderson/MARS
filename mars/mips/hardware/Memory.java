@@ -1118,7 +1118,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             throw new AddressErrorException("end address of range < start address of range ",
                Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
          }
-         observables.add(new MemoryObservable(obs, startAddr, endAddr));
+         synchronized (observables) {
+            observables.add(new MemoryObservable(obs, startAddr, endAddr));
+         }
       }
    
       /**
@@ -1133,10 +1135,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  @param obs  Observer to be removed
    	 */   		
        public void deleteObserver(Observer obs) {
-         Iterator it = observables.iterator();
-         while (it.hasNext()) {
-            ((MemoryObservable)it.next()).deleteObserver(obs);
-         }	
+         synchronized (observables) {
+            Iterator it = observables.iterator();
+            while (it.hasNext()) {
+               ((MemoryObservable)it.next()).deleteObserver(obs);
+            }
+         }
       }
    	
    	/**
@@ -1222,12 +1226,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    // is from command mode, Globals.program is null but still want ability to observe.
        private void notifyAnyObservers(int type, int address, int length, int value) {
          if ((Globals.program != null || Globals.getGui()==null) && this.observables.size() > 0) {
-            Iterator it = this.observables.iterator();
-            MemoryObservable mo;
-            while (it.hasNext()) {
-               mo = (MemoryObservable)it.next();
-               if (mo.match(address)) {
-                  mo.notifyObserver(new MemoryAccessNotice(type, address, length, value));
+            synchronized (observables) {
+               Iterator it = this.observables.iterator();
+               MemoryObservable mo;
+               while (it.hasNext()) {
+                  mo = (MemoryObservable)it.next();
+                  if (mo.match(address)) {
+                     mo.notifyObserver(new MemoryAccessNotice(type, address, length, value));
+                  }
                }
             }
          } 		
