@@ -83,7 +83,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private boolean multiFileAssemble = false;
    	
       // Structure required for MarsTool use only (not stand-alone use). Want subclasses to have access.
-      protected ConnectButton connectButton;      
+      protected ConnectionState connectionState;
    
    
       /**
@@ -94,6 +94,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          thisMarsApp = this;
          this.title = title;
          this.heading = heading;
+         connectionState = new ConnectionState();
       }
    
    //////////////////////////////////////////////////////////////////////////////////////
@@ -147,6 +148,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   }
                });
          initializePreGUI();
+         connectionState.connect();
       
          JPanel contentPane = new JPanel(new BorderLayout(5,5));
          contentPane.setBorder(emptyBorder);
@@ -248,28 +250,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    
       /**
-   	 *  The MarsTool default set of controls has one row of 3 buttons.  It includes a dual-purpose button to 
-   	 *  attach or detach simulator to MIPS memory, a button to reset the cache, and one to close the tool.
+   	 *  The MarsTool default set of controls has one row of buttons.
    	 */
        protected JComponent buildButtonAreaMarsTool() {
          Box buttonArea = Box.createHorizontalBox();
          TitledBorder tc =new TitledBorder("Tool Control");
          tc.setTitleJustification(TitledBorder.CENTER);
          buttonArea.setBorder(tc);
-         connectButton = new ConnectButton();
-         connectButton.setToolTipText("Control whether tool will respond to running MIPS program");
-         connectButton.addActionListener(
-                new ActionListener() {
-                   public void actionPerformed(ActionEvent e) {
-                     if (connectButton.isConnected()) {
-                        connectButton.disconnect();
-                     } 
-                     else {
-                        connectButton.connect();
-                     }
-                  }
-               });
-         connectButton.addKeyListener(new EnterKeyListener(connectButton));
       	
          JButton resetButton = new JButton("Reset");
          resetButton.setToolTipText("Reset all counters and other structures");
@@ -292,7 +279,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          closeButton.addKeyListener(new EnterKeyListener(closeButton));
       
       	// Add all the buttons...
-         buttonArea.add(connectButton);
          buttonArea.add(Box.createHorizontalGlue());
          buttonArea.add(resetButton);
          buttonArea.add(Box.createHorizontalGlue());
@@ -610,8 +596,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        // Closing duties for MarsTool only.
        private void performToolClosingDuties() {
          performSpecialClosingDuties();
-         if (connectButton.isConnected()) {
-            connectButton.disconnect();
+         if (connectionState.isConnected()) {
+            connectionState.disconnect();
          }
          dialog.setVisible(false);
          dialog.dispose();
@@ -631,25 +617,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    //  or used by MarsTool (JDialog-based) only.                                   //
    //////////////////////////////////////////////////////////////////////////////////
    	
-   	 //////////////////////////////////////////////////////////////////////   	
-   	 // Little class for this dual-purpose button.  It is used only by the MarsTool
-   	 // (not by the stand-alone app).
-       protected class ConnectButton extends JButton {
-         private static final String connectText = "Connect to MIPS";
-         private static final String disconnectText = "Disconnect from MIPS";
-      	
-          public ConnectButton() {
+       protected class ConnectionState {
+          public ConnectionState() {
             super();
             disconnect();
          }
       	
           public void connect() {
             observing = true;
-               addAsObserver();
+            addAsObserver();
          }
       	
           public void disconnect() {
-               deleteAsObserver();
+            deleteAsObserver();
             observing = false;
          }
       	

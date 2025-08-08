@@ -702,7 +702,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        // This one does the work: update the MMIO Control and optionally the Data register as well
    	 // NOTE: last argument TRUE means update only the MMIO Control register; FALSE means update both Control and Data.
       private synchronized void updateMMIOControlAndData(int controlAddr, int controlValue, int dataAddr, int dataValue, boolean controlOnly) {
-         if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectButton.isConnected())) {
+         if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectionState.isConnected())) {
             synchronized (Globals.memoryAndRegistersLock) {
                try {
                   Globals.memory.setRawWord(controlAddr, controlValue);

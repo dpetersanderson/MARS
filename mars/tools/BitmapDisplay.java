@@ -340,7 +340,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateBaseAddress();
                   	// If display base address is changed while connected to MIPS (this can only occur
                   	// when being used as a MarsTool), we have to delete ourselves as an observer and re-register.
-                     if (connectButton != null && connectButton.isConnected()) {
+                     if (connectionState != null && connectionState.isConnected()) {
                         deleteAsObserver();
                         addAsObserver();
                      }
