@@ -192,6 +192,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                });		
          theWindow = dialog;
          initializePreGUI();
+         connectionState.connect();
          JPanel contentPane = new JPanel(new BorderLayout(5,5));
          contentPane.setBorder(emptyBorder);
          contentPane.setOpaque(true);
