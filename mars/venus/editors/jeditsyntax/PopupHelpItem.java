@@ -55,7 +55,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			if (exact) {
 			  this.description = description;
 			} else {
-			  int detailPosition = description.indexOf(mars.venus.HelpHelpAction.descriptionDetailSeparator);
+			  int detailPosition = description.indexOf(mars.venus.HelpDialog.descriptionDetailSeparator);
 			  this.description = (detailPosition == -1) ? description : description.substring(0,detailPosition);
 			}
          this.exampleLength = this.example.length();
