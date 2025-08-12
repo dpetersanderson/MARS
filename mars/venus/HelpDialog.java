@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -72,7 +73,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 public class HelpDialog extends JDialog {
-    private VenusUI mainUI;
+    private Window mainUI;
     private JTabbedPane tabbedPane;
     private JTabbedPane mipsInfoTabbedPane;
 
@@ -85,7 +86,7 @@ public class HelpDialog extends JDialog {
      */
     public static final String descriptionDetailSeparator = ":";
 
-    public HelpDialog(VenusUI mainUI) {
+    public HelpDialog(Window mainUI) {
         super();
         this.mainUI = mainUI;
         tabbedPane = new JTabbedPane();
