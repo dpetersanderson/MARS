@@ -53,15 +53,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
           // Input arguments: $a0 is the length of time to sleep in milliseconds.
-
-               try
-               {
-                  Thread.sleep(RegisterFile.getValue(4)); // units of milliseconds  1000 millisec = 1 sec.
-               }
-               catch (InterruptedException e)
-               {
-                   return; // no exception handling
-               }
+         int timeLength = RegisterFile.getValue(4);
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            Thread.sleep(timeLength); // units of milliseconds  1000 millisec = 1 sec.
+         }
+         catch (InterruptedException e) {
+            return; // no exception handling
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
        }
 
    }

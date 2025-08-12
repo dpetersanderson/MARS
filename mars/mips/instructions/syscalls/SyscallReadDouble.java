@@ -53,16 +53,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void simulate(ProgramStatement statement) throws ProcessingException {
       //  Higher numbered reg contains high order word so order is $f1 - $f0.
          double doubleValue = 0;
-         try
-         {
+         Globals.memoryAndRegistersLock.unlock();
+         try {
             doubleValue = SystemIO.readDouble(this.getNumber());
-         } 
-             catch (NumberFormatException e)
-            {
-               throw new ProcessingException(statement,
-                   "invalid double input (syscall "+this.getNumber()+")",
-						 Exceptions.SYSCALL_EXCEPTION);
-            }
+         } catch (NumberFormatException e) {
+            throw new ProcessingException(statement,
+                  "invalid double input (syscall "+this.getNumber()+")",
+                  Exceptions.SYSCALL_EXCEPTION);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          long longValue = Double.doubleToRawLongBits(doubleValue);	
          Coprocessor1.updateRegister(1, Binary.highOrderLongToInt(longValue));
          Coprocessor1.updateRegister(0, Binary.lowOrderLongToInt(longValue));

@@ -63,7 +63,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             maxLength = 0;
 				addNullByte = false;
          }
-         inputString = SystemIO.readString(this.getNumber(), maxLength);
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            inputString = SystemIO.readString(this.getNumber(), maxLength);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          int stringLength = Math.min(maxLength, inputString.length());
          try
          {

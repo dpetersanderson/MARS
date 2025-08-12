@@ -52,16 +52,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
          int value = 0;
-         try
-         {
+         Globals.memoryAndRegistersLock.unlock();
+         try {
             value = SystemIO.readInteger(this.getNumber());
-         } 
-             catch (NumberFormatException e)
-            {
-               throw new ProcessingException(statement,
-                 "invalid integer input (syscall "+this.getNumber()+")",
-					  Exceptions.SYSCALL_EXCEPTION);
-            }
+         } catch (NumberFormatException e) {
+            throw new ProcessingException(statement,
+               "invalid integer input (syscall "+this.getNumber()+")",
+               Exceptions.SYSCALL_EXCEPTION);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          RegisterFile.updateRegister(2, value);
       }
    

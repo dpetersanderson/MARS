@@ -389,8 +389,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// If display is attached to a register then update the register value.
        private synchronized void updateAnyAttachedRegister(int intValue) {
          if (attachedRegister != null) {
-            synchronized (Globals.memoryAndRegistersLock) {
+            Globals.memoryAndRegistersLock.lock();
+            try {
                attachedRegister.setValue(intValue);
+            } finally {
+               Globals.memoryAndRegistersLock.unlock();
             }
          	// HERE'S A HACK!!  Want to immediately display the updated register value in MARS
          	// but that code was not written for event-driven update (e.g. Observer) --

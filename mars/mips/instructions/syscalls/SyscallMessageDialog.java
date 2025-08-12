@@ -82,7 +82,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // Display the dialog.
             int msgType = RegisterFile.getValue(5);
             if (msgType < 0 || msgType > 3) msgType = -1; // See values in http://java.sun.com/j2se/1.5.0/docs/api/constant-values.html
-            JOptionPane.showMessageDialog(null, message, null, msgType );
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               JOptionPane.showMessageDialog(null, message, null, msgType );
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
             
 
        }

@@ -88,7 +88,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (duration < 0) duration = ToneGenerator.DEFAULT_DURATION;
          if (instrument < rangeLowEnd || instrument > rangeHighEnd) instrument = ToneGenerator.DEFAULT_INSTRUMENT;
          if (volume < rangeLowEnd || volume > rangeHighEnd) volume = ToneGenerator.DEFAULT_VOLUME;
-         new ToneGenerator().generateToneSynchronously( (byte) pitch, duration, (byte) instrument, (byte) volume);
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            new ToneGenerator().generateToneSynchronously( (byte) pitch, duration, (byte) instrument, (byte) volume);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
       }
 
    /**

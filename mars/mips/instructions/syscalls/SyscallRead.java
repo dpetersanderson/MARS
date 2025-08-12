@@ -58,11 +58,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          byte b = 0;
          int index = 0;
          byte myBuffer[] = new byte[RegisterFile.getValue(6)]; // specified length
+         int fd = RegisterFile.getValue(4);
+         int length = RegisterFile.getValue(6);
          // Call to SystemIO.xxxx.read(xxx,xxx,xxx)  returns actual length
-         int retLength = SystemIO.readFromFile(
-                                 RegisterFile.getValue(4), // fd
-                                 myBuffer, // buffer
-                                 RegisterFile.getValue(6)); // length
+         Globals.memoryAndRegistersLock.unlock();
+         int retLength = 0;
+         try {
+            retLength = SystemIO.readFromFile(
+                                    RegisterFile.getValue(4), // fd
+                                    myBuffer, // buffer
+                                    RegisterFile.getValue(6)); // length
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          RegisterFile.updateRegister(2, retLength); // set returned value in register
 
          // Getting rid of processing exception.  It is the responsibility of the

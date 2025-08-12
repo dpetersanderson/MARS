@@ -328,61 +328,61 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	// Perform the MIPS instruction in synchronized block.  If external threads agree
             	// to access MIPS memory and registers only through synchronized blocks on same 
             	// lock variable, then full (albeit heavy-handed) protection of MIPS memory and 
-            	// registers is assured.  Not as critical for reading from those resources.
-               synchronized (Globals.memoryAndRegistersLock) {
-                  try {                      
-                     if (Simulator.externalInterruptingDevice != NO_DEVICE) {
-                        int deviceInterruptCode = externalInterruptingDevice;
-                        Simulator.externalInterruptingDevice = NO_DEVICE;
-                        throw new ProcessingException(statement, "External Interrupt", deviceInterruptCode);
-                     }
-                     BasicInstruction instruction = (BasicInstruction)statement.getInstruction();
-                     if (instruction == null) {
-                        throw new ProcessingException(statement,
-                            "undefined instruction ("+Binary.intToHexString(statement.getBinaryStatement())+")",
-                            Exceptions.RESERVED_INSTRUCTION_EXCEPTION);
-                     }
-                     // THIS IS WHERE THE INSTRUCTION EXECUTION IS ACTUALLY SIMULATED!
-                     instruction.getSimulationCode().simulate(statement);
-                  	
-                  	// IF statement added 7/26/06 (explanation above)
-                     if (Globals.getSettings().getBackSteppingEnabled()) {
-                        Globals.program.getBackStepper().addDoNothing(pc);
-                     }
+            	// registers is assured.  Not as critical for reading from those resources
+               Globals.memoryAndRegistersLock.lock();
+               try {                      
+                  if (Simulator.externalInterruptingDevice != NO_DEVICE) {
+                     int deviceInterruptCode = externalInterruptingDevice;
+                     Simulator.externalInterruptingDevice = NO_DEVICE;
+                     throw new ProcessingException(statement, "External Interrupt", deviceInterruptCode);
+                  }
+                  BasicInstruction instruction = (BasicInstruction)statement.getInstruction();
+                  if (instruction == null) {
+                     throw new ProcessingException(statement,
+                           "undefined instruction ("+Binary.intToHexString(statement.getBinaryStatement())+")",
+                           Exceptions.RESERVED_INSTRUCTION_EXCEPTION);
+                  }
+                  // THIS IS WHERE THE INSTRUCTION EXECUTION IS ACTUALLY SIMULATED!
+                  instruction.getSimulationCode().simulate(statement);
+                  
+                  // IF statement added 7/26/06 (explanation above)
+                  if (Globals.getSettings().getBackSteppingEnabled()) {
+                     Globals.program.getBackStepper().addDoNothing(pc);
+                  }
+               } catch (ProcessingException pe) {
+                  if (pe.errors() == null) {
+                     this.constructReturnReason = NORMAL_TERMINATION;
+                     this.done = true;
+                     SystemIO.resetFiles(); // close any files opened in MIPS program
+                     Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
+                     return new Boolean(done); // execution completed without error.
                   } 
-                      catch (ProcessingException pe) {
-                        if (pe.errors() == null) {
-                           this.constructReturnReason = NORMAL_TERMINATION;
-                           this.done = true;
-                           SystemIO.resetFiles(); // close any files opened in MIPS program
-                           Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                           return new Boolean(done); // execution completed without error.
-                        } 
-                        else {
-                           // See if an exception handler is present.  Assume this is the case
-                        	// if and only if memory location Memory.exceptionHandlerAddress
-                        	// (e.g. 0x80000180) contains an instruction.  If so, then set the
-                        	// program counter there and continue.  Otherwise terminate the
-                        	// MIPS program with appropriate error message.
-                           ProgramStatement exceptionHandler = null;
-                           try {
-                              exceptionHandler = Globals.memory.getStatement(Memory.exceptionHandlerAddress);
-                           } 
-                               catch (AddressErrorException aee) { } // will not occur with this well-known addres
-                           if (exceptionHandler != null) {
-                              RegisterFile.setProgramCounter(Memory.exceptionHandlerAddress);
-                           } 
-                           else {
-                              this.constructReturnReason = EXCEPTION;
-                              this.pe = pe;
-                              this.done = true;
-                              SystemIO.resetFiles(); // close any files opened in MIPS program
-                              Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                              return new Boolean(done);
-                           }
-                        }
+                  else {
+                     // See if an exception handler is present.  Assume this is the case
+                     // if and only if memory location Memory.exceptionHandlerAddress
+                     // (e.g. 0x80000180) contains an instruction.  If so, then set the
+                     // program counter there and continue.  Otherwise terminate the
+                     // MIPS program with appropriate error message.
+                     ProgramStatement exceptionHandler = null;
+                     try {
+                        exceptionHandler = Globals.memory.getStatement(Memory.exceptionHandlerAddress);
+                     } 
+                           catch (AddressErrorException aee) { } // will not occur with this well-known addres
+                     if (exceptionHandler != null) {
+                        RegisterFile.setProgramCounter(Memory.exceptionHandlerAddress);
+                     } 
+                     else {
+                        this.constructReturnReason = EXCEPTION;
+                        this.pe = pe;
+                        this.done = true;
+                        SystemIO.resetFiles(); // close any files opened in MIPS program
+                        Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
+                        return new Boolean(done);
                      }
-               }// end synchronized block
+                  }
+               } finally {
+                  Globals.memoryAndRegistersLock.unlock();
+               }
             	
             	///////// DPS 15 June 2007.  Handle delayed branching if it occurs./////
                if (DelayedBranch.isTriggered()) {

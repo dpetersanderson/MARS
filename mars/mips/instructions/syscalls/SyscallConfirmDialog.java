@@ -79,7 +79,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             //    0 ---> meaning Yes
             //    1 ---> meaning No
             //    2 ---> meaning Cancel
-            RegisterFile.updateRegister(4, JOptionPane.showConfirmDialog(null, message) );
+            int choice = 0;
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               choice = JOptionPane.showConfirmDialog(null, message);
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
+            RegisterFile.updateRegister(4, choice);
 
        }
 

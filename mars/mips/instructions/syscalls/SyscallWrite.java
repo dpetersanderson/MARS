@@ -77,10 +77,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             {
                throw new ProcessingException(statement, e);
             }
-         int retValue = SystemIO.writeToFile(
-                                 RegisterFile.getValue(4), // fd
-                                 myBuffer, // buffer
-                                 RegisterFile.getValue(6)); // length
+         int fd = RegisterFile.getValue(4);
+         int length = RegisterFile.getValue(6);
+         int retValue = 0;
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            retValue = SystemIO.writeToFile(
+                                 fd,
+                                 myBuffer,
+                                 length);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          RegisterFile.updateRegister(2, retValue); // set returned value in register
 
          // Getting rid of processing exception.  It is the responsibility of the

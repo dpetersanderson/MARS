@@ -85,7 +85,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // An empty string returned (that is, inputString.length() of zero)
             // means that OK was chosen but no string was input.
          String inputString = null;
-         inputString = JOptionPane.showInputDialog(message);
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            inputString = JOptionPane.showInputDialog(message);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          byteAddress = RegisterFile.getValue(5); // byteAddress of string is in $a1
          int maxLength = RegisterFile.getValue(6); // input buffer size for input string is in $a2
       

@@ -418,8 +418,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      int iVal = Binary.stringToInt(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
-                     synchronized (Globals.memoryAndRegistersLock) {
+                     Globals.memoryAndRegistersLock.lock();
+                     try {
                         Coprocessor1.updateRegister(row, iVal); 
+                     } finally {
+                        Globals.memoryAndRegistersLock.unlock();
                      }
                      data[row][col] = NumberDisplayBaseChooser.formatFloatNumber(iVal, valueBase);
                   
@@ -428,8 +431,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      fVal = Float.parseFloat(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
-                     synchronized (Globals.memoryAndRegistersLock) {
+                     Globals.memoryAndRegistersLock.lock();
+                     try {
                         Coprocessor1.setRegisterToFloat(row, fVal); 
+                     } finally {
+                        Globals.memoryAndRegistersLock.unlock();
                      }
                      data[row][col] = NumberDisplayBaseChooser.formatNumber(fVal, valueBase);					
                   }
@@ -443,8 +449,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      long lVal =Binary.stringToLong(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
-                     synchronized (Globals.memoryAndRegistersLock) {
+                     Globals.memoryAndRegistersLock.lock();
+                     try {
                         Coprocessor1.setRegisterPairToLong(row, lVal); 
+                     } finally {
+                        Globals.memoryAndRegistersLock.unlock();
                      }
                      setDisplayAndModelValueAt(
                            NumberDisplayBaseChooser.formatDoubleNumber(lVal, valueBase), row, col);
@@ -453,8 +462,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      dVal =  Double.parseDouble(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
-                     synchronized (Globals.memoryAndRegistersLock) {
+                     Globals.memoryAndRegistersLock.lock();
+                     try {
                         Coprocessor1.setRegisterPairToDouble(row, dVal); 
+                     } finally {
+                        Globals.memoryAndRegistersLock.unlock();
                      }
                      setDisplayAndModelValueAt(
                            NumberDisplayBaseChooser.formatNumber(dVal, valueBase), row, col);						

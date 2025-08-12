@@ -73,23 +73,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                throw new ProcessingException(statement, e);
             }
 
+            double f12 = 0;
 
-            // Display the dialog.
-            try
-            {
-            JOptionPane.showMessageDialog(null,
-                  message + Double.toString(  Coprocessor1.getDoubleFromRegisterPair("$f12") ),
-                  null,
-                  JOptionPane.INFORMATION_MESSAGE );
-            }
-            
-               catch (InvalidRegisterAccessException e)   // register ID error in this method
-               {
+            try {
+               f12 = Coprocessor1.getDoubleFromRegisterPair("$f12");
+            } catch (InvalidRegisterAccessException e) {
                   RegisterFile.updateRegister(5, -1 );  // set $a1 to -1 flag
                    throw new ProcessingException(statement,
                        "invalid int reg. access during double input (syscall "+this.getNumber()+")",
 						           Exceptions.SYSCALL_EXCEPTION);
-               }
+            }
+
+            // Display the dialog.
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               JOptionPane.showMessageDialog(null,
+                     message + Double.toString(f12),
+                     null,
+                     JOptionPane.INFORMATION_MESSAGE );
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
+            
+               
 
        }
    /**

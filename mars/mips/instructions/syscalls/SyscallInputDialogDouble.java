@@ -83,8 +83,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // An empty string returned (that is, inputValue.length() of zero)
             // means that OK was chosen but no string was input.
             String inputValue = null;
-            inputValue = JOptionPane.showInputDialog(message);
-            
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               inputValue = JOptionPane.showInputDialog(message);
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
             try
             {
               Coprocessor1.setRegisterPairToDouble(0, 0.0);  // set $f0 to zero
