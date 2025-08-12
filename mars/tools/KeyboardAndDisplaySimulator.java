@@ -702,16 +702,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        // This one does the work: update the MMIO Control and optionally the Data register as well
    	 // NOTE: last argument TRUE means update only the MMIO Control register; FALSE means update both Control and Data.
       private synchronized void updateMMIOControlAndData(int controlAddr, int controlValue, int dataAddr, int dataValue, boolean controlOnly) {
-         if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectButton.isConnected())) {
-            synchronized (Globals.memoryAndRegistersLock) {
-               try {
-                  Globals.memory.setRawWord(controlAddr, controlValue);
-                  if (!controlOnly) Globals.memory.setRawWord(dataAddr, dataValue);
-               }
-                  catch (AddressErrorException aee) {
-                     System.out.println("Tool author specified incorrect MMIO address!"+aee);
-                     System.exit(0);
-                  }
+         if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectionState.isConnected())) {
+            Globals.memoryAndRegistersLock.lock();
+            try {
+               Globals.memory.setRawWord(controlAddr, controlValue);
+               if (!controlOnly) Globals.memory.setRawWord(dataAddr, dataValue);
+            } catch (AddressErrorException aee) {
+               System.out.println("Tool author specified incorrect MMIO address!"+aee);
+               System.exit(0);
+            } finally {
+               Globals.memoryAndRegistersLock.unlock();
             }
          	// HERE'S A HACK!!  Want to immediately display the updated memory value in MARS
          	// but that code was not written for event-driven update (e.g. Observer) --

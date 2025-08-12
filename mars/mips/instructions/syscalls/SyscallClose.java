@@ -50,7 +50,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to close file descriptor given in $a0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         SystemIO.closeFile(RegisterFile.getValue(4)); 
+         int fd = RegisterFile.getValue(4);
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            SystemIO.closeFile(fd);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
       }
    
    /**

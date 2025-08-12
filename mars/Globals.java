@@ -1,12 +1,13 @@
-   package mars;
-   import mars.mips.instructions.syscalls.*;
-   import mars.mips.instructions.*;
-   import mars.mips.hardware.*;
-   import mars.assembler.*;
-   import mars.venus.*;
-   import mars.util.*;
-   import java.io.*;
-   import java.util.*;
+package mars;
+import mars.mips.instructions.syscalls.*;
+import mars.mips.instructions.*;
+import mars.mips.hardware.*;
+import mars.assembler.*;
+import mars.venus.*;
+import mars.util.*;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 	
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -57,7 +58,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /** Simulated MIPS memory component. **/
       public static Memory memory;
     /** Lock variable used at head of synchronized block to guard MIPS memory and registers **/
-      public static Object memoryAndRegistersLock = new Object();
+      public static ReentrantLock memoryAndRegistersLock = new ReentrantLock();
     /** Flag to determine whether or not to produce internal debugging information. **/
       public static boolean debug = false;
     /** Object that contains various settings that can be accessed modified internally. **/

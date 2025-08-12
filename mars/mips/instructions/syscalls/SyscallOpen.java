@@ -89,8 +89,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             {
                throw new ProcessingException(statement, e);
             }
-         int retValue = SystemIO.openFile(filename,
-                                 RegisterFile.getValue(5));
+         int flags = RegisterFile.getValue(5);
+         int retValue = 0;
+         Globals.memoryAndRegistersLock.unlock();
+         try {
+            retValue = SystemIO.openFile(filename, flags);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          RegisterFile.updateRegister(2, retValue); // set returned fd value in register
 			
 			// GETTING RID OF PROCESSING EXCEPTION.  IT IS THE RESPONSIBILITY OF THE

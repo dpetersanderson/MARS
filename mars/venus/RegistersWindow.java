@@ -341,8 +341,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
          	//  Assures that if changed during MIPS program execution, the update will
          	//  occur only between MIPS instructions.
-            synchronized (Globals.memoryAndRegistersLock) {
+            Globals.memoryAndRegistersLock.lock();
+            try {
                RegisterFile.updateRegister(row, val);
+            } finally {
+               Globals.memoryAndRegistersLock.unlock();
             }
             int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
             data[row][col] = NumberDisplayBaseChooser.formatNumber(val, valueBase); 

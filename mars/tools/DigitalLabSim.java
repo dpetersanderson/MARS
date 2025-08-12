@@ -105,19 +105,19 @@ public class DigitalLabSim extends AbstractMarsToolAndApplication {
 	   	return panelTools;
     }
     private synchronized void updateMMIOControlAndData(int dataAddr, int dataValue) {
-        if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectButton.isConnected())) {
-           synchronized (Globals.memoryAndRegistersLock) {
-              try {
-              		Globals.memory.setByte(dataAddr, dataValue);
-              } 
-                  catch (AddressErrorException aee) {
-                    System.out.println("Tool author specified incorrect MMIO address!"+aee);
-                    System.exit(0);
-                 }
-           }
-           if (Globals.getGui() != null && Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().getCodeHighlighting() ) {
-              Globals.getGui().getMainPane().getExecutePane().getDataSegmentWindow().updateValues();
-           }
+        if (!this.isBeingUsedAsAMarsTool || (this.isBeingUsedAsAMarsTool && connectionState.isConnected())) {
+           Globals.memoryAndRegistersLock.lock();
+			try {
+				Globals.memory.setByte(dataAddr, dataValue);
+			} catch (AddressErrorException aee) {
+				System.out.println("Tool author specified incorrect MMIO address!"+aee);
+				System.exit(0);
+			} finally {
+				Globals.memoryAndRegistersLock.unlock();
+			}
+			if (Globals.getGui() != null && Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().getCodeHighlighting() ) {
+				Globals.getGui().getMainPane().getExecutePane().getDataSegmentWindow().updateValues();
+			}
         }
      }
     protected JComponent getHelpComponent() {

@@ -763,16 +763,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }				
          	//  Assures that if changed during MIPS program execution, the update will
          	//  occur only between MIPS instructions.
-            synchronized (Globals.memoryAndRegistersLock) {
-               try {
-                  Globals.memory.setRawWord(address,val);
-               } 
-                // somehow, user was able to display out-of-range address.  Most likely to occur between
-                // stack base and Kernel.  
-                   catch (AddressErrorException aee) {;
-                     return;
-                  }
-            }// end synchronized block
+            Globals.memoryAndRegistersLock.lock();
+            try {
+               Globals.memory.setRawWord(address,val);
+            } 
+            // somehow, user was able to display out-of-range address.  Most likely to occur between
+            // stack base and Kernel.  
+            catch (AddressErrorException aee) {;
+               return;
+            }
+            finally {
+               Globals.memoryAndRegistersLock.unlock();
+            }
             return;
          }
       

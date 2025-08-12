@@ -51,16 +51,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
          float floatValue = 0;
-         try
-         {
+         Globals.memoryAndRegistersLock.unlock();
+         try {
             floatValue = SystemIO.readFloat(this.getNumber());
-         } 
-             catch (NumberFormatException e)
-            {
-               throw new ProcessingException(statement,
-                  "invalid float input (syscall "+this.getNumber()+")",
-						Exceptions.SYSCALL_EXCEPTION);
-            }
+         } catch (NumberFormatException e) {
+            throw new ProcessingException(statement,
+               "invalid float input (syscall "+this.getNumber()+")",
+               Exceptions.SYSCALL_EXCEPTION);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
          Coprocessor1.updateRegister(0, Float.floatToRawIntBits(floatValue));
       }
    }

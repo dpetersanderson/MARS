@@ -73,13 +73,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                throw new ProcessingException(statement, e);
             }
 
+            float f12 = Coprocessor1.getFloatFromRegister("$f12");
 
             // Display the dialog.
-            JOptionPane.showMessageDialog(null,
-                  message + Float.toString(  Coprocessor1.getFloatFromRegister("$f12") ),
-                  null,
-                  JOptionPane.INFORMATION_MESSAGE );
-            
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               JOptionPane.showMessageDialog(null,
+                     message + Float.toString(f12),
+                     null,
+                     JOptionPane.INFORMATION_MESSAGE );
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
 
        }
    

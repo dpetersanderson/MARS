@@ -93,10 +93,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
             // Display the dialog.
-            JOptionPane.showMessageDialog(null,
-                  message + message2,
-                  null,
-                  JOptionPane.INFORMATION_MESSAGE );
+            Globals.memoryAndRegistersLock.unlock();
+            try {
+               JOptionPane.showMessageDialog(null,
+                     message + message2,
+                     null,
+                     JOptionPane.INFORMATION_MESSAGE );
+            } finally {
+               Globals.memoryAndRegistersLock.lock();
+            }
             
 
        }

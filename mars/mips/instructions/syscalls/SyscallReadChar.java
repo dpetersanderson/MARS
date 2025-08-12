@@ -52,16 +52,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
          int value = 0;
-         try
-         {
+         Globals.memoryAndRegistersLock.unlock();
+         try {
             value = SystemIO.readChar(this.getNumber());
-         } 
-             catch (IndexOutOfBoundsException e) // means null input
-            {
-               throw new ProcessingException(statement,
-                     "invalid char input (syscall "+this.getNumber()+")",
-                  	Exceptions.SYSCALL_EXCEPTION);
-            }
+         } catch (IndexOutOfBoundsException e) {
+            throw new ProcessingException(statement,
+                  "invalid char input (syscall "+this.getNumber()+")",
+                  Exceptions.SYSCALL_EXCEPTION);
+         } finally {
+            Globals.memoryAndRegistersLock.lock();
+         }
 			// DPS 20 June 2008: changed from 4 ($a0) to 2 ($v0)
          RegisterFile.updateRegister(2, value); 
       }
