@@ -2397,7 +2397,6 @@ public class JEditTextArea extends JComponent
             }
             JMenuItem menuItem = new JMenuItem("<html><tt>"+item.getExamplePaddedToLength(length).replaceAll(" ","&nbsp;")+"</tt>"+item.getDescription()+extra+"</html>");
             if (item.getExact()) {
-               System.out.println("x");
                // The instruction name is completed so the role of the popup changes
             	// to that of floating help to assist in operand specification. 
                menuItem.setSelected(false);
@@ -2422,7 +2421,6 @@ public class JEditTextArea extends JComponent
                }
             }
             else {
-               System.out.println("y");
                // Typing of instruction/directive name is still in progress; the action listener 
             	// will complete it when its menu item is selected.
                menuItem.addActionListener(new PopupHelpActionListener(item.getTokenText(), item.getExample()));
@@ -2461,7 +2459,6 @@ public class JEditTextArea extends JComponent
    	// space otherwise.  Get this information from the ActionEvent.
       public void actionPerformed(ActionEvent e) {
          String insert = (e.getActionCommand().charAt(0)=='\t') ? "\t" : " ";
-         System.out.println("a");
          if (this.tokenText.length() >= this.text.length()) {
             overwriteSetSelectedText(insert);
          } 
