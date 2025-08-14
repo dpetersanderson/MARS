@@ -72,7 +72,7 @@ public class BHTSimulator extends AbstractMarsToolAndApplication implements Acti
 	public static final boolean BHT_DEFAULT_INITVAL = false;
 	
 	/** the name of the tool */
-	public static final String BHT_NAME = "BHT Simulator";
+	public static final String BHT_NAME = "Branch History Table Simulator";
 
 	/** the version of the tool */	
 	public static final String BHT_VERSION = "Version 1.0 (Ingo Kofler)";
