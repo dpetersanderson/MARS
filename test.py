@@ -1,6 +1,7 @@
 import subprocess as sp
 from pathlib import Path
 import shlex
+import sys
 
 base_path = Path(__file__).parent
 
@@ -41,6 +42,7 @@ if __name__ == '__main__':
                 command = shlex.join(base_command + ['sb'] + [str(test / 'test.asm')])
             i = 0
             while (test / f'input-{i}.bin').is_file() and (test / f'output-{i}.bin').is_file():
+                sys.stdout.flush()
                 with (test / f'input-{i}.bin').open('rb') as infile:
                     mars = sp.Popen(command, stdin=infile, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
                     errors = mars.stderr.read().strip()
