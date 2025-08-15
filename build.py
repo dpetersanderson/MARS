@@ -10,15 +10,12 @@ if __name__ == '__main__':
 
     # compile source files
     sources = glob('**/**.java', recursive=True)
-    exit_code = sp.call(['javac'] + sources)
+    exit_code = sp.call(['/usr/lib/jvm/jdk-1.8.0_441-oracle-x64/bin/javac'] + sources)
     print(f'\njavac returned: {exit_code}')
 
     # create jar with resources and binaries
     binaries = glob('**/**.class', recursive=True)
-    exit_code = sp.call('jar cmf mainclass.txt Mars.jar PseudoOps.txt Config.properties Syscall.properties Settings.properties MARSlicense.txt mainclass.txt MipsXRayOpcode.xml registerDatapath.xml controlDatapath.xml ALUcontrolDatapath.xml Mars.java Mars.class help images mars', shell=True)
+    exit_code = sp.call('/usr/lib/jvm/jdk-1.8.0_441-oracle-x64/bin/jar cmf mainclass.txt Mars.jar PseudoOps.txt Config.properties Syscall.properties Settings.properties MARSlicense.txt mainclass.txt MipsXRayOpcode.xml registerDatapath.xml controlDatapath.xml ALUcontrolDatapath.xml Mars.java Mars.class help images mars', shell=True)
     print(f'\njar returned: {exit_code}')
-    try:
-        shutil.copy('Mars.jar', '/mnt/Mars.jar')
-        print('copied jar to /mnt')
-    except Exception:
-        pass
+    shutil.copy('Mars.jar', '/mnt/Mars.jar')
+    print('copied jar to /mnt')

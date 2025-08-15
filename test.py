@@ -6,7 +6,8 @@ base_path = Path(__file__).parent
 
 args_append = ["nc", "me", "ae2", "se1", "sm"]
 base_commands = [
-    ["java", "-Xmx128M", "-jar", "Mars.jar"] + args_append,
+    ["/usr/bin/java", "-Xmx128M", "-jar", "Mars.jar"] + args_append,
+    ["/usr/lib/jvm/jdk-1.8.0_441-oracle-x64/bin/java", "-Xmx128M", "-jar", "Mars.jar"] + args_append,
     ["./Mars-Linux"] + args_append,
 ]
 base_commands_assemble = [base_command + ["a"] for base_command in base_commands]
