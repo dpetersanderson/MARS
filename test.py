@@ -33,6 +33,8 @@ if __name__ == '__main__':
                 print('error in compilation' if asm_code else 'successful compilation')
                 print(f'{test.name}: stdout: {mars_asm.stdout.read()}', end='')
                 print(f'{test.name}: stderr: {mars_asm.stderr.read()}', end='')
+                fails += 1
+                continue
             if sbfile.is_file():
                 command = shlex.join(base_command + [str(test / 'test.asm')])
             else:
