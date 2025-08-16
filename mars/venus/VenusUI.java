@@ -76,13 +76,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsWarningsAreErrors, settingsStartAtMain,
       		  settingsDelayedBranching, settingsProgramArguments, settingsSelfModifyingCode;
       private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
-      private JMenuItem helpHelp, helpAbout;
+      private JMenuItem helpHelp, helpSyscalls, helpAbout;
          
       // components of the toolbar
-      private JButton Undo, Redo, Cut, Copy, Paste, FindReplace, SelectAll;
+      private JButton Undo, Redo, FindReplace, SelectAll;
       private JButton New, Open, Save, SaveAs, SaveAll, DumpMemory, Print;
       private JButton Run, Assemble, Reset, Step, Backstep, Stop, Pause;
-      private JButton Help;
+      private JButton Help, HelpSyscalls;
+      private JButton XRay;
    
       // The "action" objects, which include action listeners.  One of each will be created then
    	// shared between a menu item and its corresponding toolbar button.  This is a very cool
@@ -100,7 +101,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       					settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
       					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
       					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
-      private Action helpHelpAction, helpAboutAction;
+      private Action helpHelpAction, helpSyscallsAction, helpAboutAction;
+      private Action xrayAction;
    
    
     /**
@@ -446,9 +448,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                             new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help22.png"))),
                									  "Help", new Integer(KeyEvent.VK_H),
                									  KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
-               									  mainUI);	
+               									  mainUI);
+            helpSyscallsAction = new HelpSyscallsAction("Syscalls",
+                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "Syscall22.png"))),
+                                            "Help on Syscalls",
+                                            KeyEvent.VK_S,
+                                            null,
+                                            mainUI);
             helpAboutAction = new HelpAboutAction("About ...",null, 
-                                            "Information about Mars", null,null, mainUI);	
+                                            "Information about Mars", null,null, mainUI);
+            
+            xrayAction = new XRayAction("MIPS X-Ray",
+                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "XRAY22.png"))),
+                                            "Animation of MIPS Datapath", null, null, mainUI);
          } 
              catch (NullPointerException e) {
                System.out.println("Internal Error: images folder not found, or other null pointer exception while creating Action objects");
@@ -626,9 +638,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       			
          helpHelp = new JMenuItem(helpHelpAction);
          helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
+
+         helpSyscalls = new JMenuItem(helpSyscallsAction);
+         helpSyscalls.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Syscall16.png"))));
+
          helpAbout = new JMenuItem(helpAboutAction);
          helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
          help.add(helpHelp);
+         help.add(helpSyscalls);
          help.addSeparator();
          help.add(helpAbout);
       
@@ -671,12 +688,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Undo.setText(""); 
          Redo = new JButton(editRedoAction);
          Redo.setText("");   	
-         Cut= new JButton(editCutAction);
-         Cut.setText("");
-         Copy= new JButton(editCopyAction);
-         Copy.setText("");
-         Paste= new JButton(editPasteAction);
-         Paste.setText("");
          FindReplace = new JButton(editFindReplaceAction);
          FindReplace.setText("");
          SelectAll = new JButton(editSelectAllAction);
@@ -696,8 +707,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Stop.setText("");
          Pause = new JButton(runPauseAction);
          Pause.setText("");      	
+         XRay = new JButton(xrayAction);
+         XRay.setText("");
          Help= new JButton(helpHelpAction);
          Help.setText("");
+         HelpSyscalls = new JButton(helpSyscallsAction);
+         HelpSyscalls.setText("");
          
          toolBar.add(New);
          toolBar.add(Open);
@@ -710,9 +725,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          toolBar.add(new JToolBar.Separator());
          toolBar.add(Undo);
          toolBar.add(Redo);
-         toolBar.add(Cut);
-         toolBar.add(Copy);
-         toolBar.add(Paste);
          toolBar.add(FindReplace);
          toolBar.add(new JToolBar.Separator());
          toolBar.add(Assemble);
@@ -723,7 +735,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          toolBar.add(Stop);
          toolBar.add(Reset);
          toolBar.add(new JToolBar.Separator());
+         toolBar.add(XRay);
+         toolBar.add(new JToolBar.Separator());
          toolBar.add(Help);
+         toolBar.add(HelpSyscalls);
          toolBar.add(new JToolBar.Separator());
       	
          return toolBar;
@@ -806,6 +821,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runClearBreakpointsAction.setEnabled(false);
          runToggleBreakpointsAction.setEnabled(false);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();
@@ -847,6 +863,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             runToggleBreakpointsAction.setEnabled(false);
          } 
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();
@@ -884,6 +901,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runClearBreakpointsAction.setEnabled(false);
          runToggleBreakpointsAction.setEnabled(false);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();
@@ -920,6 +938,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runClearBreakpointsAction.setEnabled(false);
          runToggleBreakpointsAction.setEnabled(false);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();
@@ -957,6 +976,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runPauseAction.setEnabled(false);
          runToggleBreakpointsAction.setEnabled(true);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();
@@ -992,6 +1012,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runPauseAction.setEnabled(true);
          runToggleBreakpointsAction.setEnabled(false);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.setEnabled(false);//updateUndoState(); // DPS 10 Jan 2008
          editRedoAction.setEnabled(false);//updateRedoState(); // DPS 10 Jan 2008
@@ -1028,6 +1049,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runPauseAction.setEnabled(false);
          runToggleBreakpointsAction.setEnabled(true);
          helpHelpAction.setEnabled(true);
+         helpSyscallsAction.setEnabled(true);
          helpAboutAction.setEnabled(true);
          editUndoAction.updateUndoState();
          editRedoAction.updateRedoState();

@@ -58,7 +58,7 @@ public class DigitalLabSim extends AbstractMarsToolAndApplication {
 		new DigitalLabSim(heading+", "+version,heading).go();
 	}
 	public String getName() {
-		return "Digital Lab Sim";
+		return "Seven Segment Display + Hex Keyboard";
 	}
 	protected void addAsObserver(){
     	addAsObserver(IN_ADRESS_DISPLAY_1, IN_ADRESS_DISPLAY_1);

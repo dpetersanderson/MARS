@@ -11,6 +11,7 @@ package mars.venus.editors.jeditsyntax;
 
 import mars.Globals;
 import mars.Settings;
+import mars.venus.HelpDialog;
 import mars.venus.SelectionEvent;
 import mars.venus.SelectionListener;
 import mars.venus.editors.jeditsyntax.tokenmarker.*; 
@@ -2390,7 +2391,11 @@ public class JEditTextArea extends JComponent
          int length = PopupHelpItem.maxExampleLength(helpItems) + 2; 
          for (int i=0; i<helpItems.size(); i++) {
             PopupHelpItem item = (PopupHelpItem) helpItems.get(i);
-            JMenuItem menuItem = new JMenuItem("<html><tt>"+item.getExamplePaddedToLength(length).replaceAll(" ","&nbsp;")+"</tt>"+item.getDescription()+"</html>");
+            String extra = "";
+            if (item.getExact() && item.getTokenText().contains("syscall")) {
+               extra = " <u>(Click for a list of syscalls)</u>".replaceAll(" ","&nbsp;");
+            }
+            JMenuItem menuItem = new JMenuItem("<html><tt>"+item.getExamplePaddedToLength(length).replaceAll(" ","&nbsp;")+"</tt>"+item.getDescription()+extra+"</html>");
             if (item.getExact()) {
                // The instruction name is completed so the role of the popup changes
             	// to that of floating help to assist in operand specification. 
@@ -2409,7 +2414,12 @@ public class JEditTextArea extends JComponent
                // but does nothing if selected.  DPS 11-July-2014
 
                // menuItem.setEnabled(false);               
-               } 
+
+               if (item.getTokenText().equals("syscall")) {
+                  menuItem.addActionListener(new SyscallHelpActionListener(item.getTokenText(), item.getExample()));
+                  
+               }
+            }
             else {
                // Typing of instruction/directive name is still in progress; the action listener 
             	// will complete it when its menu item is selected.
@@ -2456,6 +2466,22 @@ public class JEditTextArea extends JComponent
             overwriteSetSelectedText(this.text.substring(this.tokenText.length())+insert);			 
          }
       }
+   }
+
+   private class SyscallHelpActionListener extends PopupHelpActionListener {
+
+      public SyscallHelpActionListener(String tokenText, String text) {
+         super(tokenText, text);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+         super.actionPerformed(e);
+         HelpDialog hd = new HelpDialog(SwingUtilities.getWindowAncestor(JEditTextArea.this));
+         hd.setMipsInfoActiveTab("Syscalls");
+         hd.setVisible(true);
+      }
+      
    }
 
    private void checkAutoIndent(KeyEvent evt) {
