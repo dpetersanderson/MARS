@@ -83,6 +83,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private JButton New, Open, Save, SaveAs, SaveAll, DumpMemory, Print;
       private JButton Run, Assemble, Reset, Step, Backstep, Stop, Pause;
       private JButton Help, HelpSyscalls;
+      private JButton XRay;
    
       // The "action" objects, which include action listeners.  One of each will be created then
    	// shared between a menu item and its corresponding toolbar button.  This is a very cool
@@ -101,6 +102,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
       					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
       private Action helpHelpAction, helpSyscallsAction, helpAboutAction;
+      private Action xrayAction;
    
    
     /**
@@ -454,7 +456,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                             null,
                                             mainUI);
             helpAboutAction = new HelpAboutAction("About ...",null, 
-                                            "Information about Mars", null,null, mainUI);	
+                                            "Information about Mars", null,null, mainUI);
+            
+            xrayAction = new XRayAction("MIPS X-Ray",
+                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "XRAY22.png"))),
+                                            "Animation of MIPS Datapath", null, null, mainUI);
          } 
              catch (NullPointerException e) {
                System.out.println("Internal Error: images folder not found, or other null pointer exception while creating Action objects");
@@ -701,6 +707,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Stop.setText("");
          Pause = new JButton(runPauseAction);
          Pause.setText("");      	
+         XRay = new JButton(xrayAction);
+         XRay.setText("");
          Help= new JButton(helpHelpAction);
          Help.setText("");
          HelpSyscalls = new JButton(helpSyscallsAction);
@@ -726,6 +734,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          toolBar.add(Pause);
          toolBar.add(Stop);
          toolBar.add(Reset);
+         toolBar.add(new JToolBar.Separator());
+         toolBar.add(XRay);
          toolBar.add(new JToolBar.Separator());
          toolBar.add(Help);
          toolBar.add(HelpSyscalls);
