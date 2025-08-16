@@ -2,9 +2,10 @@ FROM rust:1.88-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Python3 (for the build scripts), alien (for the JDK) and mingw (for Windows cross compilation)
+# Install Python3 (for the build scripts), alien (for the Oracle JDK 8), mingw (for Windows cross compilation)
+# and OpenJDK 11 (the version used in the judge)
 RUN apt update
-RUN apt install -y python3 alien mingw-w64
+RUN apt install -y python3 alien mingw-w64 openjdk-11-jdk
 
 # Install Java 8u441 by Oracle
 COPY jdk-8u441-linux-x64.rpm /tmp

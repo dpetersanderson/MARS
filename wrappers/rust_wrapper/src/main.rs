@@ -17,7 +17,10 @@ fn main() {
         .spawn();
 
     if let Ok(mut child) = result {
-        child.wait().expect("Couldn't wait for child");
+        let code = child.wait().expect("Couldn't wait for child");
+        if let Some(s) = code.code() {
+            process::exit(s);
+        }
     } else {
         open::that(java_dl_url).expect("Couldn't open browser");
     }
