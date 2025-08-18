@@ -72,6 +72,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 
+/**
+ * The dialog that can be accessed via the menus Help -> help, Help -> syscalls,
+ * the help buttons and other means deemed useful.
+ */
 public class HelpDialog extends JDialog {
     private Window mainUI;
     private JTabbedPane tabbedPane;

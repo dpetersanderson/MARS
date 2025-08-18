@@ -7,6 +7,9 @@ import mars.tools.MipsXray;
 
 import java.awt.event.ActionEvent;
 
+/**
+* Action for the MIPS XRay quick access button on the toolbar.
+*/
 public class XRayAction extends GuiAction {
     public XRayAction(String name, Icon icon, String descrip,
                             Integer mnemonic, KeyStroke accel, VenusUI gui) {

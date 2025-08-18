@@ -617,7 +617,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    //  Specialized inner classes.  Either used by stand-alone (JFrame-based) only  //
    //  or used by MarsTool (JDialog-based) only.                                   //
    //////////////////////////////////////////////////////////////////////////////////
-   	
+   	/**
+       * Keeps track of whether the tool is connected or not, adding
+       * and removing it as an observer of the MIPS memory as necessary.
+       */
        protected class ConnectionState {
           public ConnectionState() {
             super();

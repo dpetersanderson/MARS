@@ -57,7 +57,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public static SymbolTable symbolTable;
     /** Simulated MIPS memory component. **/
       public static Memory memory;
-    /** Lock variable used at head of synchronized block to guard MIPS memory and registers **/
+    /** Lock used to guard MIPS memory and registers **/
       public static ReentrantLock memoryAndRegistersLock = new ReentrantLock();
     /** Flag to determine whether or not to produce internal debugging information. **/
       public static boolean debug = false;
