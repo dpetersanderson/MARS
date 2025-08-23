@@ -32,6 +32,7 @@ Para executar o MARS em outros sistemas, verifique se o Java está corretamente 
 
 Primeiramente, instale o [Docker](https://docs.docker.com/get-started/). Então, construa e execute um container (comando de exemplo):
 ```
-sudo docker build -t mars .; sudo docker run --rm --mount type=bind,src=<caminho da pasta para guardar os artefatos>,dst=/mnt mars
+docker build -t mars .; docker run --rm --mount type=bind,src=<caminho da pasta para guardar os artefatos>,dst=/mnt mars
 ```
-Deve ser especificado um diretório onde serão gravados os executáveis. Ele *deve estar fora do repositório*. 
+Se estiver no Linux e seu usuário não estiver no grupo `docker`, `sudo` ou alguma alternativa pode ser necessário para ambos os comandos.  
+Deve ser especificado um diretório onde serão gravados os executáveis. **Ele deve estar fora do repositório**. 
