@@ -26,7 +26,7 @@ $ chmod +x ~/Downloads/Mars-Linux
 
 ### Outros sistemas
 
-Para executar o MARS em outros sistemas, verifique se o Java está corretamente instalado. Se não estiver, [faça o download do Java.](https://www.java.com/download/). Depois disso, baixe a versão do mars para [Outros sistemas](https://github.com/Sa-RSt/MARS/releases/download/v4.6.2/Mars.jar).
+Para executar o MARS em outros sistemas, verifique se o Java está corretamente instalado. Se não estiver, [faça o download do Java.](https://www.java.com/download/). Depois disso, baixe a versão do MARS para [Outros sistemas](https://github.com/Sa-RSt/MARS/releases/download/v4.6.2/Mars.jar).
 
 ## Como compilar?
 
