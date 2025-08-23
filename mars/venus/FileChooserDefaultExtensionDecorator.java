@@ -1,9 +1,7 @@
-package mars.tools;
+package mars.venus;
 
 import java.awt.Component;
 import java.io.File;
-
-import mars.venus.FileChooser;
 
 /**
  * Adds an extension to the file chooser, so that, if the selected file
