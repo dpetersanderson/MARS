@@ -6,6 +6,10 @@ import java.util.Map;
 
 import mars.mips.hardware.Register;
 
+/**
+ * Helper implementation of RegisterSourceUsageHighlight that stores highlight
+ * information internally and can be queried.
+ */
 public class StatefulUsageHighlight implements RegisterSourceUsageHighlight {
 
     private Map<Integer, Boolean> usageHighlightRows;

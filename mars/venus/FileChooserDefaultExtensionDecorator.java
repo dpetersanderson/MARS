@@ -1,10 +1,12 @@
-package mars.tools;
+package mars.venus;
 
 import java.awt.Component;
 import java.io.File;
 
-import mars.venus.FileChooser;
-
+/**
+ * Adds an extension to the file chooser, so that, if the selected file
+ * does not exist and has no extension, the default extension is added to it.
+ */
 public class FileChooserDefaultExtensionDecorator implements FileChooser {
 
     private FileChooser underlying;

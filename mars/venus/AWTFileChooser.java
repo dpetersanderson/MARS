@@ -6,6 +6,9 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+/**
+ * FileChooser that uses java.awt.FileDialog in its implementation.
+ */
 public class AWTFileChooser extends FileDialog implements FileChooser {
     public AWTFileChooser(String dirPath) {
         super((java.awt.Frame) null);

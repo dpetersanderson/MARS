@@ -2468,6 +2468,10 @@ public class JEditTextArea extends JComponent
       }
    }
 
+   /**
+    * A PopupHelpActionListener with the added funcionality of opening
+    * a help dialog when triggered.
+    */
    private class SyscallHelpActionListener extends PopupHelpActionListener {
 
       public SyscallHelpActionListener(String tokenText, String text) {
