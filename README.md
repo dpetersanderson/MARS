@@ -19,14 +19,14 @@ Basta fazer o download da versão para [Windows](https://github.com/Sa-RSt/MARS/
 ### Linux
 
 Feito o download para a versão para [Linux](https://github.com/Sa-RSt/MARS/releases/download/v4.6.2/Mars-Linux), talvez o arquivo não fique marcado como executável, impedindo a execução do programa.
-Se for esse o caso, clique com o botão direito no arquivo baixado, vá em "Permissões" e permita a execução do programa (instruções podem variar a depender da configuração do sistema) ou execute no terminal, mudando o nome do arquivo de acordo:
+Se for esse o caso, clique com o botão direito no arquivo baixado, vá em "Permissões" e permita a execução do programa (instruções podem variar a depender da configuração do sistema) ou execute o seguinte comando no terminal, mudando o caminho do arquivo de acordo:
 ```
 $ chmod +x ~/Downloads/Mars-Linux
 ```
 
 ### Outros sistemas
 
-Para executar o MARS em outros sistemas, verifique se o Java está corretamente instalado. Se não estiver, [faça o download do Java.](https://www.java.com/download/). Depois disso, baixe a versão do MARS para [Outros sistemas](https://github.com/Sa-RSt/MARS/releases/download/v4.6.2/Mars.jar).
+Para executar o MARS em outros sistemas, verifique se o Java está corretamente instalado. Se não estiver, [faça o download do Java](https://www.java.com/download/). Depois disso, baixe a versão do MARS para [Outros sistemas](https://github.com/Sa-RSt/MARS/releases/download/v4.6.2/Mars.jar).
 
 ## Como compilar?
 
@@ -35,4 +35,4 @@ Primeiramente, instale o [Docker](https://docs.docker.com/get-started/). Então,
 docker build -t mars .; docker run --rm --mount type=bind,src=<caminho da pasta para guardar os artefatos>,dst=/mnt mars
 ```
 Se estiver no Linux e seu usuário não estiver no grupo `docker`, `sudo` ou alguma alternativa pode ser necessário para ambos os comandos.  
-Deve ser especificado um diretório onde serão gravados os executáveis. **Ele deve estar fora do repositório**. 
+Deve ser especificado um diretório onde serão gravados os executáveis. **Ele deve ficar fora do repositório!**
