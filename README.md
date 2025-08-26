@@ -34,5 +34,6 @@ Primeiramente, instale o [Docker](https://docs.docker.com/get-started/). Então,
 ```
 docker build -t mars .; docker run --rm --mount type=bind,src=<caminho da pasta para guardar os artefatos>,dst=/mnt mars
 ```
+A imagem precisa ter acesso ao arquivo `jdk-8u441-linux-x64.rpm` para ser construída, pois utiliza uma versão antiga do JDK. Esse arquivo pode ser obtido no [site da Oracle](https://www.oracle.com/br/java/technologies/javase/javase8u211-later-archive-downloads.html).  
 Se estiver no Linux e seu usuário não estiver no grupo `docker`, `sudo` ou alguma alternativa pode ser necessário para ambos os comandos.  
 Deve ser especificado um diretório onde serão gravados os executáveis. **Ele deve ficar fora do repositório!**
