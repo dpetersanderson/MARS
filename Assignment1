@@ -1,0 +1,95 @@
+.data
+bits_id: .asciiz "Bits ID: 1234567\n"
+name: .asciiz "Name: Example Name\n"
+prompt1: .asciiz "Enter first different number: "
+prompt2: .asciiz "Enter second different number: "
+menu: .asciiz "\nSelect operation:\n1. Addition\n2. Subtraction\n3. Multiplication\nEnter choice: "
+result_add: .asciiz "Result (Addition): "
+result_sub: .asciiz "Result (Subtraction): "
+result_mul: .asciiz "Result (Multiplication): "
+newline: .asciiz "\n"
+
+.text
+main:
+    # Print Bits ID
+    li $v0, 4
+    la $a0, bits_id
+    syscall
+
+    # Print Name
+    li $v0, 4
+    la $a0, name
+    syscall
+
+    # Prompt for first number
+    li $v0, 4
+    la $a0, prompt1
+    syscall
+
+    # Read first number
+    li $v0, 5
+    syscall
+    move $t0, $v0            # store first number in $t0
+
+    # Prompt for second number
+    li $v0, 4
+    la $a0, prompt2
+    syscall
+
+    # Read second number
+    li $v0, 5
+    syscall
+    move $t1, $v0            # store second number in $t1
+
+    # Display menu
+menu_display:
+    li $v0, 4
+    la $a0, menu
+    syscall
+
+    # Read choice
+    li $v0, 5
+    syscall
+    move $t2, $v0            # store choice in $t2
+
+    # Perform operation based on choice
+    beq $t2, 1, addition
+    beq $t2, 2, subtraction
+    beq $t2, 3, multiplication
+
+    # If invalid choice, loop back to menu
+    j menu_display
+
+addition:
+    add $t3, $t0, $t1       # t3 = t0 + t1
+    li $v0, 4
+    la $a0, result_add
+    syscall
+    li $v0, 1
+    move $a0, $t3
+    syscall
+    j exit_program
+
+subtraction:
+    sub $t3, $t0, $t1       # t3 = t0 - t1
+    li $v0, 4
+    la $a0, result_sub
+    syscall
+    li $v0, 1
+    move $a0, $t3
+    syscall
+    j exit_program
+
+multiplication:
+    mul $t3, $t0, $t1       # t3 = t0 * t1
+    li $v0, 4
+    la $a0, result_mul
+    syscall
+    li $v0, 1
+    move $a0, $t3
+    syscall
+    j exit_program
+
+exit_program:
+    li $v0, 10              # syscall to exit program
+    syscall
