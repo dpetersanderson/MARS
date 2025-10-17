@@ -48,6 +48,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private NumberDisplayBaseChooser valueDisplayBase;
       private NumberDisplayBaseChooser addressDisplayBase;
       private boolean labelWindowVisible;
+      private boolean layoutPending;
    
    /**
    * initialize the Execute pane with major components
@@ -76,6 +77,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          dataSegment = new DataSegmentWindow(choosers);
          labelValues = new LabelsWindow();
          labelWindowVisible = Globals.getSettings().getLabelWindowVisibility();
+         layoutPending = false;
          this.add(textSegment);  // these 3 LOC moved up.  DPS 3-Sept-2014
          this.add(dataSegment);
          this.add(labelValues);
@@ -105,6 +107,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
          int fullWidth = this.getSize().width - this.getInsets().left - this.getInsets().right;
          int fullHeight = this.getSize().height - this.getInsets().top - this.getInsets().bottom;
+         if (fullWidth <= 0 || fullHeight <= 0) {
+            if (!layoutPending) {
+               layoutPending = true;
+               SwingUtilities.invokeLater(
+                     new Runnable() {
+                        public void run() {
+                           layoutPending = false;
+                           setWindowBounds();
+                        }
+                     });
+            }
+            return;
+         }
          int halfHeight = fullHeight/2;
          Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
          Dimension dataDim = new Dimension((int)(fullWidth),halfHeight);

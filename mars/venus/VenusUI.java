@@ -118,9 +118,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
          // basically give up some screen space if running at 800 x 600
          double messageWidthPct = (screenWidth<1000.0)? 0.67 : 0.73;
-         double messageHeightPct = (screenWidth<1000.0)? 0.12 : 0.15;
+         double messageHeightPct = 0.25;
          double mainWidthPct = (screenWidth<1000.0)? 0.67 : 0.73;
-         double mainHeightPct = (screenWidth<1000.0)? 0.60 : 0.65;
+         double mainHeightPct = (screenWidth<1000.0)? 0.60 : 0.68;
          double registersWidthPct = (screenWidth<1000.0)? 0.18 : 0.22;
          double registersHeightPct = (screenWidth<1000.0)? 0.72 : 0.80;
       				
@@ -170,9 +170,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          mainPane.setPreferredSize(mainPanePreferredSize);
          messagesPane= new MessagesPane();
          messagesPane.setPreferredSize(messagesPanePreferredSize);
+         messagesPane.setMinimumSize(new Dimension(0, 120));
          splitter= new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
          splitter.setOneTouchExpandable(true);
+         splitter.setResizeWeight(0.75);
          splitter.resetToPreferredSizes();
+         splitter.setDividerLocation(1.0 - messageHeightPct);
          horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
          horizonSplitter.setOneTouchExpandable(true);
          horizonSplitter.resetToPreferredSizes();
