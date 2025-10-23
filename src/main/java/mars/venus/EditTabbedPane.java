@@ -318,6 +318,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             FileStatus.setEdited(false);
             FileStatus.set(FileStatus.NOT_EDITED);
             editor.setCurrentSaveDirectory(theFile.getParent());
+            Globals.getSettings().setLastSaveDirectory(theFile.getParent());
             editPane.setPathname(theFile.getPath());
             editPane.setFileStatus(FileStatus.NOT_EDITED);
             updateTitlesAndMenuState(editPane);
@@ -386,7 +387,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                BufferedWriter outFileStream = new BufferedWriter(new FileWriter(theFile));          
                outFileStream.write(editPane.getSource(), 0, editPane.getSource().length());
                outFileStream.close();
-            } 
+
+                editor.setCurrentSaveDirectory(theFile.getParent());
+                Globals.getSettings().setLastSaveDirectory(theFile.getParent());
+            }
                 catch(java.io.IOException c) {
                   JOptionPane.showMessageDialog(null,"Save As operation could not be completed due to an error:\n"+c,
                      "Save As Operation Failed", JOptionPane.ERROR_MESSAGE);
@@ -573,6 +577,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             if (fileChooser.showOpenDialog(mainUI) == JFileChooser.APPROVE_OPTION) {
                File theFile = fileChooser.getSelectedFile();
                theEditor.setCurrentOpenDirectory(theFile.getParent());
+               Globals.getSettings().setLastOpenDirectory(theFile.getParent());
                //theEditor.setCurrentSaveDirectory(theFile.getParent());// 13-July-2011 DPS.
                if (!openFile(theFile)) {
                   return false;
