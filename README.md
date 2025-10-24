@@ -16,6 +16,23 @@ MARS (official) MIPS Assembler and Runtime Simulator
 > This is my community maintained fork version 4.6 that merges useful PRs into the project for my personal use.
 > You can use it if you want, but I'm not gonna maintain it much, so use it at your own risks.
 
-## Merged PRs
+## Features
+This fork includes [Flatlaf](https://www.formdev.com/flatlaf/) to allow for:
+- Partial dark mode support
+- Native window decorations
+- High DPI displays
+- Optionally, Intellij theme support
+- And more...
+
+## Merged PRs and fixed issues
 - https://github.com/dpetersanderson/MARS/pull/10
 - https://github.com/dpetersanderson/MARS/pull/4
+- https://github.com/dpetersanderson/MARS/issues/11
+
+## Screenshot
+![how the app looks like now](screenshot.png)
+
+## How to run
+- Install Java 11+ on your system
+- On Linux/Mac, either use `./gradlew build` with `java -jar build/libs/Mars-4.6.jar` or `./gradlew run`
+- On Windows, either use `./gradlew.bat build` with `java -jar build/libs/Mars-4.6.jar` or `./gradlew.bat run`
