@@ -29,3 +29,7 @@ jar {
         attributes['Main-Class'] = application.mainClass
     }
 }
+
+dependencies {
+    implementation 'com.formdev:flatlaf:3.6.2'
+}
