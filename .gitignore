@@ -1,0 +1,25 @@
+# Gradle build output directory
+build
+
+# Compiled class files
+*.class
+
+# Log file
+*.log
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar
+*.tar.?z
+*.rar
+
+# Virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# Hidden files and directories
+.*
