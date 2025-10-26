@@ -1,0 +1,7 @@
+rootProject.name = 'Mars'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
