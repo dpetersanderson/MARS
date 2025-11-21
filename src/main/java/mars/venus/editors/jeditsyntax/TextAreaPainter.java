@@ -13,6 +13,7 @@
 
    import mars.venus.editors.jeditsyntax.tokenmarker.*;
    import javax.swing.ToolTipManager;
+   import javax.swing.UIManager;
    import javax.swing.text.*;
    import javax.swing.JComponent;
    import java.awt.event.MouseEvent;
@@ -48,8 +49,16 @@
          setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
       
          setFont(new Font("Courier New" /*"Monospaced"*/,Font.PLAIN,14));
-         setForeground(Color.black);
-         setBackground(Color.white);
+         Color foreground = UIManager.getColor("TextArea.foreground");
+         if (foreground == null) {
+            foreground = Color.black;
+         }
+         setForeground(foreground);
+         Color background = UIManager.getColor("TextArea.background");
+         if (background == null) {
+            background = Color.white;
+         }
+         setBackground(background);
       
          tabSizeChars = defaults.tabSize;
          blockCaret = defaults.blockCaret;

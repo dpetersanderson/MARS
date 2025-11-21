@@ -11,6 +11,7 @@
 
    import mars.Settings;
    import javax.swing.JPopupMenu;
+   import javax.swing.UIManager;
    import java.awt.Color;
 
 /**
@@ -71,13 +72,36 @@
          DEFAULTS.cols = 80;
          DEFAULTS.rows = 25;
          DEFAULTS.styles = SyntaxUtilities.getCurrentSyntaxStyles(); // was getDefaultSyntaxStyles()
-         DEFAULTS.caretColor = Color.black; // Color.red;
-         DEFAULTS.selectionColor = new Color(0xccccff);
-         DEFAULTS.lineHighlightColor = new Color(0xeeeeee);//0xe0e0e0);
+         DEFAULTS.caretColor = UIManager.getColor("TextArea.caretForeground");
+         if (DEFAULTS.caretColor == null) {
+            DEFAULTS.caretColor = UIManager.getColor("TextComponent.caretForeground");
+         }
+         if (DEFAULTS.caretColor == null) {
+            DEFAULTS.caretColor = Color.black;
+         }
+         DEFAULTS.selectionColor = UIManager.getColor("TextArea.selectionBackground");
+         if (DEFAULTS.selectionColor == null) {
+            DEFAULTS.selectionColor = new Color(0xccccff);
+         }
+         DEFAULTS.lineHighlightColor = UIManager.getColor("TextArea.selectionBackground");
+         if (DEFAULTS.lineHighlightColor == null) {
+            DEFAULTS.lineHighlightColor = new Color(0xeeeeee);
+         } else {
+            // Make the line highlight color slightly more subtle than selection
+            int rgb = DEFAULTS.lineHighlightColor.getRGB();
+            int alpha = 50; // More transparent
+            DEFAULTS.lineHighlightColor = new Color((rgb & 0xFFFFFF) | (alpha << 24), true);
+         }
          DEFAULTS.lineHighlight = mars.Globals.getSettings().getBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING);
-         DEFAULTS.bracketHighlightColor = Color.black;
+         DEFAULTS.bracketHighlightColor = UIManager.getColor("TextArea.foreground");
+         if (DEFAULTS.bracketHighlightColor == null) {
+            DEFAULTS.bracketHighlightColor = Color.black;
+         }
          DEFAULTS.bracketHighlight = false; // assembly language doesn't need this.
-         DEFAULTS.eolMarkerColor = new Color(0x009999);
+         DEFAULTS.eolMarkerColor = UIManager.getColor("Component.accentColor");
+         if (DEFAULTS.eolMarkerColor == null) {
+            DEFAULTS.eolMarkerColor = new Color(0x009999);
+         }
          DEFAULTS.eolMarkers = false; // true;
          DEFAULTS.paintInvalid = false; //true;
          DEFAULTS.document = new SyntaxDocument();

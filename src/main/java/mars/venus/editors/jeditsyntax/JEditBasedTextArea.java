@@ -168,7 +168,15 @@
      //
        public void setSourceCode(String s, boolean editable) {       
          this.setText(s);
-         this.setBackground( (editable)? Color.WHITE : Color.GRAY);
+         Color editableBackground = UIManager.getColor("TextArea.background");
+         if (editableBackground == null) {
+            editableBackground = Color.WHITE;
+         }
+         Color disabledBackground = UIManager.getColor("TextArea.disabledBackground");
+         if (disabledBackground == null) {
+            disabledBackground = Color.GRAY;
+         }
+         this.setBackground( (editable)? editableBackground : disabledBackground);
          this.setEditable(editable);  
          this.setEnabled(editable);
          //this.getCaret().setVisible(editable);

@@ -62,7 +62,19 @@ public class JEditTextArea extends JComponent
  * bar is added this way.
  */
    public static String LEFT_OF_SCROLLBAR = "los";
-   public static Color POPUP_HELP_TEXT_COLOR = Color.BLACK;  // DPS 11-July-2014
+   
+   /**
+    * Get the popup help text color from the current UIManager theme.
+    * Falls back to black if not available.
+    * @return the color for popup help text
+    */
+   public static Color getPopupHelpTextColor() {
+      Color color = UIManager.getColor("Label.foreground");
+      if (color == null) {
+         color = Color.BLACK;
+      }
+      return color;
+   }
 	
  // Number of text lines moved for each click of the vertical scrollbar buttons.
    private static final int VERTICAL_SCROLLBAR_UNIT_INCREMENT_IN_LINES = 1;
