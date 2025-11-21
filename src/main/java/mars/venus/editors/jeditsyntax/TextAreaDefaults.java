@@ -83,14 +83,23 @@
          if (DEFAULTS.selectionColor == null) {
             DEFAULTS.selectionColor = new Color(0xccccff);
          }
-         DEFAULTS.lineHighlightColor = UIManager.getColor("TextArea.selectionBackground");
+         // Try FlatLaf-specific key first, then fall back to a dimmed selection color
+         DEFAULTS.lineHighlightColor = UIManager.getColor("Editor.lineHighlightBackground");
+         if (DEFAULTS.lineHighlightColor == null) {
+            DEFAULTS.lineHighlightColor = UIManager.getColor("TextArea.background");
+         }
          if (DEFAULTS.lineHighlightColor == null) {
             DEFAULTS.lineHighlightColor = new Color(0xeeeeee);
          } else {
-            // Make the line highlight color slightly more subtle than selection
+            // Make the line highlight color slightly different from background
+            final int LINE_HIGHLIGHT_ALPHA = 30; // Transparency level for line highlight
             int rgb = DEFAULTS.lineHighlightColor.getRGB();
-            int alpha = 50; // More transparent
-            DEFAULTS.lineHighlightColor = new Color((rgb & 0xFFFFFF) | (alpha << 24), true);
+            Color selectionColor = DEFAULTS.selectionColor;
+            // Blend with selection color for better visibility
+            int blendRed = (((rgb >> 16) & 0xFF) + ((selectionColor.getRGB() >> 16) & 0xFF)) / 2;
+            int blendGreen = (((rgb >> 8) & 0xFF) + ((selectionColor.getRGB() >> 8) & 0xFF)) / 2;
+            int blendBlue = ((rgb & 0xFF) + (selectionColor.getRGB() & 0xFF)) / 2;
+            DEFAULTS.lineHighlightColor = new Color(blendRed, blendGreen, blendBlue, LINE_HIGHLIGHT_ALPHA);
          }
          DEFAULTS.lineHighlight = mars.Globals.getSettings().getBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING);
          DEFAULTS.bracketHighlightColor = UIManager.getColor("TextArea.foreground");
