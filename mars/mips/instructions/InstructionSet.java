@@ -1188,7 +1188,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("syscall", 
             	 "Issue a system call : Execute the system call specified by value in $v0",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 00000 00000 00000 00000 001100",
+                "000000 ccccc ccccc ccccc ccccc 001100",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2829,7 +2829,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("teq $t1,$t2",
                 "Trap if equal : Trap if $t1 is equal to $t2",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110100",
+                "000000 fffff sssss ccccc ccccc 110100",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2863,7 +2863,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("tne $t1,$t2",
                 "Trap if not equal : Trap if $t1 is not equal to $t2",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110110",
+                "000000 fffff sssss ccccc ccccc 110110",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2897,7 +2897,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("tge $t1,$t2",
                 "Trap if greater or equal : Trap if $t1 is greater than or equal to $t2",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110000",
+                "000000 fffff sssss ccccc ccccc 110000",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2914,7 +2914,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("tgeu $t1,$t2",
                 "Trap if greater or equal unsigned : Trap if $t1 is greater than or equal to $t2 using unsigned comparision",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110001",
+                "000000 fffff sssss ccccc ccccc 110001",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2972,7 +2972,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("tlt $t1,$t2",
                 "Trap if less than: Trap if $t1 less than $t2",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110010",
+                "000000 fffff sssss ccccc ccccc 110010",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
@@ -2989,7 +2989,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("tltu $t1,$t2",
                 "Trap if less than unsigned : Trap if $t1 less than $t2, unsigned comparison",
             	 BasicInstructionFormat.R_FORMAT,
-                "000000 fffff sssss 00000 00000 110011",
+                "000000 fffff sssss ccccc ccccc 110011",
                 new SimulationCode()
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
