@@ -1,5 +1,6 @@
 # Gradle build output directory
 build
+bin/
 
 # Compiled class files
 *.class
@@ -21,5 +22,10 @@ build
 hs_err_pid*
 replay_pid*
 
-# Hidden files and directories
-.*
+# Gradle configuration
+.gradle/
+
+# jdtls eclipse files
+.project
+.classpath
+.settings/
