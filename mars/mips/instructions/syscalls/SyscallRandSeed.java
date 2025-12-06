@@ -55,7 +55,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           //   $a1 = seed for pseudorandom number generator.
           // Result: No values are returned. Sets the seed of the underlying Java pseudorandom number generator.
 
-          Integer index = new Integer(RegisterFile.getValue(4));
+          Integer index = RegisterFile.getValue(4);
 			 Random stream = (Random) RandomStreams.randomStreams.get(index);
           if (stream == null) {
 			    RandomStreams.randomStreams.put(index, new Random(RegisterFile.getValue(5)));

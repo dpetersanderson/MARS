@@ -34,17 +34,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /**
  * Stores information of macros defined by now. <br>
  * Will be used in first pass of assembling MIPS source code. When reached
- * <code>.macro</code> directive, parser calls
- * {@link MacroPool#BeginMacro(String, int)} and skips source code lines until
- * reaches <code>.end_macro</code> directive. then calls
- * {@link MacroPool#CommitMacro(int)} and the macro information stored in a
+ * <code>{@link Directives#MACRO .macro}</code> directive, parser calls
+ * {@link MacroPool#beginMacro(Token)} and skips source code lines until
+ * reaches <code>{@link Directives#END_MACRO .end_macro}</code> directive. then calls
+ * {@link MacroPool#commitMacro(Token)} and the macro information stored in a
  * {@link Macro} instance will be added to {@link #macroList}. <br>
  * Each {@link MIPSprogram} will have one {@link MacroPool}<br>
  * NOTE: Forward referencing macros (macro expansion before its definition in
  * source code) and Nested macro definition (defining a macro inside other macro
  * definition) are not supported.
  * 
- * @author M.H.Sekhavat <sekhavat17@gmail.com>
+ * @author M.H.Sekhavat {@literal <sekhavat17@gmail.com>}
  */
     public class MacroPool {
       private MIPSprogram program;
@@ -53,7 +53,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     */
       private ArrayList<Macro> macroList;
    /**
-    * @see #BeginMacro(String, int)
+    * @see #beginMacro(Token)
     */
       private Macro current;
       private ArrayList<Integer> callStack;
@@ -82,7 +82,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * directive.<br>
     * Instantiates a new {@link Macro} object and stores it in {@link #current}
     * . {@link #current} will be added to {@link #macroList} by
-    * {@link #CommitMacro(int)}
+    * {@link #commitMacro(Token)}
     * 
     * @param nameToken
     *            Token containing name of macro after <code>.macro</code> directive

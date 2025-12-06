@@ -136,7 +136,9 @@
          styles[Token.MACRO_ARG]= Globals.getSettings().getEditorSyntaxStyleByPosition(Token.MACRO_ARG);      
          return styles;
       }
-   
+      
+      public static boolean popupShowing = false;
+      public static Popup popup;
    /**
     * Paints the specified line onto the graphics context. Note that this
     * method munges the offset and count values of the segment.
@@ -149,8 +151,7 @@
     * @param x The x co-ordinate
     * @param y The y co-ordinate
     * @return The x co-ordinate, plus the width of the painted string
-    */ public static boolean popupShowing = false;
-      public static Popup popup;
+    */
        public static int paintSyntaxLine(Segment line, Token tokens,
        SyntaxStyle[] styles, TabExpander expander, Graphics gfx,
        int x, int y)

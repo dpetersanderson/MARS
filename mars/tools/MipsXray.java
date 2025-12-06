@@ -130,7 +130,7 @@ public class MipsXray extends AbstractMarsToolAndApplication{
              						"\n"+
 										"To see the datapath of register bank and control units click inside the functional unit.\n\n" +
              						"Version 2.0\n" + 
-             						"Developed by Márcio Roberto, Guilherme Sales, Fabrício Vivas, Flávio Cardeal and Fábio Lúcio\n" +
+             						"Developed by MÃ¡rcio Roberto, Guilherme Sales, FabrÃ­cio Vivas, FlÃ¡vio Cardeal and FÃ¡bio LÃºcio\n" +
              						"Contact Marcio Roberto at marcio.rdaraujo@gmail.com with questions or comments.\n"
              						;
           JButton help = new JButton("Help");
@@ -299,18 +299,18 @@ public class MipsXray extends AbstractMarsToolAndApplication{
            try{
                runAssembleAction = new RunAssembleAction("Assemble",  
                        new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble22.png"))),
-   							  "Assemble the current file and clear breakpoints", new Integer(KeyEvent.VK_A),
+   							  "Assemble the current file and clear breakpoints", KeyEvent.VK_A,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F3, 0), 
    							  mainUI);			
 
                runStepAction = new RunStepAction("Step", 
                        new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward22.png"))),
-   							  "Run one step at a time", new Integer(KeyEvent.VK_T),
+   							  "Run one step at a time", KeyEvent.VK_T,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
    							  mainUI);	
                runBackstepAction = new RunBackstepAction("Backstep", 
                        new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack22.png"))),
-   							  "Undo the last step", new Integer(KeyEvent.VK_B),
+   							  "Undo the last step", KeyEvent.VK_B,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
    							  mainUI);		
            }

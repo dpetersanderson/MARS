@@ -483,7 +483,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     ((hexString.indexOf("0X")==0 || hexString.indexOf("0x")==0)
                						  ? hexString.substring(2) : hexString), maxLengthHex);
             this.binaryString = Binary.hexStringToBinaryString(this.hexString); 
-            this.decimalString = new Float(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString))).toString();
+            this.decimalString = Float.toString(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString)));
             this.expansionString = buildExpansionFromBinaryString(this.binaryString);
             this.intValue = Binary.binaryStringToInt(this.binaryString);
             return this;
@@ -493,7 +493,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           private FlavorsOfFloat buildOneFromBinaryString() {
             this.binaryString = getFullBinaryStringFromDisplays();
             this.hexString = Binary.binaryStringToHexString(binaryString);
-            this.decimalString = new Float(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString))).toString();
+            this.decimalString = Float.toString(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString)));
             this.expansionString = buildExpansionFromBinaryString(this.binaryString);
             this.intValue = Binary.binaryStringToInt(this.binaryString);
             return this;
@@ -508,7 +508,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 catch (NumberFormatException nfe) {
                   return null;
                }
-            this.decimalString = new Float(floatValue).toString();
+            this.decimalString = Float.toString(floatValue);
             this.intValue = Float.floatToIntBits(floatValue);// use floatToRawIntBits?
             this.binaryString = Binary.intToBinaryString(this.intValue);
             this.hexString = Binary.binaryStringToHexString(this.binaryString);
@@ -521,7 +521,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             this.intValue = intValue;
             this.binaryString = Binary.intToBinaryString(intValue);
             this.hexString = Binary.binaryStringToHexString(this.binaryString);
-            this.decimalString = new Float(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString))).toString();
+            this.decimalString = Float.toString(Float.intBitsToFloat(Binary.binaryStringToInt(this.binaryString)));
             this.expansionString = buildExpansionFromBinaryString(this.binaryString);
             return this;
          }
