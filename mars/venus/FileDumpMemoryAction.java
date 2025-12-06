@@ -40,7 +40,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the File -> Save For Dump Memory menu item
+    * Action  for the File -&gt; Save For Dump Memory menu item
     */   			
     public class FileDumpMemoryAction extends GuiAction {
     

@@ -892,7 +892,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          editRedoAction.updateRedoState();
       }
    
-     /* Use this when "File -> New" is used
+     /* Use this when "File -&gt; New" is used
       */
        void setMenuStateEditingNew() {
       /* Note: undo and redo are handled separately by the undo manager*/  
@@ -1133,9 +1133,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }   	          
    	
    	/**
-   	 * Return reference tothe Run->Assemble item's action.  Needed by File->Open in case
+   	 * Return reference to the Run -&gt; Assemble item's action.  Needed by File -&gt; Open in case
    	 * assemble-upon-open flag is set.
-   	 * @return the Action object for the Run->Assemble operation.
+   	 * @return the Action object for the Run -&gt; Assemble operation.
    	 */
        public Action getRunAssembleAction() {
          return runAssembleAction;

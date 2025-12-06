@@ -162,7 +162,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 
       /** Clears out all components of the Execute tab: text segment
    	 * display, data segment display, label display and register display.
-   	 * This will typically be done upon File->Close, Open, New.
+   	 * This will typically be done upon File -&gt; Close, Open, New.
    	 */
    	
        public void clearPane() {

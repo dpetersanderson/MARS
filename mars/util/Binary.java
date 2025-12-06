@@ -237,7 +237,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * 
      * @param value The String value to convert.
      * @return char '0', '1', ...'F' which form hexadecimal equivalent of decoded String.
-     * If string length > 4, returns '0'.
+     * If string length &gt; 4, returns '0'.
      **/   
    
        public static char binaryStringToHexDigit(String value) {

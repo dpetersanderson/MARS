@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
    /**
-    * Action class for the Run -> Go menu item (and toolbar icon)
+    * Action class for the Run -&gt; Go menu item (and toolbar icon)
     */
     public class RunGoAction extends GuiAction  {
    	

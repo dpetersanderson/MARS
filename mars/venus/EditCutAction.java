@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Edit -> Cut menu item
+    * Action  for the Edit -&gt; Cut menu item
     */   			
     public class EditCutAction extends GuiAction {
    	 

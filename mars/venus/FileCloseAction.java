@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
     /**
-    * Action  for the File -> Close menu item
+    * Action  for the File -&gt; Close menu item
     */   			
     public class FileCloseAction extends GuiAction {
    	 

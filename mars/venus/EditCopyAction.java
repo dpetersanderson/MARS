@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Edit -> Copy menu item
+    * Action  for the Edit -&gt; Copy menu item
     */   			
     public class EditCopyAction extends GuiAction {
    	 

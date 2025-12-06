@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Edit -> Undo menu item
+    * Action  for the Edit -&gt; Undo menu item
     */   			
     public class EditUndoAction extends GuiAction {
    	 

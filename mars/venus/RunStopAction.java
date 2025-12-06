@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
    /**
-    * Action class for the Run -> Stop menu item (and toolbar icon)
+    * Action class for the Run -&gt; Stop menu item (and toolbar icon)
     */
     public class RunStopAction extends GuiAction  {
    	
