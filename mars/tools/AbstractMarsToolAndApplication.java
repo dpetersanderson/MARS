@@ -514,7 +514,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  since it will remove the app as a memory observer regardless of the subrange
    	 *  or number of subranges it is registered for.
    	 *  @param lowEnd low end of memory address range.
-   	 *  @param highEnd high end of memory address range; must be >= lowEnd
+   	 *  @param highEnd high end of memory address range; must be &gt;= lowEnd
    	 */
    	
        protected void addAsObserver(int lowEnd, int highEnd) {

@@ -37,7 +37,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
    /**
-    * Action class for the Run -> Assemble menu item (and toolbar icon)
+    * Action class for the Run -&gt; Assemble menu item (and toolbar icon)
     */
     public class RunAssembleAction extends GuiAction {
    	 

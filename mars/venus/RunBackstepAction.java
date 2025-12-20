@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Run -> Backstep menu item
+    * Action  for the Run -&gt; Backstep menu item
     */   			
     public class RunBackstepAction extends GuiAction {
    	 

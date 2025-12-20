@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
     /**
-    * Action  for the File -> Open menu item
+    * Action  for the File -&gt; Open menu item
     */   			
     public class FileOpenAction extends GuiAction {
     

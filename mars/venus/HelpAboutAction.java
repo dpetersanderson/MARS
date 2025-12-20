@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Help -> About menu item
+    * Action  for the Help -&gt; About menu item
     */   			
     public class HelpAboutAction extends GuiAction {
        public  HelpAboutAction(String name, Icon icon, String descrip,

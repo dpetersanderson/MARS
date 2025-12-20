@@ -39,7 +39,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Help -> Help menu item
+    * Action  for the Help -&gt; Help menu item
     */   			
     public class HelpHelpAction extends GuiAction {
        public  HelpHelpAction(String name, Icon icon, String descrip,

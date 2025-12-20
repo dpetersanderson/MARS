@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Edit -> Redo menu item
+    * Action  for the Edit -&gt; Redo menu item
     */   			
     public class EditRedoAction extends GuiAction {
    	 

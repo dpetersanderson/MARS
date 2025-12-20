@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
    /**
-    * Action  for the Run -> Reset menu item
+    * Action  for the Run -&gt; Reset menu item
     */   
     public class RunResetAction extends GuiAction {
    	 

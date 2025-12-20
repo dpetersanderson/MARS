@@ -1672,7 +1672,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         round = Integer.MAX_VALUE;
                      } 
                      else {
-                        Float floatObj = new Float(floatValue);
+                        Float floatObj = Float.valueOf(floatValue);
                         // If we are EXACTLY in the middle, then round to even!  To determine this,
                         // find next higher integer and next lower integer, then see if distances 
                         // are exactly equal.
@@ -1920,7 +1920,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         round = Integer.MAX_VALUE;
                      } 
                      else {
-                        Double doubleObj = new Double(doubleValue);
+                        Double doubleObj = Double.valueOf(doubleValue);
                         // If we are EXACTLY in the middle, then round to even!  To determine this,
                         // find next higher integer and next lower integer, then see if distances 
                         // are exactly equal.

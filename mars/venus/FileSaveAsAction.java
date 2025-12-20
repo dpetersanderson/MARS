@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the File -> Save As menu item
+    * Action  for the File -&gt; Save As menu item
     */   			
     public class FileSaveAsAction extends GuiAction {
    	 

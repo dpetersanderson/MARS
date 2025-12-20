@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
     /**
-    * Action  for the Run -> Step menu item
+    * Action  for the Run -&gt; Step menu item
     */   			
     public class RunStepAction extends GuiAction {
    	 
