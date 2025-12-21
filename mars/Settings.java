@@ -146,17 +146,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public static final int EDITOR_TAB_SIZE = 5;
    	/** Number of letters to be matched by editor's instruction guide before popup generated (if popup enabled) */
       public static final int EDITOR_POPUP_PREFIX_LENGTH = 6;
+    /** Default open directory when opening a new file */
+      public static final int LAST_OPEN_DIRECTORY = 7;
+    /** Default save directory when saving a new file */
+      public static final int LAST_SAVE_DIRECTORY = 8;
    	// Match the above by position.
-      private static final String[] stringSettingsKeys = { "ExceptionHandler", "TextColumnOrder", "LabelSortState", "MemoryConfiguration", "CaretBlinkRate", "EditorTabSize", "EditorPopupPrefixLength" };
-   
-      /** Last resort default values for String settings; 
+      private static final String[] stringSettingsKeys = { "ExceptionHandler", "TextColumnOrder", "LabelSortState", "MemoryConfiguration", "CaretBlinkRate", "EditorTabSize", "EditorPopupPrefixLength", "LastOpenDirectory", "LastSaveDirectory" };
+      /** Last resort default values for String settings;
    	 *  will use only if neither the Preferences nor the properties file work.
    	 *  If you wish to change, do so before instantiating the Settings object.
    	 *  Must match key by list position.
    	 */
-      private static String[] defaultStringSettingsValues = { "", "0 1 2 3 4", "0", "", "500", "8", "2" }; 
-   
-   
+      private static String[] defaultStringSettingsValues = { "", "0 1 2 3 4", "0", "", "500", "8", "2", System.getProperty("user.dir"), System.getProperty("user.dir") };
       // FONT SETTINGS.  Each array position has associated name.
    	/** Font for the text editor */
       public static final int EDITOR_FONT = 0;
@@ -727,8 +728,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
          return length;
       }
-   
-   	
+
+    /**
+     * Name of the last open directory.
+     * @return String pathname of the last open directory, user's current working directory if none.
+     */
+       public String getLastOpenDirectory() {
+           return stringSettingsValues[LAST_OPEN_DIRECTORY];
+       }
+
+    /**
+     * Name of the last open directory.
+     * @return String pathname of the last open directory, user's current working directory if none.
+     */
+       public String getLastSaveDirectory() {
+           return stringSettingsValues[LAST_SAVE_DIRECTORY];
+       }
+
    	/**
    	 * Get the text editor default tab size in characters
    	 * @return tab size in characters
@@ -1055,7 +1071,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void setEditorPopupPrefixLength(int length) {
          setStringSetting(EDITOR_POPUP_PREFIX_LENGTH, ""+length);
       }
-   
+
+    /**
+     * Set path of last open directory and write it to persistent storage.
+     * @param newDirectoryPath path of last open directory
+     */
+       public void setLastOpenDirectory(String newDirectoryPath) {
+           setStringSetting(LAST_OPEN_DIRECTORY, newDirectoryPath);
+       }
+
+    /**
+     * Set path of last save directory and write it to persistent storage.
+     * @param newDirectoryPath path of last save directory
+     */
+       public void setLastSaveDirectory(String newDirectoryPath) {
+           setStringSetting(LAST_SAVE_DIRECTORY, newDirectoryPath);
+       }
+
    	/**
    	 * Set editor font to the specified Font object and write it to persistent storage.
    	 * This method retained for compatibility but replaced by: 
