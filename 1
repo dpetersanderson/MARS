@@ -1,0 +1,7 @@
+# BLT implementation using SLT + BEQ
+# Alternative: branch if not less (skip label)
+# Discussion: Checks when $8 is NOT less than $9, skips label instead.
+# Performance: Also 2 instructions. Equivalent cost, depends on control flow.
+
+slt $at, $9, $8     # $at = 1 if $9 < $8 (so $8 >= $9)
+beq $at, $zero, label  # if not ($8 >= $9), then $8 < $9 → branch
