@@ -907,7 +907,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }));
          instructionList.add(
                 new BasicInstruction("bgezal $t1,label",
-                "Branch if greater then or equal to zero and link : If $t1 is greater than or equal to zero, then set $ra to the Program Counter and branch to statement at label's address",
+                "Branch if greater then or equal to zero and link : Set $ra to the Program Counter (Return Address). If $t1 is greater than or equal to zero, then branch to statement at label's address",
             	 BasicInstructionFormat.I_BRANCH_FORMAT,
                 "000001 fffff 10001 ssssssssssssssss",
                 new SimulationCode()
@@ -915,9 +915,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   {
                      int[] operands = statement.getOperands();
-                     if (RegisterFile.getValue(operands[0]) >= 0)
-                     {  // the "and link" part
-                        processReturnAddress(31);//RegisterFile.updateRegister("$ra",RegisterFile.getProgramCounter());
+                     // save compare result (important when the compare register is 31) 
+                     boolean condition = RegisterFile.getValue(operands[0]) >= 0;
+                     // the "and link" part
+                     processReturnAddress(31);//RegisterFile.updateRegister("$ra",RegisterFile.getProgramCounter());
+                     if (condition)
+                     {
                         processBranch(operands[1]);
                      }
                   } 
@@ -972,7 +975,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }));
          instructionList.add(
                 new BasicInstruction("bltzal $t1,label",
-                "Branch if less than zero and link : If $t1 is less than or equal to zero, then set $ra to the Program Counter and branch to statement at label's address",
+                "Branch if less than zero and link : Set $ra to the Program Counter (Return Address). If $t1 is less than or equal to zero, then branch to statement at label's address",
             	 BasicInstructionFormat.I_BRANCH_FORMAT,
                 "000001 fffff 10000 ssssssssssssssss",
                 new SimulationCode()
@@ -980,9 +983,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   {
                      int[] operands = statement.getOperands();
-                     if (RegisterFile.getValue(operands[0]) < 0)
-                     {  // the "and link" part
-                        processReturnAddress(31);//RegisterFile.updateRegister("$ra",RegisterFile.getProgramCounter());
+                     // save compare result (important when the compare register is 31) 
+                     boolean condition = RegisterFile.getValue(operands[0]) < 0;
+                     // the "and link" part
+                     processReturnAddress(31);//RegisterFile.updateRegister("$ra",RegisterFile.getProgramCounter());
+                     if (condition)
+                     {
                         processBranch(operands[1]);
                      }
                   }
