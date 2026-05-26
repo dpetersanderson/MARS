@@ -41,13 +41,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * Action  for the File -&gt; Open menu item
     */   			
     public class FileOpenAction extends GuiAction {
-    
-      private File mostRecentlyOpenedFile;
-      private JFileChooser fileChooser;
-      private int fileFilterCount;
-      private ArrayList fileFilterList;
-      private PropertyChangeListener listenForUserAddedFileFilter;
-   	 
        public FileOpenAction(String name, Icon icon, String descrip,
                              Integer mnemonic, KeyStroke accel, VenusUI gui) {
          super(name, icon, descrip, mnemonic, accel, gui);

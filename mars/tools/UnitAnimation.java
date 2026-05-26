@@ -21,9 +21,7 @@ import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -68,8 +66,8 @@ implements ActionListener {
 
 // private Vertex[][] inputGraph;
  private Vector<Vector<Vertex>>  outputGraph;
- private ArrayList<Vertex> vertexList;
- private ArrayList<Vertex> vertexTraversed;
+ private List<Vertex> vertexList;
+ private List<Vertex> vertexTraversed;
  //Screen Label variables
  
  private HashMap<String, String> registerEquivalenceTable;
@@ -109,7 +107,7 @@ private int datapatTypeUsed;
 	   	private boolean first_interaction;
 	   	private boolean active;
 	   	private boolean isText;
-	   	private ArrayList<Integer> targetVertex;
+	   	private List<Integer> targetVertex;
 	   	
 	   	public Vertex(int index, int init, int end, String name, int oppositeAxis, boolean isMovingXaxis, 
 	   			String listOfColors, String listTargetVertex, boolean isText){
@@ -138,7 +136,7 @@ private int datapatTypeUsed;
 	   				direction = movingDownside;
 	   		}
 	   		String[] list =  listTargetVertex.split("#");
-	   		targetVertex = new ArrayList<Integer>();
+	   		targetVertex = new ArrayList<>();
 	   		for(int i = 0; i < list.length; i++){
 	   			targetVertex.add(Integer.parseInt(list[i]));
 	   		//	System.out.println("Adding " + i + " " +  Integer.parseInt(list[i])+ " in target");
@@ -156,7 +154,7 @@ private int datapatTypeUsed;
 	   	}
 
 
-		public ArrayList<Integer> getTargetVertex() {
+		public List<Integer> getTargetVertex() {
 			return targetVertex;
 		}
 
@@ -240,13 +238,13 @@ private int datapatTypeUsed;
 	 // load and initialise the images
 	 initImages();
 	  
-	 vertexList = new ArrayList<Vertex>();
+	 vertexList = new ArrayList<>();
 	 counter = 0;
 	 justStarted = true;
 	 instructionCode = instructionBinary;
 	 
 	 //declaration of labels definition.
-	 registerEquivalenceTable = new  HashMap<String, String>();
+	 registerEquivalenceTable = new HashMap<>();
 	 
 	 countRegLabel = 400;
 	 countALULabel = 380;
@@ -274,7 +272,7 @@ private int datapatTypeUsed;
  }
  
  //import the list of opcodes of mips set of instructions
- public void importXmlStringData(String xmlName, HashMap table, String elementTree, String tagId, String tagData){
+ public void importXmlStringData(String xmlName, HashMap<String,String> table, String elementTree, String tagId, String tagData){
 	 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(false);
 		DocumentBuilder docBuilder;
@@ -359,15 +357,15 @@ private int datapatTypeUsed;
 				}
 			}
 			//loading matrix of control of vertex.
-			outputGraph = new Vector<Vector<Vertex>>();
-			vertexTraversed = new ArrayList<Vertex>();
+            outputGraph = new Vector<>();
+            vertexTraversed = new ArrayList<>();
 			int size = vertexList.size();
 			Vertex vertex;
-			ArrayList<Integer> targetList;
+			List<Integer> targetList;
 			for(int i = 0; i < vertexList.size(); i++){
 				vertex = vertexList.get(i);
 				targetList = vertex.getTargetVertex();
-				Vector<Vertex> vertexOfTargets = new Vector<Vertex>();
+                Vector<Vertex> vertexOfTargets = new Vector<>();
 				for(int k = 0; k < targetList.size(); k++){
 					vertexOfTargets.add(vertexList.get(targetList.get(k)));
 				}
@@ -463,15 +461,15 @@ private int datapatTypeUsed;
 				}
 			}
 			//loading matrix of control of vertex.
-			outputGraph = new Vector<Vector<Vertex>>();
-			vertexTraversed = new ArrayList<Vertex>();
+			outputGraph = new Vector<>();
+			vertexTraversed = new ArrayList<>();
 			int size = vertexList.size();
 			Vertex vertex;
-			ArrayList<Integer> targetList;
+			List<Integer> targetList;
 			for(int i = 0; i < vertexList.size(); i++){
 				vertex = vertexList.get(i);
 				targetList = vertex.getTargetVertex();
-				Vector<Vertex> vertexOfTargets = new Vector<Vertex>();
+				Vector<Vertex> vertexOfTargets = new Vector<>();
 				for(int k = 0; k < targetList.size(); k++){
 					vertexOfTargets.add(vertexList.get(targetList.get(k)));
 				}
@@ -737,7 +735,7 @@ public void printTrackRtoL(Vertex v){
 	 for(int i = 0; i < vertexTraversed.size(); i++){
 		 vert = vertexTraversed.get(i);
 		 if(vert.isMovingXaxis == true){
-			 if(vert.getDirection() == vert.movingLeft){
+			 if(vert.getDirection() == Vertex.movingLeft){
 				 printTrackLtoR(vert);
 				 if(vert.isActive() == false){
 					 int j = vert.getTargetVertex().size();
@@ -777,7 +775,7 @@ public void printTrackRtoL(Vertex v){
 			 }
 		 } //end of condition of X axis
 		 else{
-			 if(vert.getDirection() == vert.movingDownside){
+			 if(vert.getDirection() == Vertex.movingDownside){
 				 if(vert.isText == true)
 					 ;
 				 else

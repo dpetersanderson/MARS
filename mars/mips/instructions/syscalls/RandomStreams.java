@@ -1,5 +1,5 @@
    package mars.mips.instructions.syscalls;
-	import java.util.HashMap;
+	import java.util.*;
 
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -39,5 +39,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class RandomStreams {
       /** Collection of pseudorandom number streams available for use in Rand-type syscalls.
        * The streams are by default not seeded. */
-		 static final HashMap randomStreams = new HashMap();
+		 static final HashMap<Integer,Random> randomStreams = new HashMap<>();
    }

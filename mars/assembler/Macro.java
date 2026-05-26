@@ -1,8 +1,6 @@
 package mars.assembler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 import mars.ErrorList;
 import mars.ErrorMessage;
@@ -44,7 +42,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 public class Macro {
    private String name;
    private MIPSprogram program;
-   private ArrayList<String> labels;
+   private List<String> labels;
 
 /**
  * first and last line number of macro definition. first line starts with
@@ -55,15 +53,15 @@ public class Macro {
 /**
  * arguments like <code>%arg</code> will be substituted by macro expansion
  */
-   private ArrayList<String> args;
+   private List<String> args;
 
    public Macro() {
       name = "";
       program = null;
       fromLine = toLine = 0;
       origFromLine = origToLine = 0;
-      args = new ArrayList<String>();
-      labels = new ArrayList<String>();
+      args = new ArrayList<>();
+      labels = new ArrayList<>();
    }
 
    public String getName() {
@@ -114,7 +112,7 @@ public class Macro {
       this.origToLine = origToLine;
    }
 	
-   public ArrayList<String> getArgs() {
+   public List<String> getArgs() {
       return args;
    }
 
@@ -156,7 +154,7 @@ public class Macro {
  */
 
    public String getSubstitutedLine(int line, TokenList args, long counter, ErrorList errors) {
-      TokenList tokens = (TokenList) program.getTokenList().get(line - 1);
+      TokenList tokens = program.getTokenList().get(line - 1);
       String s = program.getSourceLine(line);
    
       for (int i = tokens.size() - 1; i >= 0; i--) {

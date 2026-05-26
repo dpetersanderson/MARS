@@ -122,9 +122,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          int halfHeight = fullHeight/2;
          Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
-         Dimension dataDim = new Dimension((int)(fullWidth),halfHeight);
+         Dimension dataDim = new Dimension(fullWidth,halfHeight);
          Dimension lablDim = new Dimension((int)(fullWidth*.25), halfHeight);
-         Dimension textFullDim = new Dimension((int)(fullWidth), halfHeight);
+         Dimension textFullDim = new Dimension(fullWidth, halfHeight);
          dataSegment.setBounds(0,textDim.height+1, dataDim.width, dataDim.height);
          if (labelWindowVisible) {
             textSegment.setBounds(0, 0, textDim.width, textDim.height);

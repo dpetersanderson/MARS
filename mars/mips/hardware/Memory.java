@@ -103,7 +103,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     // and high end of address range, but retrieval from the tree has to be based
     // on target address being ANYWHERE IN THE RANGE (not an exact key match).
       
-      Collection observables = getNewMemoryObserversCollection();
+      Collection<MemoryObservable> observables = getNewMemoryObserversCollection();
    
     // The data segment is allocated in blocks of 1024 ints (4096 bytes).  Each block is
     // referenced by a "block table" entry, and the table has 1024 entries.  The capacity
@@ -1133,9 +1133,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  @param obs  Observer to be removed
    	 */   		
        public void deleteObserver(Observer obs) {
-         Iterator it = observables.iterator();
+         Iterator<MemoryObservable> it = observables.iterator();
          while (it.hasNext()) {
-            ((MemoryObservable)it.next()).deleteObserver(obs);
+            it.next().deleteObserver(obs);
          }	
       }
    	
@@ -1168,14 +1168,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    		
    		
-       private Collection getNewMemoryObserversCollection() {
-         return new Vector();  // Vectors are thread-safe
+       private Collection<MemoryObservable> getNewMemoryObserversCollection() {
+         return new Vector<>();  // Vectors are thread-safe
       }
    		
        /////////////////////////////////////////////////////////////////////////
        // Private class whose objects will represent an observable-observer pair 
    	 // for a given memory address or range.
-       private class MemoryObservable extends Observable implements Comparable {
+       private class MemoryObservable extends Observable implements Comparable<MemoryObservable> {
          private int lowAddress, highAddress; 
       	
           public MemoryObservable(Observer obs, int startAddr, int endAddr) {
@@ -1195,11 +1195,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          
       	// Useful to have for future refactoring, if it actually becomes worthwhile to sort
       	// these or put 'em in a tree (rather than sequential search through list).
-          public int compareTo(Object obj) {
-            if (!(obj instanceof MemoryObservable)) {
-               throw new ClassCastException();
-            }
-            MemoryObservable mo = (MemoryObservable) obj;
+          public int compareTo(MemoryObservable mo) {
             if (this.lowAddress < mo.lowAddress || this.lowAddress==mo.lowAddress && this.highAddress < mo.highAddress) {
                return -1;
             }
@@ -1222,12 +1218,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    // is from command mode, Globals.program is null but still want ability to observe.
        private void notifyAnyObservers(int type, int address, int length, int value) {
          if ((Globals.program != null || Globals.getGui()==null) && this.observables.size() > 0) {
-            Iterator it = this.observables.iterator();
-            MemoryObservable mo;
-            while (it.hasNext()) {
-               mo = (MemoryObservable)it.next();
+            MemoryAccessNotice notice = new MemoryAccessNotice(type, address, length, value);
+            for (MemoryObservable mo: observables) {
                if (mo.match(address)) {
-                  mo.notifyObserver(new MemoryAccessNotice(type, address, length, value));
+                  mo.notifyObserver(notice);
                }
             }
          } 		

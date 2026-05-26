@@ -110,7 +110,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private JScrollPane displayScrollPane;
       private JTextArea display;
       private JPanel displayPanel, displayOptions;
-      private JComboBox delayTechniqueChooser;
+      private JComboBox<TransmitterDelayTechnique> delayTechniqueChooser;
       private DelayLengthPanel delayLengthPanel;
       private JSlider delayLengthSlider;
       private JCheckBox displayAfterDelayCheckBox;
@@ -635,7 +635,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
          displayPanel.add(displayScrollPane);
          displayOptions = new JPanel();
-         delayTechniqueChooser = new JComboBox(delayTechniques);
+         delayTechniqueChooser = new JComboBox<>(delayTechniques);
          delayTechniqueChooser.setToolTipText("Technique for determining simulated transmitter device processing delay");
          delayTechniqueChooser.addActionListener(
                new ActionListener() {
@@ -869,7 +869,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             public void stateChanged(ChangeEvent e) {
                JSlider source = (JSlider)e.getSource();
                if (!source.getValueIsAdjusting()) {
-                  delayLengthIndex = (int)source.getValue();
+                  delayLengthIndex = source.getValue();
                   transmitDelayInstructionCountLimit = generateDelay();
                }
                else {

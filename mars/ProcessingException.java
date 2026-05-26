@@ -45,7 +45,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Constructor for ProcessingException.
     * 
-    * @param e An ErrorList which is an ArrayList of ErrorMessage objects.  Each ErrorMessage
+    * @param e An ErrorList which is an List of ErrorMessage objects.  Each ErrorMessage
     * represents one processing error.
     **/
        public ProcessingException(ErrorList e) {
@@ -55,7 +55,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Constructor for ProcessingException.
     * 
-    * @param e An ErrorList which is an ArrayList of ErrorMessage objects.  Each ErrorMessage
+    * @param e An ErrorList which is an List of ErrorMessage objects.  Each ErrorMessage
     * represents one processing error.
     * @param aee AddressErrorException object containing specialized error message, cause, address
     **/

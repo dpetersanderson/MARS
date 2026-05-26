@@ -6,7 +6,6 @@
    import mars.simulator.*;
    import java.io.*;
    import java.util.*;
-   import java.awt.*;
    import javax.swing.*;
    import javax.swing.JOptionPane;   // KENV 9/8/2004
 
@@ -114,15 +113,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private static final int DECIMAL = 0; // memory and register display format
       private static final int HEXADECIMAL = 1;// memory and register display format
       private static final int ASCII = 2;// memory and register display format
-      private ArrayList registerDisplayList;
-      private ArrayList memoryDisplayList;
-      private ArrayList filenameList;
+      private List<String> registerDisplayList;
+      private List<String> memoryDisplayList;
+      private List<String> filenameList;
       private MIPSprogram code;
       private int maxSteps;
       private int instructionCount;
       private PrintStream out; // stream for display of command line output
-      private ArrayList dumpTriples = null; // each element holds 3 arguments for dump option
-      private ArrayList programArgumentList; // optional program args for MIPS program (becomes argc, argv)
+      private List<String[]> dumpTriples = null; // each element holds 3 arguments for dump option
+      private List<String> programArgumentList = null; // optional program args for MIPS program (becomes argc, argv)
       private int assembleErrorExitCode;  // MARS command exit code to return if assemble error occurs
       private int simulateErrorExitCode;// MARS command exit code to return if simulation error occurs
    		
@@ -148,9 +147,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             instructionCount = 0;
             assembleErrorExitCode = 0;
             simulateErrorExitCode = 0;
-            registerDisplayList = new ArrayList();
-            memoryDisplayList = new ArrayList();
-            filenameList = new ArrayList();
+            registerDisplayList = new ArrayList<>();
+            memoryDisplayList = new ArrayList<>();
+            filenameList = new ArrayList<>();
             MemoryConfigurations.setCurrentConfiguration(MemoryConfigurations.getDefaultConfiguration());
          	// do NOT use Globals.program for command line MARS -- it triggers 'backstep' log.
             code = new MIPSprogram();  
@@ -177,8 +176,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (dumpTriples == null) 
             return;
          
-         for (int i=0; i<dumpTriples.size(); i++) {
-            String[] triple = (String[])dumpTriples.get(i);
+         for (String[] triple: dumpTriples) {
             File file = new File(triple[2]);
             Integer[] segInfo = MemoryDump.getSegmentBounds(triple[0]);
          	// If not segment name, see if it is address range instead.  DPS 14-July-2008
@@ -201,7 +199,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                continue;
             }
             DumpFormatLoader loader = new DumpFormatLoader();
-            ArrayList dumpFormats = loader.loadDumpFormats();
+            List<DumpFormat> dumpFormats = loader.loadDumpFormats();
             DumpFormat format = DumpFormatLoader.findDumpFormatGivenCommandDescriptor(dumpFormats, triple[1]);
             if (format == null) {
                out.println("Error while attempting to save dump, format " + triple[1] + " was not found!");
@@ -261,8 +259,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          String noCopyrightSwitch = "nc";
          String displayMessagesToErrSwitch = "me";
          boolean argsOK = true;
-         boolean inProgramArgumentList = false;
-         programArgumentList = null;
+         programArgumentList = Collections.emptyList();
          if (args.length == 0) 
             return true; // should not get here...
          // If the option to display MARS messages to standard erro is used,
@@ -275,20 +272,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return false;					
          } 
          for (int i=0; i<args.length; i++) {
-            // We have seen "pa" switch, so all remaining args are program args
+            // We hit "pa" switch, so all remaining args are program args
          	// that will become "argc" and "argv" for the MIPS program.
-            if (inProgramArgumentList) {
-               if (programArgumentList == null) {
-                  programArgumentList = new ArrayList();
-               }
-               programArgumentList.add(args[i]);
-               continue;
-            }
-         	// Once we hit "pa", all remaining command args are assumed
-         	// to be program arguments.
             if (args[i].toLowerCase().equals("pa")) {
-               inProgramArgumentList = true;
-               continue;
+               programArgumentList = Arrays.asList(args).subList(i + 1, args.length);
+               break;
             }
          	// messages-to-standard-error switch already processed, so ignore.
             if (args[i].toLowerCase().equals(displayMessagesToErrSwitch)) {
@@ -305,7 +293,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                } 
                else {
                   if (dumpTriples == null) 
-                     dumpTriples = new ArrayList();
+                     dumpTriples = new ArrayList<>();
                   dumpTriples.add(new String[] {args[++i], args[++i], args[++i]});
                   //simulate = false;
                }
@@ -467,15 +455,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          try {
             Globals.getSettings().setBooleanSettingNonPersistent(Settings.DELAYED_BRANCHING_ENABLED, delayedBranching);
             Globals.getSettings().setBooleanSettingNonPersistent(Settings.SELF_MODIFYING_CODE_ENABLED, selfModifyingCode);
-            File mainFile = new File((String) filenameList.get(0)).getAbsoluteFile();// First file is "main" file
-            ArrayList filesToAssemble;
+            File mainFile = new File(filenameList.get(0)).getAbsoluteFile();// First file is "main" file
+            List<String> filesToAssemble;
             if (assembleProject) { 
                filesToAssemble = FilenameFinder.getFilenameList(mainFile.getParent(), Globals.fileExtensions);
                if (filenameList.size() > 1) {
                   // Using "p" project option PLUS listing more than one filename on command line.
                   // Add the additional files, avoiding duplicates.
                   filenameList.remove(0); // first one has already been processed
-                  ArrayList moreFilesToAssemble = FilenameFinder.getFilenameList(filenameList, FilenameFinder.MATCH_ALL_EXTENSIONS);
+                  List<String> moreFilesToAssemble = FilenameFinder.getFilenameList(filenameList, FilenameFinder.MATCH_ALL_EXTENSIONS);
                   // Remove any duplicates then merge the two lists.
                   for (int index2 = 0; index2<moreFilesToAssemble.size(); index2++) {
                      for (int index1 = 0; index1<filesToAssemble.size(); index1++) {
@@ -495,7 +483,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             if (Globals.debug) {
                out.println("--------  TOKENIZING BEGINS  -----------");
             }
-            ArrayList MIPSprogramsToAssemble = 
+            List<MIPSprogram> MIPSprogramsToAssemble = 
                       code.prepareFilesForAssembly(filesToAssemble, mainFile.getAbsolutePath(), null);		
             if (Globals.debug) {
                out.println("--------  ASSEMBLY BEGINS  -----------");
@@ -609,9 +597,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          String strValue;
          // Display requested register contents
          out.println();
-         Iterator regIter = registerDisplayList.iterator();
-         while (regIter.hasNext()) {
-            String reg = regIter.next().toString();
+         for (String reg: registerDisplayList) {
             if (RegisterFile.getUserRegister(reg)!=null) {
                      // integer register
                if (verbose) 
@@ -700,7 +686,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private void displayMemoryPostMortem() {  
          int value;  
          // Display requested memory range contents
-         Iterator memIter = memoryDisplayList.iterator();
+         Iterator<String> memIter = memoryDisplayList.iterator();
          int addressStart=0, addressEnd=0;
          while (memIter.hasNext()) {
             try { // This will succeed; error would have been caught during command arg parse
@@ -744,8 +730,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//  present, it must be processed before all others.  Since messages may
    	//  be output as early as during the command parse.  
       private void processDisplayMessagesToErrSwitch(String[] args, String displayMessagesToErrSwitch) {
-         for (int i=0; i<args.length; i++) {
-            if (args[i].toLowerCase().equals(displayMessagesToErrSwitch)) {
+         for (String arg: args) {
+            if (arg.equalsIgnoreCase(displayMessagesToErrSwitch)) {
                out = System.err;
                return;
             }
@@ -756,9 +742,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//  if so.
    	
       private void displayCopyright(String[] args, String noCopyrightSwitch) {
-         boolean print = true;
-         for (int i=0; i<args.length; i++) {
-            if (args[i].toLowerCase().equals(noCopyrightSwitch)) {
+         for (String arg: args) {
+            if (arg.equalsIgnoreCase(noCopyrightSwitch)) {
                return;
             }
          }
@@ -770,21 +755,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//  Display command line help text
    	
       private void displayHelp() {
-         String[] segmentNames = MemoryDump.getSegmentNames();
          String segments = "";
-         for (int i=0; i<segmentNames.length; i++) {
-            segments += segmentNames[i];
-            if (i<segmentNames.length-1) {
-               segments += ", ";
-            }
+         String segmentGlue = "";
+         for (String segmentName: MemoryDump.getSegmentNames()) {
+            segments += segmentGlue;
+            segments += segmentName;
+            segmentGlue = ", ";
          }
-         ArrayList dumpFormats = (new DumpFormatLoader()).loadDumpFormats();
+         List<DumpFormat> dumpFormats = (new DumpFormatLoader()).loadDumpFormats();
          String formats = "";
-         for (int i=0; i<dumpFormats.size(); i++) {
-            formats += ((DumpFormat) dumpFormats.get(i)).getCommandDescriptor();
-            if (i<dumpFormats.size()-1) {
-               formats += ", ";
-            }
+         String formatGlue = "";
+         for (DumpFormat dumpFormat : dumpFormats) {
+            formats += formatGlue;
+            formats += dumpFormat.getCommandDescriptor();
+            formatGlue = ", ";
          }
          out.println("Usage:  Mars  [options] filename [additional filenames]");
          out.println("  Valid options (not case sensitive, separate by spaces) are:");

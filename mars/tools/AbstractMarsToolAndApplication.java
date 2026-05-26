@@ -5,6 +5,7 @@
    import java.awt.*;
    import java.awt.event.*;
    import java.util.*;
+   import java.util.List;
    import java.io.*;
    import mars.*;
    import mars.util.*;
@@ -708,16 +709,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             MIPSprogram program = new MIPSprogram();
             mars.Globals.program = program; // Shouldn't have to do this...
             String fileToAssemble = mostRecentlyOpenedFile.getPath();
-            ArrayList filesToAssemble = null;
+            List<String> filesToAssemble = null;
             if (multiFileAssemble) {// setting (check box in file open dialog) calls for multiple file assembly 
                filesToAssemble = FilenameFinder.getFilenameList(
                                new File(fileToAssemble).getParent(), Globals.fileExtensions);
             } 
             else {
-               filesToAssemble = new ArrayList();
+               filesToAssemble = new ArrayList<>();
                filesToAssemble.add(fileToAssemble);
             }
-            ArrayList programsToAssemble = null;
+            List<MIPSprogram> programsToAssemble = null;
             try {
                operationStatusMessages.displayNonTerminatingMessage("Assembling "+fileToAssemble);
                programsToAssemble = program.prepareFilesForAssembly(filesToAssemble, fileToAssemble, exceptionHandler);

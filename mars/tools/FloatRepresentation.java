@@ -348,14 +348,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          for (int i=0; i<fpRegisters.length; i++) {
             registerList[i+1] = fpRegisters[i].getName();
          }
-         JComboBox registerSelect = new JComboBox(registerList);
+         JComboBox<String> registerSelect = new JComboBox<>(registerList);
          registerSelect.setSelectedIndex(0);  // No register attached
          registerSelect.setToolTipText("Attach to selected FP register");
          registerSelect.addActionListener(
                 new ActionListener() {
                    public void actionPerformed(ActionEvent e) {
-                     JComboBox cb = (JComboBox)e.getSource(); 
-                     int selectedIndex = cb.getSelectedIndex();
+                     int selectedIndex = registerSelect.getSelectedIndex();
                      if (isObserving()) {
                         deleteAsObserver();
                      }

@@ -38,13 +38,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
     public class MemoryDump {
-   
-      /** A list of segmentname/dumpformat/filename triples which should be dumped */
-      public static ArrayList dumpTriples = null;
-      
-      /** A mapping from segments names (like ".text") to the base and limit for that segment. */
-      private static final HashMap segmentBoundMap = new HashMap();
-      
       private static final String[] segmentNames = { ".text", ".data" };
       private static int[] baseAddresses = new int[2];
       private static int[] limitAddresses = new int[2];

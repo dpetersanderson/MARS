@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private Container contentPane;
       private JPanel labelPanel;      // holds J
       private JCheckBox dataLabels, textLabels;
-      private ArrayList listOfLabelsForSymbolTable;
+      private List<LabelsForSymbolTable> listOfLabelsForSymbolTable;
       private LabelsWindow labelsWindow;
       private static final int MAX_DISPLAYED_CHARS = 24;
       private static final int PREFERRED_NAME_COLUMN_WIDTH = 60;
@@ -165,18 +165,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	//
        private JScrollPane generateLabelScrollPane() {
-         listOfLabelsForSymbolTable = new ArrayList();
+         listOfLabelsForSymbolTable = new ArrayList<>();
          listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(null));// global symtab
-         ArrayList MIPSprogramsAssembled = RunAssembleAction.getMIPSprogramsToAssemble();
+         List<MIPSprogram> MIPSprogramsAssembled = RunAssembleAction.getMIPSprogramsToAssemble();
          Box allSymtabTables = Box.createVerticalBox();
          for (int i=0; i<MIPSprogramsAssembled.size(); i++) {
             listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(
-                        (MIPSprogram) MIPSprogramsAssembled.get(i)));
+                        MIPSprogramsAssembled.get(i)));
          }
-         ArrayList tableNames = new ArrayList();
+         List<Box> tableNames = new ArrayList<>();
          JTableHeader tableHeader = null;
          for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-            LabelsForSymbolTable symtab = (LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i);
+            LabelsForSymbolTable symtab = listOfLabelsForSymbolTable.get(i);
             if (symtab.hasSymbols()) {
                String name = symtab.getSymbolTableName();
                if (name.length() > MAX_DISPLAYED_CHARS) {
@@ -228,8 +228,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        */
        public void updateLabelAddresses() {
          if (listOfLabelsForSymbolTable != null) {
-            for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-               ((LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i)).updateLabelAddresses();
+            for (LabelsForSymbolTable item: listOfLabelsForSymbolTable) {
+                item.updateLabelAddresses();
             }      
          }
       }
@@ -239,8 +239,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//   Listener class to respond to "Text" or "Data" checkbox click 
        private class LabelItemListener implements ItemListener {
           public void itemStateChanged(ItemEvent ie) {
-            for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-               ((LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i)).generateLabelTable();
+            for (LabelsForSymbolTable item: listOfLabelsForSymbolTable) {
+               item.generateLabelTable();
             }     			 
          }
       }
@@ -291,7 +291,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          private MIPSprogram myMIPSprogram;
          private Object[][] labelData;
          private JTable labelTable;	 
-         private ArrayList symbols;
+         private List<Symbol> symbols;
          private SymbolTable symbolTable;
          private String tableName;
       	
@@ -332,13 +332,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                symbols = symbolTable.getDataSymbols();
             } 
             else {
-               symbols = new ArrayList();
+               symbols = new ArrayList<>();
             }
-            Collections.sort(symbols, tableSortComparator); // DPS 25 Dec 2008
+            symbols.sort(tableSortComparator); // DPS 25 Dec 2008
             labelData = new Object[symbols.size()][2];
          
             for(int i=0; i< symbols.size(); i++){//sets up the label table
-               Symbol s = (Symbol)(symbols.get(i));
+               Symbol s = symbols.get(i);
                labelData[i][LABEL_COLUMN] = s.getName();
                labelData[i][ADDRESS_COLUMN] = NumberDisplayBaseChooser.formatNumber(s.getAddress(), addressBase);
             }
@@ -362,7 +362,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             String formattedAddress;
             int numSymbols = (labelData==null) ? 0 : labelData.length;
             for(int i=0; i< numSymbols; i++) {
-               address = ((Symbol)symbols.get(i)).getAddress();
+               address = symbols.get(i).getAddress();
                formattedAddress = NumberDisplayBaseChooser.formatNumber(address, addressBase);
                labelTable.getModel().setValueAt(formattedAddress, i, ADDRESS_COLUMN);
             }
@@ -403,7 +403,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          * JTable uses this method to determine the default renderer/
          * editor for each cell.  
          */
-          public Class getColumnClass(int c) {
+          public Class<?> getColumnClass(int c) {
             return getValueAt(0, c).getClass();
          }
          

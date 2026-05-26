@@ -29,7 +29,7 @@
     */
        public DefaultInputHandler()
       {
-         bindings = currentBindings = new Hashtable();
+         bindings = currentBindings = new Hashtable<>();
       }
    
    /**
@@ -111,7 +111,7 @@
                   current = (Hashtable)o;
                else
                {
-                  o = new Hashtable();
+                  o = new Hashtable<>();
                   current.put(keyStroke,o);
                   current = (Hashtable)o;
                }

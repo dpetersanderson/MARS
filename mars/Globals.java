@@ -57,7 +57,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /** Simulated MIPS memory component. **/
       public static Memory memory;
     /** Lock variable used at head of synchronized block to guard MIPS memory and registers **/
-      public static Object memoryAndRegistersLock = new Object();
+     final public static Object memoryAndRegistersLock = new Object();
     /** Flag to determine whether or not to produce internal debugging information. **/
       public static boolean debug = false;
     /** Object that contains various settings that can be accessed modified internally. **/
@@ -76,7 +76,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /** The current MARS version number. Can't wait for "initialize()" call to get it. */
       public static final String version = "4.6";
     /** List of accepted file extensions for MIPS assembly source files. */
-      public static final ArrayList fileExtensions = getFileExtensions();
+      public static final List<String> fileExtensions = getFileExtensions();
     /** Maximum length of scrolled message window (MARS Messages and Run I/O) */
       public static final int maximumMessageCharacters = getMessageLimit();
     /** Maximum number of assembler errors produced by one assemble operation */
@@ -188,8 +188,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    	// Read assembly language file extensions from properties file.  Resulting
    	// string is tokenized into array list (assume StringTokenizer default delimiters).
-       private static ArrayList getFileExtensions() {
-         ArrayList extensionsList = new ArrayList();
+       private static List<String> getFileExtensions() {
+         List<String> extensionsList = new ArrayList<>();
          String extensions = getPropertyEntry(configPropertiesFile,"Extensions");
          if (extensions != null) {
             StringTokenizer st = new StringTokenizer(extensions); 
@@ -204,11 +204,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * Get list of MarsTools that reside outside the MARS distribution. 
    	 * Currently this is done by adding the tool's path name to the list
    	 * of values for the external_tools property. Use ";" as delimiter!
-   	 * @return ArrayList.  Each item is file path to .class file
+   	 * @return List.  Each item is file path to .class file
    	 * of a class that implements MarsTool.  If none, returns empty list.
    	 */
-       public static ArrayList getExternalTools() {
-         ArrayList toolsList = new ArrayList();
+       public static List<String> getExternalTools() {
+         List<String> toolsList = new ArrayList<>();
          String delimiter = ";";
          String tools = getPropertyEntry(configPropertiesFile,"ExternalTools");
          if (tools != null) {
@@ -233,12 +233,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	   
    	/**
    	 * Read any syscall number assignment overrides from config file.
-   	 * @return ArrayList of SyscallNumberOverride objects
+   	 * @return List of SyscallNumberOverride objects
    	 */
-       public ArrayList getSyscallOverrides() {
-         ArrayList overrides = new ArrayList();
+       public List<SyscallNumberOverride> getSyscallOverrides() {
+         List<SyscallNumberOverride> overrides = new ArrayList<>();
          Properties properties = PropertiesFile.loadPropertiesFromFile(syscallPropertiesFile);
-         Enumeration keys = properties.keys();
+         Enumeration<Object> keys = properties.keys();
          while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             overrides.add(new SyscallNumberOverride(key,properties.getProperty(key)));

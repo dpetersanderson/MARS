@@ -1,6 +1,6 @@
    package mars.assembler;
 
-   import java.util.ArrayList;
+   import java.util.*;
 
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -42,7 +42,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     public final class Directives {
    
-      private static ArrayList directiveList = new ArrayList();
+      private static List<Directives> directiveList = new ArrayList<>();
       public static final Directives DATA   = new Directives(".data", "Subsequent items stored in Data segment at next available address");
       public static final Directives TEXT   = new Directives(".text", "Subsequent items (instructions) stored in Text segment at next available address");
       public static final Directives WORD   = new Directives(".word", "Store the listed value(s) as 32 bit words on word boundary");
@@ -92,9 +92,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     **/
     
        public static Directives matchDirective(String str) {
-         Directives match;
-         for (int i=0; i<directiveList.size(); i++) {
-            match = (Directives) directiveList.get(i);
+         for (Directives match: directiveList) {
             if (str.equalsIgnoreCase(match.descriptor)) {
                return match;
             }
@@ -108,17 +106,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * ".a" will match ".ascii", ".asciiz" and ".align"
     * 
     * @param str A String 
-    * @return If match is found, returns ArrayList of matching Directives objects, else returns <code>null</code>.
+    * @return If match is found, returns List of matching Directives objects, else returns <code>null</code>.
     **/
     
-       public static ArrayList prefixMatchDirectives(String str) {
-         ArrayList matches = null;
-         for (int i=0; i<directiveList.size(); i++) {
-            if (((Directives) directiveList.get(i)).descriptor.toLowerCase().startsWith(str.toLowerCase())) {
+       public static List<Directives> prefixMatchDirectives(String str) {
+         List<Directives> matches = null;
+         for (Directives d: directiveList) {
+            if (d.descriptor.toLowerCase().startsWith(str.toLowerCase())) {
                if (matches == null) {
-                  matches = new ArrayList();
+                  matches = new ArrayList<>();
                }
-               matches.add(directiveList.get(i));
+               matches.add(d);
             }
          }
          return matches;
@@ -161,7 +159,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * 
    * @return MIPS Directive
    **/
-       public static ArrayList getDirectiveList() {
+       public static List<Directives> getDirectiveList() {
          return directiveList;
       }
    

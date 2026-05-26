@@ -1,7 +1,6 @@
    package mars.assembler;
 
-   import java.util.ArrayList;
-   import java.util.Stack;
+   import java.util.*;
 
    import mars.ErrorList;
    import mars.MIPSprogram;
@@ -51,13 +50,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * List of macros defined by now
     */
-      private ArrayList<Macro> macroList;
+      private List<Macro> macroList;
    /**
     * @see #beginMacro(Token)
     */
       private Macro current;
-      private ArrayList<Integer> callStack;
-      private ArrayList<Integer> callStackOrigLines;
+      private List<Integer> callStack;
+      private List<Integer> callStackOrigLines;
    /**
     * @see #getNextCounter()
     */
@@ -70,9 +69,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public MacroPool(MIPSprogram mipsProgram) {
          this.program = mipsProgram;
-         macroList = new ArrayList<Macro>();
-         callStack=new ArrayList<Integer>();
-         callStackOrigLines=new ArrayList<Integer>();
+         macroList = new ArrayList<>();
+         callStack = new ArrayList<>();
+         callStackOrigLines = new ArrayList<>();
          current = null;
          counter = 0;
       }
@@ -169,7 +168,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    
    
-       public ArrayList<Integer> getCallStack() {
+       public List<Integer> getCallStack() {
          return callStack;
       }
    

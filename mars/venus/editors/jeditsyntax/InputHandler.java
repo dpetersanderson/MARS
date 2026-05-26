@@ -81,11 +81,11 @@
    // Default action
       public static final ActionListener INSERT_CHAR = new insert_char();
    
-      private static Hashtable actions;
+      private static Hashtable<String,ActionListener> actions;
    
       static
       {
-         actions = new Hashtable();
+         actions = new Hashtable<>();
          actions.put("backspace",BACKSPACE);
          actions.put("backspace-word",BACKSPACE_WORD);
          actions.put("delete",DELETE);
@@ -132,7 +132,7 @@
     */
        public static ActionListener getAction(String name)
       {
-         return (ActionListener)actions.get(name);
+         return actions.get(name);
       }
    
    /**
@@ -141,10 +141,10 @@
     */
        public static String getActionName(ActionListener listener)
       {
-         Enumeration enumeration = getActions();
+         Enumeration<String> enumeration = getActions();
          while(enumeration.hasMoreElements())
          {
-            String name = (String)enumeration.nextElement();
+            String name = enumeration.nextElement();
             ActionListener _listener = getAction(name);
             if(_listener == listener)
                return name;
@@ -155,7 +155,7 @@
    /**
     * Returns an enumeration of all available actions.
     */
-       public static Enumeration getActions()
+       public static Enumeration<String> getActions()
       {
          return actions.keys();
       }

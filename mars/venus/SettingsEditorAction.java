@@ -47,12 +47,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class SettingsEditorAction extends GuiAction  {
     
       JDialog editorDialog;
-      JComboBox fontFamilySelector, fontStyleSelector;
-      JSlider tabSizeSelector;
-      JTextField fontSizeDisplay;
-   	
-   	// Used to determine upon OK, whether or not anything has changed.
-      String initialFontFamily, initialFontStyle, initialFontSize; 
    	  
    	  /**
    	   *  Create a new SettingsEditorAction.  Has all the GuiAction parameters.

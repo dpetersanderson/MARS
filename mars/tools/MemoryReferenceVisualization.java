@@ -48,7 +48,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private static String heading =  "Visualizing memory reference patterns";
    	
    	// Major GUI components
-      private JComboBox wordsPerUnitSelector, visualizationUnitPixelWidthSelector, visualizationUnitPixelHeightSelector,
+      private JComboBox<String> wordsPerUnitSelector, visualizationUnitPixelWidthSelector, visualizationUnitPixelHeightSelector,
                         visualizationPixelWidthSelector, visualizationPixelHeightSelector, displayBaseAddressSelector;
       private JCheckBox drawHashMarksSelector;
       private Graphics drawingArea;
@@ -302,7 +302,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateDisplay();
                   }
                });	
-         wordsPerUnitSelector = new JComboBox(wordsPerUnitChoices);
+         wordsPerUnitSelector = new JComboBox<>(wordsPerUnitChoices);
          wordsPerUnitSelector.setEditable(false);
          wordsPerUnitSelector.setBackground(backgroundColor);
          wordsPerUnitSelector.setSelectedIndex(defaultWordsPerUnitIndex);
@@ -314,7 +314,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      reset();
                   }
                });						
-         visualizationUnitPixelWidthSelector = new JComboBox(visualizationUnitPixelWidthChoices);
+         visualizationUnitPixelWidthSelector = new JComboBox<>(visualizationUnitPixelWidthChoices);
          visualizationUnitPixelWidthSelector.setEditable(false);
          visualizationUnitPixelWidthSelector.setBackground(backgroundColor);
          visualizationUnitPixelWidthSelector.setSelectedIndex(defaultVisualizationUnitPixelWidthIndex);
@@ -327,7 +327,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateDisplay();
                   }
                });
-         visualizationUnitPixelHeightSelector = new JComboBox(visualizationUnitPixelHeightChoices);
+         visualizationUnitPixelHeightSelector = new JComboBox<>(visualizationUnitPixelHeightChoices);
          visualizationUnitPixelHeightSelector.setEditable(false);
          visualizationUnitPixelHeightSelector.setBackground(backgroundColor);
          visualizationUnitPixelHeightSelector.setSelectedIndex(defaultVisualizationUnitPixelHeightIndex);
@@ -340,7 +340,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateDisplay();
                   }
                });					
-         visualizationPixelWidthSelector = new JComboBox(displayAreaPixelWidthChoices);
+         visualizationPixelWidthSelector = new JComboBox<>(displayAreaPixelWidthChoices);
          visualizationPixelWidthSelector.setEditable(false);
          visualizationPixelWidthSelector.setBackground(backgroundColor);
          visualizationPixelWidthSelector.setSelectedIndex(defaultDisplayWidthIndex);
@@ -356,7 +356,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateDisplay();
                   }
                });
-         visualizationPixelHeightSelector = new JComboBox(displayAreaPixelHeightChoices);
+         visualizationPixelHeightSelector = new JComboBox<>(displayAreaPixelHeightChoices);
          visualizationPixelHeightSelector.setEditable(false);
          visualizationPixelHeightSelector.setBackground(backgroundColor);
          visualizationPixelHeightSelector.setSelectedIndex(defaultDisplayHeightIndex);
@@ -372,7 +372,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      updateDisplay();
                   }
                });	      	
-         displayBaseAddressSelector = new JComboBox(displayBaseAddressChoices);
+         displayBaseAddressSelector = new JComboBox<>(displayBaseAddressChoices);
          displayBaseAddressSelector.setEditable(false);
          displayBaseAddressSelector.setBackground(backgroundColor);
          displayBaseAddressSelector.setSelectedIndex(defaultBaseAddressIndex);
@@ -502,7 +502,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	// Will return int equivalent of specified combo box's current selection.
    	// The selection must be a String that parses to an int.
-       private int getIntComboBoxSelection(JComboBox comboBox) {
+       private int getIntComboBoxSelection(JComboBox<String> comboBox) {
          try {
             return Integer.parseInt((String)comboBox.getSelectedItem());
          } 
@@ -670,10 +670,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              public void stateChanged(ChangeEvent e) { 
                JSlider source = (JSlider)e.getSource(); 
                if (!source.getValueIsAdjusting()) { 
-                  counterIndex = (int)source.getValue();
+                  counterIndex = source.getValue();
                } 
                else {
-                  int count = countTable[(int)source.getValue()];
+                  int count = countTable[source.getValue()];
                   sliderLabel.setText(setLabel(count));
                   currentColorButton.setBackground(counterColorScale.getColor(count));
                }
@@ -741,7 +741,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       // Each object represents beginning of a counter value range (non-negative integer) and
    	// color for rendering the range.  High end of the range is defined as low end of the
    	// next range minus 1.  For last range, high end is Integer.MAX_VALUE.
-       private class CounterColor implements Comparable {
+       private static class CounterColor implements Comparable<CounterColor> {
          private int colorRangeStart;
          private Color associatedColor;
           public CounterColor(int start, Color color) {
@@ -750,13 +750,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       	
       	// Necessary for sorting in ascending order of range low end.
-          public int compareTo(Object other) {
-            if (other instanceof CounterColor) {
-               return this.colorRangeStart - ((CounterColor)other).colorRangeStart;
-            } 
-            else {
-               throw new ClassCastException();
-            }
+          public int compareTo(CounterColor other) {
+            return this.colorRangeStart - other.colorRangeStart;
          }
       }
       

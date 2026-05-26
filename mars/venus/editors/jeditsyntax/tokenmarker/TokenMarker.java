@@ -9,6 +9,7 @@
 
    package mars.venus.editors.jeditsyntax.tokenmarker;
 
+   import mars.venus.editors.jeditsyntax.*;
    import javax.swing.text.Segment;
    import java.util.*;
 
@@ -189,9 +190,9 @@
     *  override it in language-specific subclasses.
     *  @param token the pertinent Token object
     *  @param tokenText the source String that matched to the token
-    *  @return ArrayList containing PopupHelpItem objects, one per match.  
+    *  @return List containing PopupHelpItem objects, one per match.  
     */
-       public ArrayList getTokenExactMatchHelp(Token token, String tokenText) {
+       public List<PopupHelpItem> getTokenExactMatchHelp(Token token, String tokenText) {
          return null;
       }
    
@@ -204,9 +205,9 @@
     *  @param tokenList first Token on the current line
     *  @param tokenAtOffset the pertinent Token object
     *  @param tokenText the source String that matched to the token
-    *  @return ArrayList containing PopupHelpItem objects, one per match.  
+    *  @return List containing PopupHelpItem objects, one per match.  
     */		
-       public ArrayList getTokenPrefixMatchHelp(String line, Token tokenList, Token tokenAtOffset, String tokenText) {
+       public List<PopupHelpItem> getTokenPrefixMatchHelp(String line, Token tokenList, Token tokenAtOffset, String tokenText) {
          return null;
       }
    

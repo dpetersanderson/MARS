@@ -42,7 +42,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     public class MemoryConfigurations {
     
-      private static ArrayList configurations = null;
+      private static List<MemoryConfiguration> configurations = null;
       private static MemoryConfiguration defaultConfiguration;
       private static MemoryConfiguration currentConfiguration;
    	
@@ -159,16 +159,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
        public static void buildConfigurationCollection() {
          if (configurations == null) {
-            configurations = new ArrayList();
+            configurations = new ArrayList<>();
             configurations.add(new MemoryConfiguration("Default", "Default", configurationItemNames, defaultConfigurationItemValues));
             configurations.add(new MemoryConfiguration("CompactDataAtZero", "Compact, Data at Address 0", configurationItemNames, dataBasedCompactConfigurationItemValues));
             configurations.add(new MemoryConfiguration("CompactTextAtZero", "Compact, Text at Address 0", configurationItemNames, textBasedCompactConfigurationItemValues));
-            defaultConfiguration = (MemoryConfiguration) configurations.get(0);
+            defaultConfiguration = configurations.get(0);
             currentConfiguration = defaultConfiguration;
          	// Get current config from settings
          	//String currentConfigurationIdentifier = Globals.getSettings().getMemoryConfiguration();
             setCurrentConfiguration(getConfigurationByName(Globals.getSettings().getMemoryConfiguration()));
-         //	Iterator configurationsIterator = getConfigurationsIterator();
+         //	Iterator<MemoryConfiguration> configurationsIterator = getConfigurationsIterator();
          //	while (configurationsIterator.hasNext()) {
          	//  MemoryConfiguration config = (MemoryConfiguration)configurationsIterator.next();
          //	  if (currentConfigurationIdentifier.equals(config.getConfigurationIdentifier())) {
@@ -178,7 +178,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       }
    	
-       public static Iterator getConfigurationsIterator() {
+       public static Iterator<MemoryConfiguration> getConfigurationsIterator() {
          if (configurations == null) {
             buildConfigurationCollection();
          }
@@ -187,9 +187,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    	
        public static MemoryConfiguration getConfigurationByName(String name) {
-         Iterator configurationsIterator = getConfigurationsIterator();
+         Iterator<MemoryConfiguration> configurationsIterator = getConfigurationsIterator();
          while (configurationsIterator.hasNext()) {
-            MemoryConfiguration config = (MemoryConfiguration)configurationsIterator.next();
+            MemoryConfiguration config = configurationsIterator.next();
             if (name.equals(config.getConfigurationIdentifier())) {
                return config;
             }

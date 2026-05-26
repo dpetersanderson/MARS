@@ -158,7 +158,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           void stopped(Simulator s);
       }
    
-      private ArrayList<StopListener> stopListeners = new ArrayList<StopListener>(1);
+      private List<StopListener> stopListeners = new ArrayList<>(1);
        public void addStopListener(StopListener l) {
          stopListeners.add(l);
       }

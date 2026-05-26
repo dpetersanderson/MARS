@@ -8,6 +8,7 @@
    import java.awt.*;
    import java.awt.event.*;
    import java.util.*;   
+   import java.util.List;
    import javax.swing.table.*;
    import javax.swing.event.*;
 	
@@ -59,7 +60,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * consistent once set up, since address column is not editable.
    	 */
       private  int[] intAddresses;      // index is table model row, value is text address
-      private  Hashtable addressRows;   // key is text address, value is table model row
+      private  Hashtable<Integer,Integer> addressRows;   // key is text address, value is table model row
       private  Hashtable<Integer, ModifiedCode> executeMods;   // key is table model row, value is original code, basic, source.
       private  Container contentPane;
       private  TextTableModel tableModel;
@@ -108,17 +109,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          int addressBase = Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBase();
          codeHighlighting = true;
          breakpointsEnabled = true;
-         ArrayList sourceStatementList = Globals.program.getMachineList();
+         List<ProgramStatement> sourceStatementList = Globals.program.getMachineList();
          data = new Object[sourceStatementList.size()][columnNames.length];
          intAddresses = new int[data.length];
-         addressRows = new Hashtable(data.length);
-         executeMods = new Hashtable<Integer,ModifiedCode>(data.length);
+         addressRows = new Hashtable<>(data.length);
+         executeMods = new Hashtable<>(data.length);
       	// Get highest source line number to determine #leading spaces so line numbers will vertically align
       	// In multi-file situation, this will not necessarily be the last line b/c sourceStatementList contains
       	// source lines from all files.  DPS 3-Oct-10
          int maxSourceLineNumber = 0;
          for (int i=sourceStatementList.size()-1; i>=0; i--) {
-            ProgramStatement statement = (ProgramStatement) sourceStatementList.get(i);
+            ProgramStatement statement = sourceStatementList.get(i);
             if (statement.getSourceLine() > maxSourceLineNumber) {
                maxSourceLineNumber = statement.getSourceLine();
             }
@@ -127,7 +128,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          int leadingSpaces = 0;
          int lastLine = -1;
          for (int i = 0; i < sourceStatementList.size(); i++) {
-            ProgramStatement statement = (ProgramStatement) sourceStatementList.get(i);
+            ProgramStatement statement = sourceStatementList.get(i);
             intAddresses[i] = statement.getAddress();
             addressRows.put(intAddresses[i], i);
             data[i][BREAK_COLUMN] = Boolean.FALSE;
@@ -265,13 +266,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void updateBasicStatements() {
          if (contentPane.getComponentCount() == 0) 
             return; // ignore if no content to change
-         ArrayList sourceStatementList = Globals.program.getMachineList();
+         List<ProgramStatement> sourceStatementList = Globals.program.getMachineList();
          for(int i=0; i < sourceStatementList.size(); i++) {
             // Loop has been extended to cover self-modifying code.  If code at this memory location has been
          	// modified at runtime, construct a ProgramStatement from the current address and binary code
          	// then display its basic code.  DPS 11-July-2013
             if (executeMods.get(i) == null) { // not modified, so use original logic.
-               ProgramStatement statement = (ProgramStatement) sourceStatementList.get(i); 
+               ProgramStatement statement = sourceStatementList.get(i); 
                table.getModel().setValueAt(statement.getPrintableBasicAssemblyStatement(), i, BASIC_COLUMN);
             }
             else { 
@@ -668,7 +669,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private int findRowForAddress(int address) throws IllegalArgumentException {
          int addressRow = 0;
          try {
-            addressRow = ((Integer)addressRows.get(address)).intValue();
+            addressRow = addressRows.get(address).intValue();
          } 
              catch (NullPointerException e) {
                throw new IllegalArgumentException(); // address not found in map
@@ -710,7 +711,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          * then the break column would contain text ("true"/"false"),
          * rather than a check box.
          */
-          public Class getColumnClass(int c) {
+          public Class<?> getColumnClass(int c) {
             return getValueAt(0, c).getClass();
          }
       

@@ -277,7 +277,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          * JTable uses this method to determine the default renderer/
          * editor for each cell.  
       	*/
-          public Class getColumnClass(int c) {
+          public Class<?> getColumnClass(int c) {
             return getValueAt(0, c).getClass();
          }
       

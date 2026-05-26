@@ -62,10 +62,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/	 
    		 
        public static void showRegisters(){
-         for (int i=0; i< registers.length; i++){
-            System.out.println("Name: " + registers[i].getName());
-            System.out.println("Number: " + registers[i].getNumber());
-            System.out.println("Value: " + registers[i].getValue());	
+         for (Register r: registers) {
+            System.out.println("Name: " + r.getName());
+            System.out.println("Number: " + r.getNumber());
+            System.out.println("Value: " + r.getValue());	
             System.out.println(""); 
          }
       }
@@ -79,10 +79,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public static int updateRegister(String n, int val){
 		   int oldValue = 0;
-         for (int i=0; i< registers.length; i++){
-            if(("$"+registers[i].getNumber()).equals(n) || registers[i].getName().equals(n)) {
-				   oldValue = registers[i].getValue();
-               registers[i].setValue(val);
+         for (Register r: registers) {
+            if(("$"+r.getNumber()).equals(n) || r.getName().equals(n)) {
+				   oldValue = r.getValue();
+               r.setValue(val);
                break;
             }
          }
@@ -97,11 +97,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
        public static int updateRegister(int num, int val){
          int old = 0;
-         for (int i=0; i< registers.length; i++){
-            if(registers[i].getNumber()== num) {
+         for (Register r: registers) {
+            if(r.getNumber()== num) {
                old = (Globals.getSettings().getBackSteppingEnabled())
-                        ? Globals.program.getBackStepper().addCoprocessor0Restore(num,registers[i].setValue(val))
-                  		: registers[i].setValue(val);
+                        ? Globals.program.getBackStepper().addCoprocessor0Restore(num,r.setValue(val))
+                  		: r.setValue(val);
                break;
             }
          }
@@ -116,9 +116,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
    	
        public static int getValue(int num){
-         for (int i=0; i< registers.length; i++){
-            if(registers[i].getNumber()== num) {
-               return registers[i].getValue();
+         for (Register r: registers) {
+            if(r.getNumber()== num) {
+               return r.getValue();
             }
          }
          return 0;
@@ -131,9 +131,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    		  **/	
       		
        public static int getNumber(String n){
-         for (int i=0; i< registers.length; i++){
-            if(("$"+registers[i].getNumber()).equals(n) || registers[i].getName().equals(n)) {
-               return registers[i].getNumber();
+         for (Register r: registers) {
+            if(("$"+r.getNumber()).equals(n) || r.getName().equals(n)) {
+               return r.getNumber();
             }
          } 
          return -1;     
@@ -173,9 +173,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
    	
        public static Register getRegister(String rname) {
-         for (int i=0; i< registers.length; i++){
-            if(("$"+registers[i].getNumber()).equals(rname) || registers[i].getName().equals(rname)) {
-               return registers[i];
+         for  (Register r: registers) {
+            if(("$"+r.getNumber()).equals(rname) || r.getName().equals(rname)) {
+               return r;
             }
          } 
          return null;
@@ -187,8 +187,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
    	
        public static void resetRegisters(){
-         for(int i=0; i< registers.length; i++){
-            registers[i].resetValue();
+         for (Register r: registers) {
+            r.resetValue();
          }
       }
       
@@ -197,8 +197,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  will add the given Observer to each one.  
    	 */
        public static void addRegistersObserver(Observer observer) {
-         for (int i=0; i<registers.length; i++) {
-            registers[i].addObserver(observer);
+         for (Register r: registers) {
+            r.addObserver(observer);
          }
       }
       
@@ -207,8 +207,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  will delete the given Observer from each one.  
    	 */
        public static void deleteRegistersObserver(Observer observer) {
-         for (int i=0; i<registers.length; i++) {
-            registers[i].deleteObserver(observer);
+         for (Register r: registers) {
+            r.deleteObserver(observer);
          }
       }
 

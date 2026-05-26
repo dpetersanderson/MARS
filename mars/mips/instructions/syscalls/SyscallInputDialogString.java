@@ -110,9 +110,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
                if (inputString.length() < maxLength-1) 
 					{
-                  Globals.memory.setByte(byteAddress + (int)Math.min(inputString.length(), maxLength-2), '\n');  // newline at string end
+                  Globals.memory.setByte(byteAddress + Math.min(inputString.length(), maxLength-2), '\n');  // newline at string end
                }
-               Globals.memory.setByte(byteAddress + (int)Math.min((inputString.length()+1), maxLength-1), 0);  // null char to end string
+               Globals.memory.setByte(byteAddress + Math.min((inputString.length()+1), maxLength-1), 0);  // null char to end string
                     
                if (inputString.length() > maxLength - 1)
                {

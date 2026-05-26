@@ -58,7 +58,7 @@ import javax.swing.table.AbstractTableModel;
 public class BHTableModel extends AbstractTableModel {
 
 	/** vector holding the entries of the BHT */ 
-	private Vector m_entries;
+	private Vector<BHTEntry> m_entries;
 	
 	/** number of entries in the BHT */
 	private int m_entryCnt;
@@ -71,7 +71,7 @@ public class BHTableModel extends AbstractTableModel {
 	
 	/** type of the table columns */
 	//@SuppressWarnings("unchecked")
-	private Class m_columnClasses[] = {	Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class};
+	private Class<?> m_columnClasses[] = {	Integer.class, String.class, String.class, Integer.class, Integer.class, Double.class};
 
 	
 	/**
@@ -107,7 +107,7 @@ public class BHTableModel extends AbstractTableModel {
 	 * @param i the index of the column
 	 * @return class representing the type of the i-th column
 	 */    
-	public Class getColumnClass(int i) {
+	public Class<?> getColumnClass(int i) {
     	if (i < 0 || i > m_columnClasses.length) 
     		throw new IllegalArgumentException("Illegal column index "  + i + " (must be in range 0.." + (m_columnClasses.length-1) + ")");
     	
@@ -147,7 +147,7 @@ public class BHTableModel extends AbstractTableModel {
 	 */
 	public Object getValueAt(int row, int col) { 
 				
-		BHTEntry e = (BHTEntry) m_entries.elementAt(row);
+		BHTEntry e = m_entries.elementAt(row);
 		if (e==null) return "";
 		
 		if (col==0) return row;		
@@ -180,7 +180,7 @@ public class BHTableModel extends AbstractTableModel {
 		m_entryCnt = numEntries;
 		m_historySize = historySize;
 		
-		m_entries = new Vector();
+		m_entries = new Vector<>();
 		
 		for (int i=0; i < m_entryCnt; i++) {
 			m_entries.add(new BHTEntry(m_historySize, initVal));
@@ -216,7 +216,7 @@ public class BHTableModel extends AbstractTableModel {
 		if (index < 0 || index > m_entryCnt) 
 			throw new IllegalArgumentException("Only indexes in the range 0 to " + (m_entryCnt-1) + " allowed");
 		
-		return ((BHTEntry) m_entries.elementAt(index)).getPrediction();
+		return m_entries.elementAt(index).getPrediction();
 	}
 	
 	
@@ -231,7 +231,7 @@ public class BHTableModel extends AbstractTableModel {
 		if (index < 0 || index > m_entryCnt) 
 			throw new IllegalArgumentException("Only indexes in the range 0 to " + (m_entryCnt-1) + " allowed");
 		
-		((BHTEntry) m_entries.elementAt(index)).updatePrediction(branchTaken);
+		m_entries.elementAt(index).updatePrediction(branchTaken);
 		fireTableRowsUpdated(index, index);
 	}
 

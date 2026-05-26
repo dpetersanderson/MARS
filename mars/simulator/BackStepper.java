@@ -127,10 +127,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 
        public void backStep() {
          if (engaged && !backSteps.empty()) {
-            ProgramStatement statement = ((BackStep)backSteps.peek()).ps;
+            ProgramStatement statement = backSteps.peek().ps;
             engaged = false; // GOTTA DO THIS SO METHOD CALL IN SWITCH WILL NOT RESULT IN NEW ACTION ON STACK!
             do {
-               BackStep step = (BackStep) backSteps.pop();
+               BackStep step = backSteps.pop();
             /*
             	System.out.println("backstep POP: action "+step.action+" pc "+mars.util.Binary.intToHexString(step.pc)+
             	                   " source "+((step.ps==null)? "none":step.ps.getSource())+
@@ -180,7 +180,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      System.out.println("Internal MARS error: address exception while back-stepping.");
                      System.exit(0);
                   }
-            } while (!backSteps.empty() && statement == ((BackStep)backSteps.peek()).ps);
+            } while (!backSteps.empty() && statement == backSteps.peek().ps);
             engaged = true;  // RESET IT (was disabled at top of loop -- see comment)
          }
       }

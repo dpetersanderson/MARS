@@ -9,6 +9,7 @@
    import javax.swing.border.*;
    import java.io.*;
    import java.util.*;
+   import java.util.List;
    import javax.swing.plaf.basic.*;
 	
 	/*
@@ -57,8 +58,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private int[] segmentListBaseArray; 
       private int[] segmentListHighArray;
    	 
-      private JComboBox segmentListSelector;
-      private JComboBox formatListSelector;
+      private JComboBox<String> segmentListSelector;
+      private JComboBox<DumpFormat> formatListSelector;
        public FileDumpMemoryAction(String name, Icon icon, String descrip,
                              Integer mnemonic, KeyStroke accel, VenusUI gui) {
          super(name, icon, descrip, mnemonic, accel, gui);
@@ -165,7 +166,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       	
       	// Create segment selector.  First element selected by default.
-         segmentListSelector = new JComboBox(segmentListArray);
+         segmentListSelector = new JComboBox<>(segmentListArray);
          segmentListSelector.setSelectedIndex(0);  
          JPanel segmentPanel = new JPanel(new BorderLayout());
          segmentPanel.add(new Label("Memory Segment"), BorderLayout.NORTH);
@@ -173,8 +174,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          contents.add(segmentPanel, BorderLayout.WEST);
       	
          // Next, create list of all available dump formats.
-         ArrayList dumpFormats = (new DumpFormatLoader()).loadDumpFormats();
-         formatListSelector = new JComboBox(dumpFormats.toArray());
+         List<DumpFormat> dumpFormats = (new DumpFormatLoader()).loadDumpFormats();
+         formatListSelector = new JComboBox<>(dumpFormats.toArray(new DumpFormat[0]));
          formatListSelector.setRenderer(new DumpFormatComboBoxRenderer(formatListSelector));
          formatListSelector.setSelectedIndex(0);  
          JPanel formatPanel = new JPanel(new BorderLayout());
@@ -269,20 +270,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Display tool tip for dump format list items.  Got the technique from
    	// http://forum.java.sun.com/thread.jspa?threadID=488762&messageID=2292482
    	
-       private class DumpFormatComboBoxRenderer extends BasicComboBoxRenderer {
-         private JComboBox myMaster;
+       private static class DumpFormatComboBoxRenderer extends BasicComboBoxRenderer {
+         private JComboBox<DumpFormat> myMaster;
       	 
-          public DumpFormatComboBoxRenderer(JComboBox myMaster) {
+          public DumpFormatComboBoxRenderer(JComboBox<DumpFormat> myMaster) {
             super();
             this.myMaster = myMaster;
          }
       	 
-          public Component getListCellRendererComponent( JList list, Object value, int index, 
+          public Component getListCellRendererComponent( JList<?> list, Object value, int index, 
                                                       boolean isSelected, boolean cellHasFocus) { 
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus); 
             setToolTipText(value.toString());
-            if (index >=0 && ((DumpFormat)(myMaster.getItemAt(index))).getDescription() != null) {
-               setToolTipText(((DumpFormat)(myMaster.getItemAt(index))).getDescription());
+            if (index >=0 && myMaster.getItemAt(index).getDescription() != null) {
+               setToolTipText(myMaster.getItemAt(index).getDescription());
             }
             return this;
          } 

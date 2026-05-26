@@ -239,7 +239,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      */
        private void createActionObjects() {
          Toolkit tk = Toolkit.getDefaultToolkit();
-         Class cs = this.getClass(); 
+         Class<?> cs = this.getClass(); 
          try {
             fileNewAction = new FileNewAction("New", 
                                             new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New22.png"))),
@@ -468,7 +468,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private JMenuBar setUpMenuBar() {
       
          Toolkit tk = Toolkit.getDefaultToolkit();
-         Class cs = this.getClass(); 
+         Class<?> cs = this.getClass(); 
          JMenuBar menuBar = new JMenuBar();
          file=new JMenu("File");
          file.setMnemonic(KeyEvent.VK_F);

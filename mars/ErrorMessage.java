@@ -2,7 +2,7 @@
 	
    import java.util.regex.Pattern;
    import java.util.regex.Matcher;
-   import java.util.ArrayList;
+   import java.util.*;
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
 
@@ -182,7 +182,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Looks bass-ackwards, but to get the line numbers to display correctly
       	// for runtime error occurring in macro expansion (expansion->definition), need 
       	// to assign to the opposite variables.
-         ArrayList<Integer> defineLine = parseMacroHistory(statement.getSource());
+         List<Integer> defineLine = parseMacroHistory(statement.getSource());
          if (defineLine.size() == 0) {
             this.line = statement.getSourceLine();
             this.macroExpansionHistory = "";
@@ -193,11 +193,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       }
     	
-       private ArrayList<Integer> parseMacroHistory(String string) {	
+       private List<Integer> parseMacroHistory(String string) {	
          Pattern pattern = Pattern.compile("<\\d+>");
          Matcher matcher = pattern.matcher(string);
          String verify = new String(string).trim();
-         ArrayList<Integer> macroHistory = new ArrayList<Integer>();
+         List<Integer> macroHistory = new ArrayList<>();
          while (matcher.find()) {
             String match = matcher.group();
             if (verify.indexOf(match)==0) {
