@@ -378,8 +378,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	 // control style (color, plain/italic/bold) for syntax highlighting
           private JPanel buildSyntaxStylePanel() {
             JPanel syntaxStylePanel = new JPanel();
-            defaultStyles = SyntaxUtilities.getDefaultSyntaxStyles();
+            defaultStyles = new SyntaxStyle[Token.ID_COUNT];
+            for (int i=0; i<defaultStyles.length; i++) {
+               defaultStyles[i] = Globals.getSettings().getDefaultEditorSyntaxStyleByPosition(i);
+            }
             initialStyles = SyntaxUtilities.getCurrentSyntaxStyles();
+            Color sampleBackground = TextAreaDefaults.getColorDefaults().backgroundColor;
             String[] labels = MIPSTokenMarker.getMIPSTokenLabels();
             String[] sampleText = MIPSTokenMarker.getMIPSTokenExamples();
             syntaxStylesAction = false;
@@ -413,7 +417,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   samples[count].setHorizontalAlignment(SwingConstants.CENTER);
                   samples[count].setBorder(BorderFactory.createLineBorder(Color.black)); 
                   samples[count].setText(sampleText[i]);
-                  samples[count].setBackground(Color.WHITE);
+                  samples[count].setBackground(sampleBackground);
                   samples[count].setToolTipText(SAMPLE_TOOL_TIP_TEXT);
                   foregroundButtons[count] = new ColorSelectButton(); // defined in SettingsHighlightingAction
                   foregroundButtons[count].addActionListener(new ForegroundChanger(count));

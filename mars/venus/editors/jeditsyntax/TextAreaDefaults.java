@@ -37,6 +37,8 @@
       public int cols;
       public int rows;
       public SyntaxStyle[] styles;
+      public Color foregroundColor;
+      public Color backgroundColor;
       public Color caretColor;
       public Color selectionColor;
       public Color lineHighlightColor;
@@ -55,7 +57,7 @@
     */
        public static TextAreaDefaults getDefaults()
       {
-         DEFAULTS = new TextAreaDefaults();
+         DEFAULTS = getColorDefaults();
       
          DEFAULTS.inputHandler = new DefaultInputHandler();
          DEFAULTS.inputHandler.addDefaultKeyBindings();
@@ -71,9 +73,6 @@
          DEFAULTS.cols = 80;
          DEFAULTS.rows = 25;
          DEFAULTS.styles = SyntaxUtilities.getCurrentSyntaxStyles(); // was getDefaultSyntaxStyles()
-         DEFAULTS.caretColor = Color.black; // Color.red;
-         DEFAULTS.selectionColor = new Color(0xccccff);
-         DEFAULTS.lineHighlightColor = new Color(0xeeeeee);//0xe0e0e0);
          DEFAULTS.lineHighlight = mars.Globals.getSettings().getBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING);
          DEFAULTS.bracketHighlightColor = Color.black;
          DEFAULTS.bracketHighlight = false; // assembly language doesn't need this.
@@ -82,5 +81,17 @@
          DEFAULTS.paintInvalid = false; //true;
          DEFAULTS.document = new SyntaxDocument();
          return DEFAULTS;
+      }
+   
+       public static TextAreaDefaults getColorDefaults()
+      {
+         TextAreaDefaults colors = new TextAreaDefaults();
+         boolean darkMode = mars.Globals.getSettings().getBooleanSetting(Settings.DARK_MODE);
+         colors.foregroundColor = darkMode ? new Color(0xd4d4d4) : Color.black;
+         colors.backgroundColor = darkMode ? new Color(0x2b2b2b) : Color.white;
+         colors.caretColor = darkMode ? Color.white : Color.black;
+         colors.selectionColor = darkMode ? new Color(0x264f78) : new Color(0xccccff);
+         colors.lineHighlightColor = darkMode ? new Color(0x323232) : new Color(0xeeeeee);
+         return colors;
       }
    }

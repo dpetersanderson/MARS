@@ -54,6 +54,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
       // Light gray background color for alternating lines of the instruction lists
       static Color altBackgroundColor = new Color(0xEE,0xEE,0xEE);  
+      static Color darkAltBackgroundColor = new Color(0x32,0x34,0x36);
 		
 		/**
 		 *  Separates Instruction name descriptor from detailed (operation) description 
@@ -129,6 +130,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             in.close();
             helpDisplay = new JEditorPane("text/html",text.toString());
             helpDisplay.setEditable(false);
+            helpDisplay.setBackground(Color.WHITE);
             helpDisplay.setCaretPosition(0); // assure top of document displayed
             helpScrollPane = new JScrollPane(helpDisplay, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -160,6 +162,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             text.append("</pre>");        
             marsCopyrightDisplay = new JEditorPane("text/html",text.toString());
             marsCopyrightDisplay.setEditable(false);
+            marsCopyrightDisplay.setBackground(Color.WHITE);
             marsCopyrightDisplay.setCaretPosition(0); // assure top of document displayed
             marsCopyrightScrollPane = new JScrollPane(marsCopyrightDisplay, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -253,6 +256,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          JLabel helpRemarksLabel = new JLabel(helpRemarks, JLabel.CENTER);
          helpRemarksLabel.setOpaque(true);
          helpRemarksLabel.setBackground(Color.decode("0x"+helpRemarksColor));
+         helpRemarksLabel.setForeground(Color.BLACK);
          JScrollPane operandsScrollPane = new JScrollPane(helpRemarksLabel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
          mipsHelpInfo.add(operandsScrollPane, BorderLayout.NORTH);
@@ -345,7 +349,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                setForeground(list.getSelectionForeground()); 
             } 
             else {
-               setBackground((index % 2 == 0) ? altBackgroundColor : list.getBackground()); 
+               Color altBackground = Globals.getSettings().getBooleanSetting(Settings.DARK_MODE) ? darkAltBackgroundColor : altBackgroundColor;
+               setBackground((index % 2 == 0) ? altBackground : list.getBackground());
                setForeground(list.getForeground());
             } 
             setEnabled(list.isEnabled()); 
@@ -385,6 +390,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                       catch (Throwable t) {
                         webpagePane = new JEditorPane("text/html",cannotDisplayMessage);
                      }
+                  webpagePane.setBackground(Color.WHITE);
                   webpagePane.addHyperlinkListener(
                          new HyperlinkListener() {
                             public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -415,7 +421,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                  	  JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                   webpageURL = new JTextField(e.getURL().toString(), 50);
                   webpageURL.setEditable(false);
-                  webpageURL.setBackground(Color.WHITE);
+                  webpageURL.setBackground(UIManager.getColor("TextField.background"));
                   JPanel URLPanel= new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 4));
                   URLPanel.add(new JLabel("URL: "));
                   URLPanel.add(webpageURL);

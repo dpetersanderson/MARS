@@ -111,6 +111,24 @@
          return styles;
       }
    
+       public static SyntaxStyle[] getDefaultDarkSyntaxStyles()
+      {
+         SyntaxStyle[] styles = new SyntaxStyle[Token.ID_COUNT];
+         styles[Token.NULL]     = new SyntaxStyle(new Color(0xd4d4d4),false,false);
+         styles[Token.COMMENT1] = new SyntaxStyle(new Color(0x6a9955),true,false);
+         styles[Token.COMMENT2] = new SyntaxStyle(new Color(0xd16d9e),true,false);
+         styles[Token.KEYWORD1] = new SyntaxStyle(new Color(0x569cd6),false,false);
+         styles[Token.KEYWORD2] = new SyntaxStyle(new Color(0xc586c0),false,false);
+         styles[Token.KEYWORD3] = new SyntaxStyle(new Color(0xe06c75),false,false);
+         styles[Token.LITERAL1] = new SyntaxStyle(new Color(0x98c379),false,false);
+         styles[Token.LITERAL2] = new SyntaxStyle(new Color(0x98c379),false,false);
+         styles[Token.LABEL]    = new SyntaxStyle(new Color(0xd4d4d4),true,false);
+         styles[Token.OPERATOR] = new SyntaxStyle(new Color(0xd4d4d4),false,true);
+         styles[Token.INVALID]  = new SyntaxStyle(new Color(0xf44747),false,false);
+         styles[Token.MACRO_ARG]= new SyntaxStyle(new Color(0xdcdcaa),false,false);
+         return styles;
+      }
+   
    /**
     * Returns the CURRENT style table. This can be passed to the
     * <code>setStyles()</code> method of <code>SyntaxDocument</code>

@@ -74,7 +74,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private JMenuItem runGo, runStep, runBackstep, runReset, runAssemble, runStop, runPause, runClearBreakpoints, runToggleBreakpoints;
       private JCheckBoxMenuItem settingsLabel, settingsPopupInput, settingsValueDisplayBase, settingsAddressDisplayBase,
               settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsWarningsAreErrors, settingsStartAtMain,
-      		  settingsDelayedBranching, settingsProgramArguments, settingsSelfModifyingCode;
+      		  settingsDelayedBranching, settingsProgramArguments, settingsSelfModifyingCode, settingsDarkMode;
       private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
       private JMenuItem helpHelp, helpAbout;
          
@@ -99,7 +99,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleAllAction,
       					settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
       					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
-      					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
+      					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction,
+      					settingsDarkModeAction;
       private Action helpHelpAction, helpAboutAction;
    
    
@@ -425,6 +426,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                									  "If set, the MIPS program can write and branch to both text and data segments.",
                									  null,null,
                									  mainUI);
+            settingsDarkModeAction  = new SettingsDarkModeAction("Dark mode",
+                                            null,
+               									  "If set, use dark colors for the MARS window, editor and Execute Tab",
+               									  null,null,
+               									  mainUI);
             settingsEditorAction          = new SettingsEditorAction("Editor...",
                                             null,
                									  "View and modify text editor settings.",
@@ -602,6 +608,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          settingsStartAtMain.setSelected(Globals.getSettings().getStartAtMain()); 
          settingsProgramArguments = new JCheckBoxMenuItem(settingsProgramArgumentsAction);
          settingsProgramArguments.setSelected(Globals.getSettings().getProgramArguments());
+         settingsDarkMode = new JCheckBoxMenuItem(settingsDarkModeAction);
+         settingsDarkMode.setSelected(Globals.getSettings().getBooleanSetting(Settings.DARK_MODE));
          settingsEditor = new JMenuItem(settingsEditorAction);
          settingsHighlighting = new JMenuItem(settingsHighlightingAction);
          settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
@@ -622,6 +630,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          settings.add(settingsDelayedBranching);
          settings.add(settingsSelfModifyingCode);
          settings.addSeparator();
+         settings.add(settingsDarkMode);
          settings.add(settingsEditor);
          settings.add(settingsHighlighting);
          settings.add(settingsExceptionHandler);

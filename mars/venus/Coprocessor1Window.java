@@ -92,9 +92,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	//Object saveBG = UIManager.getColor("CheckBox.interiorBackground");
       	//UIManager.put("CheckBox.interiorBackground", Color.WHITE);
          for (int i=0; i < numFlags; i++) {
-            conditionFlagCheckBox[i] = new JCheckBox(Integer.toString(i));
+            conditionFlagCheckBox[i] =
+                new JCheckBox(Integer.toString(i)) {
+                   public void updateUI() {
+                     super.updateUI();
+                     setBackground(UIManager.getColor("Table.background"));
+                  }
+               };
             conditionFlagCheckBox[i].addActionListener(this);
-            conditionFlagCheckBox[i].setBackground(Color.WHITE);
             conditionFlagCheckBox[i].setToolTipText("checked == 1, unchecked == 0");
             checksPane.add(conditionFlagCheckBox[i]);
          }		

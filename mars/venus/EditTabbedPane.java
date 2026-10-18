@@ -552,6 +552,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             fileFilterList.add(FilenameFinder.getFileFilter(Globals.fileExtensions, "Assembler Files", true));
             fileFilterCount = 0; // this will trigger fileChooser file filter load in next line
             setChoosableFileFilters();
+            UIManager.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                   public void propertyChange(java.beans.PropertyChangeEvent e) {
+                     if (e.getPropertyName().equals("lookAndFeel")) {
+                        SwingUtilities.updateComponentTreeUI(fileChooser);
+                     }
+                  }
+               });
          }
       
        /*

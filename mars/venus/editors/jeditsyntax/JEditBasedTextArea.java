@@ -120,6 +120,12 @@
    	 */
        public void updateSyntaxStyles() {
          painter.setStyles(SyntaxUtilities.getCurrentSyntaxStyles());
+         TextAreaDefaults colors = TextAreaDefaults.getColorDefaults();
+         painter.setForeground(colors.foregroundColor);
+         painter.setBackground(colors.backgroundColor);
+         painter.setCaretColor(colors.caretColor);
+         painter.setSelectionColor(colors.selectionColor);
+         painter.setLineHighlightColor(colors.lineHighlightColor);
       }
    
    	    	

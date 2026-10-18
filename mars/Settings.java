@@ -112,6 +112,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /** Flag to determine whether a program can write binary code to the text or data segment and
         execute that code.  */
       public static final int SELF_MODIFYING_CODE_ENABLED = 20;	
+      public static final int DARK_MODE = 21;
    
       // NOTE: key sequence must match up with labels above which are used for array indexes!
       private static String[] booleanSettingsKeys = {"ExtendedAssembler", "BareMachine", "AssembleOnOpen", "AssembleAll",
@@ -120,7 +121,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          												"WarningsAreErrors", "ProgramArguments", "DataSegmentHighlighting",
          												"RegistersHighlighting", "StartAtMain", "EditorCurrentLineHighlighting",
          												"PopupInstructionGuidance", "PopupSyscallInput", "GenericTextEditor", 
-         												"AutoIndent", "SelfModifyingCode" };
+         												"AutoIndent", "SelfModifyingCode", "DarkMode" };
    
       /** Last resort default values for boolean settings; will use only  if neither
    	 *  the Preferences nor the properties file work. If you wish to change them, 
@@ -129,7 +130,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
       public static boolean[] defaultBooleanSettingsValues = { // match the above list by position
                                               true, false, false, false, false, true, true, false, false, 
-         												 true, false, false, true, true, false, true, true, false, false, true, false };
+         												 true, false, false, true, true, false, true, true, false, false, true, false, false };
    
       // STRING SETTINGS.  Each array position has associated name.
    	/** Current specified exception handler file (a MIPS assembly source file) */
@@ -247,6 +248,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
       private static String[] defaultColorSettingsValues = { 
                  "0x00e0e0e0", "0", "0x00ffffff", "0", "0x00ffff99", "0", "0x0033ff00", "0", "0x0099ccff", "0", "0x0099cc55","0" };
+      private static String[] defaultDarkColorSettingsValues = {
+                 "0x00323436", "0x00d4d4d4", "0x002b2b2b", "0x00d4d4d4", "0x00666622", "0x00ffffff", "0x00336622", "0x00ffffff", "0x00285a8c", "0x00ffffff", "0x00446622","0x00ffffff" };
+      private static final String DARK_MODE_PREFIX = "Dark";
       
    
       
@@ -256,6 +260,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private String[] fontStyleSettingsValues;	
       private String[] fontSizeSettingsValues;	
       private String[] colorSettingsValues;
+      private String[] darkColorSettingsValues;
    
       private Preferences preferences;
    	
@@ -283,6 +288,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontStyleSettingsValues = new String[fontStyleSettingsKeys.length];
          fontSizeSettingsValues = new String[fontSizeSettingsKeys.length];
          colorSettingsValues = new String[colorSettingsKeys.length];
+         darkColorSettingsValues = new String[colorSettingsKeys.length];
       	// This determines where the values are actually stored.  Actual implementation
       	// is platform-dependent.  For Windows, they are stored in Registry.  To see,
       	// run regedit and browse to: HKEY_CURRENT_USER\Software\JavaSoft\Prefs\mars
@@ -330,6 +336,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    */
       private String[] syntaxStyleColorSettingsValues;
+      private String[] darkSyntaxStyleColorSettingsValues;
       private boolean[] syntaxStyleBoldSettingsValues;
       private boolean[] syntaxStyleItalicSettingsValues;
    	
@@ -339,32 +346,34 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
       private static String[] syntaxStyleColorSettingsKeys, syntaxStyleBoldSettingsKeys, syntaxStyleItalicSettingsKeys; 
       private static String[] defaultSyntaxStyleColorSettingsValues;
+      private static String[] defaultDarkSyntaxStyleColorSettingsValues;
       private static boolean[] defaultSyntaxStyleBoldSettingsValues;
       private static boolean[] defaultSyntaxStyleItalicSettingsValues;
    
    
        public void setEditorSyntaxStyleByPosition( int index, SyntaxStyle syntaxStyle ) {
-         syntaxStyleColorSettingsValues[index] = syntaxStyle.getColorAsHexString();
+         valuesForMode(syntaxStyleColorSettingsValues, darkSyntaxStyleColorSettingsValues)[index] = syntaxStyle.getColorAsHexString();
          syntaxStyleItalicSettingsValues[index] = syntaxStyle.isItalic();		 
          syntaxStyleBoldSettingsValues[index] = syntaxStyle.isBold();
          saveEditorSyntaxStyle(index);
       }
    	
        public SyntaxStyle getEditorSyntaxStyleByPosition( int index ) {
-         return new SyntaxStyle(getColorValueByPosition(index, syntaxStyleColorSettingsValues),
+         return new SyntaxStyle(getColorValueByPosition(index, valuesForMode(syntaxStyleColorSettingsValues, darkSyntaxStyleColorSettingsValues)),
                                 syntaxStyleItalicSettingsValues[index],
                                 syntaxStyleBoldSettingsValues[index]);
       }
    
        public SyntaxStyle getDefaultEditorSyntaxStyleByPosition( int index ) {
-         return new SyntaxStyle(getColorValueByPosition(index, defaultSyntaxStyleColorSettingsValues),
+         return new SyntaxStyle(getColorValueByPosition(index, valuesForMode(defaultSyntaxStyleColorSettingsValues, defaultDarkSyntaxStyleColorSettingsValues)),
                                 defaultSyntaxStyleItalicSettingsValues[index],
                                 defaultSyntaxStyleBoldSettingsValues[index]);
       }   	
    
        private void saveEditorSyntaxStyle(int index) {
          try {
-            preferences.put(syntaxStyleColorSettingsKeys[index], syntaxStyleColorSettingsValues[index]);
+            preferences.put(keyForMode(syntaxStyleColorSettingsKeys[index]),
+               valuesForMode(syntaxStyleColorSettingsValues, darkSyntaxStyleColorSettingsValues)[index]);
             preferences.putBoolean(syntaxStyleBoldSettingsKeys[index], syntaxStyleBoldSettingsValues[index]);
             preferences.putBoolean(syntaxStyleItalicSettingsKeys[index], syntaxStyleItalicSettingsValues[index]);
             preferences.flush();
@@ -387,14 +396,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    		// Color objects totally.  Requires new methods for the SyntaxUtilities class.
        private void initializeEditorSyntaxStyles() {
          SyntaxStyle syntaxStyle[] = SyntaxUtilities.getDefaultSyntaxStyles();
+         SyntaxStyle darkSyntaxStyle[] = SyntaxUtilities.getDefaultDarkSyntaxStyles();
          int tokens = syntaxStyle.length;
          syntaxStyleColorSettingsKeys = new String[tokens]; 
          syntaxStyleBoldSettingsKeys = new String[tokens]; 
          syntaxStyleItalicSettingsKeys = new String[tokens]; 
          defaultSyntaxStyleColorSettingsValues = new String[tokens];
+         defaultDarkSyntaxStyleColorSettingsValues = new String[tokens];
          defaultSyntaxStyleBoldSettingsValues = new boolean[tokens];
          defaultSyntaxStyleItalicSettingsValues = new boolean[tokens];
          syntaxStyleColorSettingsValues = new String[tokens];
+         darkSyntaxStyleColorSettingsValues = new String[tokens];
          syntaxStyleBoldSettingsValues = new boolean[tokens];
          syntaxStyleItalicSettingsValues = new boolean[tokens];		
          for (int i=0; i<tokens; i++) {
@@ -403,6 +415,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             syntaxStyleItalicSettingsKeys[i] = SYNTAX_STYLE_ITALIC_PREFIX + i;
             syntaxStyleColorSettingsValues[i] = 
                defaultSyntaxStyleColorSettingsValues[i] = syntaxStyle[i].getColorAsHexString();
+            darkSyntaxStyleColorSettingsValues[i] =
+               defaultDarkSyntaxStyleColorSettingsValues[i] = darkSyntaxStyle[i].getColorAsHexString();
             syntaxStyleBoldSettingsValues[i] = 
                defaultSyntaxStyleBoldSettingsValues[i] = syntaxStyle[i].isBold();
             syntaxStyleItalicSettingsValues[i] = 
@@ -413,6 +427,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private void getEditorSyntaxStyleSettingsFromPreferences() {
          for (int i=0; i<syntaxStyleColorSettingsKeys.length; i++) {
             syntaxStyleColorSettingsValues[i] = preferences.get(syntaxStyleColorSettingsKeys[i], syntaxStyleColorSettingsValues[i]);
+            darkSyntaxStyleColorSettingsValues[i] = preferences.get(DARK_MODE_PREFIX + syntaxStyleColorSettingsKeys[i], darkSyntaxStyleColorSettingsValues[i]);
             syntaxStyleBoldSettingsValues[i] = preferences.getBoolean(syntaxStyleBoldSettingsKeys[i], syntaxStyleBoldSettingsValues[i]);
             syntaxStyleItalicSettingsValues[i] = preferences.getBoolean(syntaxStyleItalicSettingsKeys[i], syntaxStyleItalicSettingsValues[i]);
          }
@@ -754,7 +769,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  * @return corresponding Color, or null if key not found or value not valid color
    	  */
        public Color getColorSettingByKey(String key) {
-         return getColorValueByKey(key, colorSettingsValues);
+         return getColorValueByKey(key, valuesForMode(colorSettingsValues, darkColorSettingsValues));
       }
    	
    	 /**
@@ -764,7 +779,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  * @return corresponding default Color, or null if key not found or value not valid color
    	  */   	
        public Color getDefaultColorSettingByKey(String key) {
-         return getColorValueByKey(key, defaultColorSettingsValues);
+         return getColorValueByKey(key, valuesForMode(defaultColorSettingsValues, defaultDarkColorSettingsValues));
       }
    
    	
@@ -775,7 +790,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  * @return corresponding Color, or null if argument invalid or value not valid color
    	  */
        public Color getColorSettingByPosition(int position) {
-         return getColorValueByPosition(position, colorSettingsValues);
+         return getColorValueByPosition(position, valuesForMode(colorSettingsValues, darkColorSettingsValues));
       }
    	
    	 /**
@@ -785,7 +800,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  * @return corresponding default Color, or null if argument invalid or value not valid color
    	  */   	
        public Color getDefaultColorSettingByPosition(int position) {
-         return getColorValueByPosition(position, defaultColorSettingsValues);
+         return getColorValueByPosition(position, valuesForMode(defaultColorSettingsValues, defaultDarkColorSettingsValues));
       }
    
    
@@ -1172,6 +1187,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }     
          for (int i=0; i<colorSettingsValues.length; i++) {
             colorSettingsValues[i] = defaultColorSettingsValues[i];
+            darkColorSettingsValues[i] = defaultDarkColorSettingsValues[i];
          }
          initializeEditorSyntaxStyles();
       }
@@ -1194,8 +1210,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
       // Used by setter methods for color-based settings
        private void setColorSetting(int settingIndex, Color color) {
-         colorSettingsValues[settingIndex] = Binary.intToHexString( color.getRed()<<16 | color.getGreen()<<8 | color.getBlue() );
+         valuesForMode(colorSettingsValues, darkColorSettingsValues)[settingIndex] = Binary.intToHexString( color.getRed()<<16 | color.getGreen()<<8 | color.getBlue() );
          saveColorSetting(settingIndex);
+      }
+   
+       private String[] valuesForMode(String[] values, String[] darkValues) {
+         return booleanSettingsValues[DARK_MODE] ? darkValues : values;
+      }
+   
+       private String keyForMode(String key) {
+         return booleanSettingsValues[DARK_MODE] ? DARK_MODE_PREFIX + key : key;
       }
    
       // Get Color object for this key value.  Get it from values array provided as argument (could be either
@@ -1284,6 +1308,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                settingValue = Globals.getPropertyEntry(filename, colorSettingsKeys[i]);
                if (settingValue != null )
                   colorSettingsValues[i] = defaultColorSettingsValues[i] = settingValue;
+               settingValue = Globals.getPropertyEntry(filename, DARK_MODE_PREFIX + colorSettingsKeys[i]);
+               if (settingValue != null )
+                  darkColorSettingsValues[i] = defaultDarkColorSettingsValues[i] = settingValue;
             }
          } 
              catch (Exception e) {
@@ -1313,6 +1340,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          for (int i=0; i<colorSettingsKeys.length; i++) {
             colorSettingsValues[i] = preferences.get(colorSettingsKeys[i], colorSettingsValues[i]);
+            darkColorSettingsValues[i] = preferences.get(DARK_MODE_PREFIX + colorSettingsKeys[i], darkColorSettingsValues[i]);
          }
          getEditorSyntaxStyleSettingsFromPreferences();
       }
@@ -1366,7 +1394,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Save the key-value pair in the Properties object and assure it is written to persisent storage.		
        private void saveColorSetting(int index) {
          try {
-            preferences.put(colorSettingsKeys[index], colorSettingsValues[index]);
+            preferences.put(keyForMode(colorSettingsKeys[index]), valuesForMode(colorSettingsValues, darkColorSettingsValues)[index]);
             preferences.flush();
          } 
              catch (SecurityException se) {

@@ -107,6 +107,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         if (text.startsWith(ErrorList.ERROR_MESSAGE_PREFIX) || text.startsWith(ErrorList.WARNING_MESSAGE_PREFIX)) {
                            assemble.select(lineStart,lineEnd); 
                            assemble.setSelectionColor(Color.YELLOW);
+                           assemble.setSelectedTextColor(Color.BLACK);
                            assemble.repaint();
                            int separatorPosition = text.indexOf(ErrorList.MESSAGE_SEPARATOR);
                            if (separatorPosition >= 0) {
@@ -205,6 +206,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                lineStart = assemble.getLineStartOffset(textLine);
                lineEnd = assemble.getLineEndOffset(textLine);
                assemble.setSelectionColor(Color.YELLOW);
+               assemble.setSelectedTextColor(Color.BLACK);
                assemble.select(lineStart,lineEnd);
                assemble.getCaret().setSelectionVisible(true);
                assemble.repaint();               
